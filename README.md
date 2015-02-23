@@ -1,5 +1,5 @@
 # Free Spirits
-This project is a mixed drink database and builder. Built for our Software
+Mixed drink database and builder. Built for our Software
 Engineering course.
 
 # Group Members

@@ -1,20 +1,20 @@
 drink = {
-	string : 				name
-	string : 				description
+	string :				name
+	string :				description
 	array of foreign keys :	ingredients
 	array of ints :			ingregient values
 	int :					number of favorites
 }
 
 ingredient = {
-	string : 				name
+	string :				name
 	string :				description
-	array of foreign keys : drinks
-	int : 					measurement type
+	array of foreign keys :	drinks
+	int :					measurement type
 }
 
 user = {
-	string : 				name
+	string :				name
 	array of foreign keys :	favorite drinks
 	?? authentication ??
 	?? picture ??

@@ -2,5 +2,10 @@
 Mixed drink database and builder. Built for our Software
 Engineering course.
 
-# Group Members
-Paul Bae, Jin Dong Tang, Larry Liu, Ali Homafar, Menglin Liu, Zane Urbanski
+## Group Members
+* Paul Bae (@pybae)
+* Zane Urbanski (@zaneu)
+* Ali Homafar (@alih)
+* Jin Dong Tang
+* Larry Liu
+* Menglin Liu

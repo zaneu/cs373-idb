@@ -12,9 +12,20 @@ class DrinkItem(scrapy.Item):
     the Drink Item
     """
 
-    url         = scrapy.Field()
-    name        = scrapy.Field()
+    url = scrapy.Field()
+    name = scrapy.Field()
     description = scrapy.Field()
-    recipe      = scrapy.Field()
+    recipe = scrapy.Field()
     ingredients = scrapy.Field()
 
+
+class IngredientItem(scrapy.Item):
+    """
+    the ingredient item
+    note that we override the id function here
+    """
+
+    id = scrapy.Field()
+    name = scrapy.Field()
+    description = scrapy.Field()
+    nutrition = scrapy.Field()

@@ -8,7 +8,34 @@ from free_spirits.items import IngredientItem
 import re
 
 
+def check_if_str(x):
+    """
+    returns if the element is a BeautifulSoup string
+    this is useful for filtering the entries given
+    """
+
+    return type(x) is bs4.element.NavigableString
+
+
+def values_from_listing(listing):
+    """
+    returns a list of strings representing values in a table
+    listing must be a bs4 Tag element
+    """
+
+    values = filter(check_if_str, listing.contents)
+    values = map(str, values)
+    values = map(lambda x: x.strip(), values)
+    values = filter(lambda x: x, values)
+
+    return values
+
+
 class IngredientsSpider(CrawlSpider):
+    """
+    the IngredientsSpider
+    """
+
     name = "ingredients"
     allowed_domains = ["drinksmixer.com"]
 
@@ -17,7 +44,8 @@ class IngredientsSpider(CrawlSpider):
     ]
 
     rules = (
-        Rule(LinkExtractor(allow='http://www\.drinksmixer\.com/desc\d+\.html',), callback='parse_ingredient'),
+        Rule(LinkExtractor(allow='http://www\.drinksmixer\.com/desc\d+\.html'),
+             callback='parse_ingredient'),
     )
 
     def parse_ingredient(self, response):
@@ -28,7 +56,6 @@ class IngredientsSpider(CrawlSpider):
 
         ingredient = IngredientItem()
         soup = BeautifulSoup(response.body, "lxml")
-        check_if_str = lambda x: type(x) is bs4.element.NavigableString
 
         id          = re.findall(r'\d+', response.url)[0]
         title       = soup.find("title").contents[0].rstrip("information")
@@ -51,11 +78,7 @@ class IngredientsSpider(CrawlSpider):
 
         listing = table.find("td", {"valign": "top"})
         listing = listing.find("p", {"class": "l1a"})
-
-        values = filter(check_if_str, listing.contents)
-        values = map(str, values)
-        values = map(lambda x: x.strip(), values)
-        values = filter(lambda x: x, values)
+        values  = values_from_listing(listing)
 
         nutrition = {}
 
@@ -66,19 +89,14 @@ class IngredientsSpider(CrawlSpider):
         nutrition["protein"]       = values[4]
 
         listing = listing.findNext("p", {"class": "l1a"})
-
-        values = filter(check_if_str, listing.contents)
-        values = map(str, values)
-        values = map(lambda x: x.strip(), values)
-        values = filter(lambda x: x, values)
+        values  = values_from_listing(listing)
 
         nutrition["fiber"]       = values[0]
         nutrition["sugars"]      = values[1]
         nutrition["cholesterol"] = values[2]
         nutrition["sodium"]      = values[3]
-
-        # alcohol is optional, and often left empty
         nutrition["alcohol"]     = values[4] if len(values) > 4 else ""
+        # alcohol is optional, and often left empty
 
         ingredient["nutrition"] = nutrition
 

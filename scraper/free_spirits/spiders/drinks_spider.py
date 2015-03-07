@@ -46,10 +46,10 @@ class DrinkSpider(CrawlSpider):
                     value = ingredient.find("span", {"class": "amount"}).contents[0]
                     key = ingredient.find("span", {"class": "name"})
                     key = key.find("a")
-                    id = key['href']
-                    id = re.findall(r'\d+', id)[0]
+                    key = key['href']
+                    key = re.findall(r'\d+', key)[0]
 
-                    drink['ingredients'][id] = value
+                    drink['ingredients'][key] = value
 
         drink['name']        = title.rstrip()
         drink['recipe']      = recipe.contents[0].rstrip() if recipe else ""

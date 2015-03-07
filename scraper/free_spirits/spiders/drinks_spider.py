@@ -26,8 +26,8 @@ class DrinkSpider(CrawlSpider):
         drink = DrinkItem()
         soup = BeautifulSoup(response.body, "lxml")
 
-        title = soup.find("title").contents[0].rstrip("recipe")
-        recipe = soup.find("div", {"class": "RecipeDirections instructions"})
+        title       = soup.find("title").contents[0].rstrip("recipe")
+        recipe      = soup.find("div", {"class": "RecipeDirections instructions"})
         description = soup.find("div", {"class": "summary RecipeDirections"})
         ingredients = soup.find("div", {"class": "ingredients"})
 

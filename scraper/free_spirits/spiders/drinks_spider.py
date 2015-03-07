@@ -4,6 +4,8 @@ from scrapy.contrib.linkextractors import LinkExtractor
 from bs4 import BeautifulSoup
 from free_spirits.items import DrinkItem
 
+import re
+
 
 class DrinkSpider(CrawlSpider):
     """
@@ -42,11 +44,13 @@ class DrinkSpider(CrawlSpider):
             for ingredient in ingredients.find_all("span", {"class": "ingredient"}):
                 if ingredient.contents:
                     value = ingredient.find("span", {"class": "amount"}).contents[0]
-                    name = ingredient.find("span", {"class": "name"}).contents[0].contents[0]
+                    key = ingredient.find("span", {"class": "name"})
+                    key = key.find("a")
+                    id = key['href']
+                    id = re.findall(r'\d+', id)[0]
 
-                    drink['ingredients'][name] = value
+                    drink['ingredients'][id] = value
 
-        drink['url']         = response.url
         drink['name']        = title.rstrip()
         drink['recipe']      = recipe.contents[0].rstrip() if recipe else ""
         drink['description'] = description.contents[0].rstrip() if description else ""

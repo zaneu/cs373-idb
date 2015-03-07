@@ -12,7 +12,6 @@ class DrinkItem(scrapy.Item):
     the Drink Item
     """
 
-    url = scrapy.Field()
     name = scrapy.Field()
     description = scrapy.Field()
     recipe = scrapy.Field()

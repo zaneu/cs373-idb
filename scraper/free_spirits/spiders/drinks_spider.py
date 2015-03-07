@@ -6,6 +6,10 @@ from free_spirits.items import DrinkItem
 
 
 class DrinkSpider(CrawlSpider):
+    """
+    the DrinkSpider
+    """
+
     name = "drinks"
     allowed_domains = ["drinksmixer.com"]
 
@@ -14,7 +18,8 @@ class DrinkSpider(CrawlSpider):
     ]
 
     rules = (
-        Rule(LinkExtractor(allow='http://www\.drinksmixer\.com/.*\.html',), callback='parse_drink'),
+        Rule(LinkExtractor(allow='http://www\.drinksmixer\.com/.*\.html'),
+             callback='parse_drink'),
     )
 
     def parse_drink(self, response):

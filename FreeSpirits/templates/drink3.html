@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Caribou Lou{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../static/css/drink.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <img src="../static/img/caribou-lou.jpg" name="aboutme" width="140" height="140" class="img-responsive center-block">
+      <h1 class="text-center name">Caribou Lou</h1>
+      <p class="text-center description">
+        Referenced in the song "Caribou Lou" by rapper Tech N9ne where he sings about it - "...151 rum, pineapple juice, and malibu, caribou, get them all numb...". The directions are included in the song also but are scaled to a unknown jug quantity. Therefore mix as you please but remember it's the 151 that will hit you. Originated in Kansas City, MO.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

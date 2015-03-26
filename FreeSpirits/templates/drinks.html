@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}Ingredients{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../static/css/listing.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped table-hover">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Price</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="col-sm-1">1</td>
+    <td class="col-lg-5">
+      <a href="{{ url_for('drinks', drink='drink1') }}">Bloody Mary</a>
+    </td>
+    <td>$5.00</td>
+  </tr>
+  <tr>
+    <td class="col-sm-1">2</td>
+    <td class="col-lg-5">
+      <a href="{{ url_for('drinks', drink='drink2') }}">Gin & Tonic</a>
+    </td>
+    <td>$4.00</td>
+  </tr>
+  <tr>
+    <td class="col-sm-1">3</td>
+    <td class="col-lg-5">
+      <a href="{{ url_for('drinks', drink='drink3') }}">Caribou Lou</a>
+    </td>
+    <td>$5.00</td>
+  </tr>
+</tbody>
+</table>
+{% endblock %}

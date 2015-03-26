@@ -1,13 +1,5 @@
 /* The css file for the splash page*/
-
-.navbar {
-	height: 50px;
-	padding: 5px;
-}
-
-.navbar-nav {
-	font-size: 20px;
-}
+@import url("base.css");
 
 .logo {
 	font-size: 90px;

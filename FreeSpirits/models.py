@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+The models
+"""
+
 class User():
     """
     The User model

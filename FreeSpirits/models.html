@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>models</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/pybae/cs373-idb/FreeSpirits/models.py">/Users/pybae/cs373-idb/FreeSpirits/models.py</a></font></td></tr></table>
+    <p><tt>The&nbsp;models</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="models.html#Drink">Drink</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#Ingredient">Ingredient</a>
+</font></dt><dt><font face="helvetica, arial"><a href="models.html#User">User</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Drink">class <strong>Drink</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;required&nbsp;variables&nbsp;of&nbsp;this&nbsp;class&nbsp;are<br>
+The&nbsp;name<br>
+The&nbsp;description<br>
+The&nbsp;ingredients&nbsp;(dictionary&nbsp;of&nbsp;names&nbsp;and&nbsp;values)<br>
+The&nbsp;nutritional&nbsp;values&nbsp;(an&nbsp;array)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Drink-__init__"><strong>__init__</strong></a>(self, name=None, ingredients=None, nutrition=None)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Ingredient">class <strong>Ingredient</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;required&nbsp;variables&nbsp;of&nbsp;this&nbsp;class&nbsp;are<br>
+The&nbsp;name<br>
+The&nbsp;description<br>
+The&nbsp;nutritional&nbsp;values&nbsp;(an&nbsp;array)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Ingredient-__init__"><strong>__init__</strong></a>(self, name=None, description=None, nutrition=None)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="User">class <strong>User</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;<a href="#User">User</a>&nbsp;model<br>
+As&nbsp;of&nbsp;now,&nbsp;this&nbsp;class&nbsp;is&nbsp;not&nbsp;related&nbsp;to&nbsp;the&nbsp;database&nbsp;at&nbsp;all<br>
+This&nbsp;will&nbsp;be&nbsp;done&nbsp;in&nbsp;the&nbsp;later&nbsp;phases<br>
+So,&nbsp;the&nbsp;instance&nbsp;variables&nbsp;will&nbsp;have&nbsp;to&nbsp;be&nbsp;replaced&nbsp;with&nbsp;Columns&nbsp;and&nbsp;so<br>
+forth&nbsp;to&nbsp;accomodate&nbsp;for&nbsp;SQL-Alchemy<br>
+&nbsp;<br>
+The&nbsp;associations&nbsp;will&nbsp;be&nbsp;done&nbsp;by&nbsp;joint&nbsp;tables&nbsp;and&nbsp;are&nbsp;thus&nbsp;excluded&nbsp;here<br>
+&nbsp;<br>
+The&nbsp;required&nbsp;variables&nbsp;of&nbsp;this&nbsp;class&nbsp;are:<br>
+the&nbsp;name<br>
+the&nbsp;email<br>
+potentially&nbsp;Facebook&nbsp;OAuth&nbsp;(TBD)<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="User-__init__"><strong>__init__</strong></a>(self, name=None, email=None)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

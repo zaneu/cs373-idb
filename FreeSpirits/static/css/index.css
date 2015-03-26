@@ -1,0 +1,27 @@
+/* The css file for the splash page*/
+
+.navbar {
+	height: 50px;
+	padding: 5px;
+}
+
+.navbar-nav {
+	font-size: 20px;
+}
+
+.logo {
+	font-size: 90px;
+}
+
+.intro-text {
+	font-size: 20px;
+	opacity: 0.8;
+}
+
+.vertical-center {
+ 	min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+ 	min-height: 70vh; /* These two lines are counted as one :-)       */
+
+ 	display: flex;
+ 	align-items: center;
+}

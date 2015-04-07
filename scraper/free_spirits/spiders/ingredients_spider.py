@@ -4,32 +4,9 @@ from scrapy.contrib.linkextractors import LinkExtractor
 import bs4
 from bs4 import BeautifulSoup
 from free_spirits.items import IngredientItem
+from common import *
 
 import re
-
-
-def check_if_str(x):
-    """
-    returns if the element is a BeautifulSoup string
-    this is useful for filtering the entries given
-    """
-
-    return type(x) is bs4.element.NavigableString
-
-
-def values_from_listing(listing):
-    """
-    returns a list of strings representing values in a table
-    listing must be a bs4 Tag element
-    """
-
-    values = filter(check_if_str, listing.contents)
-    values = map(str, values)
-    values = map(lambda x: x.strip(), values)
-    values = filter(lambda x: x, values)
-
-    return values
-
 
 class IngredientsSpider(CrawlSpider):
     """
@@ -80,22 +57,20 @@ class IngredientsSpider(CrawlSpider):
         listing = listing.find("p", {"class": "l1a"})
         values  = values_from_listing(listing)
 
-        nutrition = {}
-
-        nutrition["calories"]      = values[0]
-        nutrition["energy"]        = values[1]
-        nutrition["fats"]          = values[2]
-        nutrition["carbohydrates"] = values[3]
-        nutrition["protein"]       = values[4]
+        calories      = values[0]
+        energy        = values[1]
+        fats          = values[2]
+        carbohydrates = values[3]
+        protein       = values[4]
 
         listing = listing.findNext("p", {"class": "l1a"})
         values  = values_from_listing(listing)
 
-        nutrition["fiber"]       = values[0]
-        nutrition["sugars"]      = values[1]
-        nutrition["cholesterol"] = values[2]
-        nutrition["sodium"]      = values[3]
-        nutrition["alcohol"]     = values[4] if len(values) > 4 else ""
+        fiber       = values[0]
+        sugars      = values[1]
+        cholesterol = values[2]
+        sodium      = values[3]
+        alcohol     = values[4] if len(values) > 4 else ""
         # alcohol is optional, and often left empty
 
         ingredient["nutrition"] = nutrition

@@ -3,6 +3,7 @@ from scrapy.contrib.linkextractors import LinkExtractor
 
 from bs4 import BeautifulSoup
 from free_spirits.items import DrinkItem
+from common import *
 
 import re
 

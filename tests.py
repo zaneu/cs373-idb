@@ -1,68 +1,69 @@
 # -*- coding: utf-8 -*-
 
-from models import *
+import os
+
+from flask import Flask
+
+from FreeSpirits import app, db, test_client
+from FreeSpirits.models import *
+from flask.ext.testing import TestCase
+from flask.ext.sqlalchemy import SQLAlchemy
+
 import unittest
 
-class TestModels(unittest.TestCase):
+basedir = os.path.abspath(os.path.dirname(__file__))
+test_client(basedir)
+db.create_all()
 
-    def test_user_default(self):
-        u = User()
-        self.assertEqual(u.name, None)
-        self.assertEqual(u.email, None)
-
-    def test_user_name(self):
-        u = User("Paul")
-        self.assertEqual(u.name, "Paul")
-        self.assertEqual(u.email, None)
+class ModelTests(unittest.TestCase):
+    """
+    The main test suite
+    This function creates a dummy sqlite3 database (test.db)
+    """
     
-    def test_user_name_email(self):
-        u = User("Paul", "pbae@utexas.edu")
-        self.assertEqual(u.name, "Paul")
-        self.assertEqual(u.email, "pbae@utexas.edu")
+    def setUp(self):
+        db.create_all()
 
-    def test_ingredient_default(self):
-        i = Ingredient()
-        self.assertEqual(i.name, None)
-        self.assertEqual(i.description, None)
-        self.assertEqual(i.nutrition, None)
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
 
-    def test_ingredient_name(self):
-        i = Ingredient("Lemon")
-        self.assertEqual(i.name, "Lemon")
-        self.assertEqual(i.description, None)
-        self.assertEqual(i.nutrition, None)
+    # =====
+    # Tests
+    # =====
+
+    def test_add_default_ingredient(self):
+        ingredient = Ingredient()
+        db.session.add(ingredient)
+        db.session.commit()
+
+        self.assertTrue(ingredient in db.session)
+
+    def test_add_ingredient_1(self):
+        ingredient = Ingredient(name="Mint")
+        db.session.add(ingredient)
+        db.session.commit()
+
+        self.assertTrue(ingredient in db.session)
+        self.assertEqual(Ingredient.query.filter_by(name="Mint").first(), ingredient)
+
+    def test_add_ingredient_2(self):
+        ingredient = Ingredient(name="Rum", calories="120")
+        db.session.add(ingredient)
+        db.session.commit()
+
+        self.assertTrue(ingredient in db.session)
+        self.assertEqual(Ingredient.query.filter_by(calories="120").first(), ingredient)
     
-    def test_ingredient_name_description(self):
-        i = Ingredient("Lemon", "Very sour!")
-        self.assertEqual(i.name, "Lemon")
-        self.assertEqual(i.description, "Very sour!")
-        self.assertEqual(i.nutrition, None)
+    def test_add_ingredient_3(self):
+        ingredient = Ingredient(name="Rum", calories="120", energy="100")
+        db.session.add(ingredient)
+        db.session.commit()
 
-    def test_drink_default(self):
-        d = Drink()
-        self.assertEqual(d.name, None)
-        self.assertEqual(d.ingredients, None)
-        self.assertEqual(d.nutrition, None)
-
-    def test_drink_name(self):
-        d = Drink("Caribou Lou")
-        self.assertEqual(d.name, "Caribou Lou")
-        self.assertEqual(d.ingredients, None)
-        self.assertEqual(d.nutrition, None)
+        self.assertTrue(ingredient in db.session)
+        self.assertEqual(Ingredient.query.filter_by(energy="100").first(), ingredient)
     
-    def test_drink_name_description(self):
-        ingredients = {
-            "151 Rum": "3 / 2 parts", 
-            "Malibu coconut Rum": "1 part", 
-            "Pineapple juice": "5 parts" 
-        }
-
-        d = Drink("Caribou Lou", ingredients)
-
-        self.assertEqual(d.name, "Caribou Lou")
-        self.assertEqual(d.ingredients, ingredients)
-        self.assertEqual(d.nutrition, None)
-
+    
 if __name__ == '__main__':
     unittest.main()
 

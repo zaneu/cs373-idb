@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -11,3 +13,13 @@ db = SQLAlchemy(app)
 # late imports so dependencies are correct
 from . import views
 from . import models
+
+def test_client(basedir):
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test.db')
+
+    app.config["TESTING"] = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+    db = SQLAlchemy(app)
+    
+    from . import views
+    from . import models

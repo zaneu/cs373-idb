@@ -12,11 +12,27 @@
   <tr>
     <th>#</th>
     <th>Name</th>
-    <th>Price</th>
+    <th>Calories</th>
   </tr>
 </thead>
 <tbody>
-  <tr>
+  {% for drink in drinks %}
+    <tr>
+      <td class="col-sm-1">
+        {{ loop.index }}
+      </td>
+      <td class="col-lg-5">
+        <a href="{{ 'drinks/' + drink.id|string }}">
+          {{ drink.name }}
+        </a>
+      </td>
+      <td>
+        {{ drink.calories }}
+      </td>
+    </tr>
+  {% endfor %}
+
+  <!-- <tr>
     <td class="col-sm-1">1</td>
     <td class="col-lg-5">
       <a href="{{ url_for('drinks', drink='drink1') }}">Bloody Mary</a>
@@ -36,7 +52,7 @@
       <a href="{{ url_for('drinks', drink='drink3') }}">Caribou Lou</a>
     </td>
     <td>$5.00</td>
-  </tr>
+  </tr> -->
 </tbody>
 </table>
 {% endblock %}

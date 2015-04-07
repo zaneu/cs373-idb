@@ -12,7 +12,7 @@ print("Creating all tables")
 db.create_all()
 
 print("Loading data/ingredients.json")
-f = open("data/temp.json")
+f = open("data/ingredients.json")
 ingredients = json.load(f)
 f.close()
 

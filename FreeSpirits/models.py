@@ -66,6 +66,7 @@ class Ingredient(db.Model):
     def __repr__(self):
         return "<Ingredient %r>" % (self.name)
 
+
 class Drink(db.Model):
     """
     The required variables of this class are
@@ -78,6 +79,7 @@ class Drink(db.Model):
     id            = db.Column(db.Integer, primary_key=True)
     name          = db.Column(db.String(120), index=True, unique=True)
     description   = db.Column(db.String(2000))
+    ingredients   = db.Column
     calories      = db.Column(db.String(20))
     energy        = db.Column(db.String(20))
     fats          = db.Column(db.String(20))

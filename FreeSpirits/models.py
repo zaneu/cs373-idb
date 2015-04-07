@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-"""
-The models
-"""
+from . import db
 
-class User():
+class User(db.Model):
     """
     The User model
     As of now, this class is not related to the database at all
@@ -12,43 +10,82 @@ class User():
     So, the instance variables will have to be replaced with Columns and so
     forth to accomodate for SQL-Alchemy
 
-    The associations will be done by joint tables and are thus excluded here
+    The associations will be done by join tables and are thus excluded here
 
     The required variables of this class are:
     the name
     the email
-    potentially Facebook OAuth (TBD)
     """
+    __tablename__ = "User"
 
-    def __init__(self, name=None, email=None):
-        self.name = name
-        self.email = email
+    id    = db.Column(db.Integer, primary_key=True)
+    name  = db.Column(db.String(64), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+
+    def __repr__(self):
+        return "<User %r>" % (self.name)
+ 
+
+class IngredientToDrink(db.Model):
+    """
+    This is the join table between ingredients and drinks
+    It was necessary to create a separate class, rather than a table, since we
+    wanted to include an extra column (quantity) between each relationship
+    """
+    __tablename__ = "IngredientDrink"
+
+    id            = db.Column(db.Integer, primary_key=True)
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('Ingredient.id'), primary_key=True)
+    drink_id      = db.Column(db.Integer, db.ForeignKey('Drink.id'), primary_key=True)
+    quantity      = db.Column(db.String(200))
 
 
-class Ingredient():
+class Ingredient(db.Model):
     """
     The required variables of this class are
     The name
     The description
     The nutritional values (an array)
     """
+    __tablename__ = "Ingredient"
 
-    def __init__(self, name=None, description=None, nutrition=None):
-        self.name = name
-        self.description = description
-        self.nutrition = nutrition
+    id            = db.Column(db.Integer, primary_key=True)
+    name          = db.Column(db.String(120), index=True, unique=True)
+    description   = db.Column(db.String(2000))
+    calories      = db.Column(db.String(20))
+    energy        = db.Column(db.String(20))
+    fats          = db.Column(db.String(20))
+    carbohydrates = db.Column(db.String(20))
+    protein       = db.Column(db.String(20))
+    fiber         = db.Column(db.String(20))
+    sugars        = db.Column(db.String(20))
+    cholesterol   = db.Column(db.String(20))
+    sodium        = db.Column(db.String(20))
+    alcohol       = db.Column(db.String(20))
 
+    def __repr__(self):
+        return "<Ingredient %r>" % (self.name)
 
-class Drink():
+class Drink(db.Model):
     """
     The required variables of this class are
     The name
     The description
-    The ingredients (dictionary of names and values)
     The nutritional values (an array)
     """
+    __tablename__ = "Drink"
 
-    def __init__(self, name=None, ingredients=None, nutrition=None):
-        self.name = name
-        self.ingredients = ingredients
-        self.nutrition = nutrition
+    id            = db.Column(db.Integer, primary_key=True)
+    name          = db.Column(db.String(120), index=True, unique=True)
+    description   = db.Column(db.String(2000))
+    calories      = db.Column(db.String(20))
+    energy        = db.Column(db.String(20))
+    fats          = db.Column(db.String(20))
+    carbohydrates = db.Column(db.String(20))
+    protein       = db.Column(db.String(20))
+    fiber         = db.Column(db.String(20))
+    sugars        = db.Column(db.String(20))
+    cholesterol   = db.Column(db.String(20))
+    sodium        = db.Column(db.String(20))
+    alcohol       = db.Column(db.String(20))
+

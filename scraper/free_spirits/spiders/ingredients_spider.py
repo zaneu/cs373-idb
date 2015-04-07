@@ -57,22 +57,20 @@ class IngredientsSpider(CrawlSpider):
         listing = listing.find("p", {"class": "l1a"})
         values  = values_from_listing(listing)
 
-        calories      = values[0]
-        energy        = values[1]
-        fats          = values[2]
-        carbohydrates = values[3]
-        protein       = values[4]
+        ingredient["calories"]      = values[0]
+        ingredient["energy"]        = values[1]
+        ingredient["fats"]          = values[2]
+        ingredient["carbohydrates"] = values[3]
+        ingredient["protein"]       = values[4]
 
         listing = listing.findNext("p", {"class": "l1a"})
         values  = values_from_listing(listing)
 
-        fiber       = values[0]
-        sugars      = values[1]
-        cholesterol = values[2]
-        sodium      = values[3]
-        alcohol     = values[4] if len(values) > 4 else ""
+        ingredient["fiber"]       = values[0]
+        ingredient["sugars"]      = values[1]
+        ingredient["cholesterol"] = values[2]
+        ingredient["sodium"]      = values[3]
+        ingredient["alcohol"]     = values[4] if len(values) > 4 else ""
         # alcohol is optional, and often left empty
-
-        ingredient["nutrition"] = nutrition
 
         return ingredient

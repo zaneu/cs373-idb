@@ -56,21 +56,23 @@ drink_count = 1
 
 for value in progress.bar(drinks):
     drink = Drink(
+            id=drink_count,
             name=value["name"],
             description=value["description"],
             recipe=value["recipe"]
     )
 
     db.session.add(drink)
-    db.session.commit()
 
     for ingredient_id in value["ingredients"]:
         ingredient_quantity = value["ingredients"][ingredient_id]
         ingredient = ingredient_table[ingredient_id]
 
-        link = IngredientToDrink(id=count, ingredient_id=ingredient.id, drink_id=drink.id, quantity=ingredient_quantity)
+        link = IngredientToDrink(id=count, ingredient_id=ingredient.id, drink_id=drink_count, quantity=ingredient_quantity)
         db.session.add(link)
         count += 1
+
+    drink_count += 1
 
 print("Committing drinks")
 db.session.commit()

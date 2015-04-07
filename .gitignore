@@ -5,3 +5,4 @@ temp
 /scraper/free_spirits/spiders/'
 .DS_STORE
 app.db
+test.db

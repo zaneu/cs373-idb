@@ -13,8 +13,8 @@ BOT_NAME = 'free_spirits'
 SPIDER_MODULES = ['free_spirits.spiders']
 NEWSPIDER_MODULE = 'free_spirits.spiders'
 
-LOG_ENABLED = True
+LOG_ENABLED = False
 DEPTH_LIMIT = 1
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'free_spirits (+http://www.yourdomain.com)'
+USER_AGENT = 'free_spirits (http://freespirits.me)'

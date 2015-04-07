@@ -19,23 +19,18 @@ def about():
     return render_template("about.html")
 
 @app.route('/drinks')
-def drinks_listing():
-    drinks = Drink.query.all()
-    return render_template("drinks.html", drinks=drinks)
-
-@app.route('/drinks/<drink>')
-def drinks(drink):
-    return render_template(drink + ".html")
+@app.route('/drinks/<drink_id>')
+def drinks(drink_id=None):
+    if drink_id == None:
+        return render_template("drinks.html", drinks=Drink.query.order_by(Drink.name))
+    return render_template("drink.html", drink=Drink.query.filter_by(id=drink_id).first())
 
 @app.route('/ingredients')
-def ingredients_listing():
-    ingredients = Ingredient.query.order_by(Ingredient.name)
-    return render_template("ingredients.html", ingredients=ingredients)
-  
 @app.route('/ingredients/<ingredient_id>')
-def ingredients(ingredient_id):
-    ingredient = Ingredient.query.filter_by(id=ingredient_id).first()
-    return render_template("ingredient.html", ingredient=ingredient)
+def ingredients(ingredient_id=None):
+    if ingredient_id is None:
+        return render_template("ingredients.html", ingredients=Ingredient.query.order_by(Ingredient.name))
+    return render_template("ingredient.html", ingredient=Ingredient.query.filter_by(id=ingredient_id).first())
 
 @app.route('/users')
 def users_listing():

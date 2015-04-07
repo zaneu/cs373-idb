@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from . import app
+from .models import *
+
 from flask import render_template
 
 @app.route('/')
@@ -18,15 +20,17 @@ def about():
 
 @app.route('/drinks')
 def drinks_listing():
-    return render_template("drinks.html")
-  
+    drinks = Drink.query.all()
+    return render_template("drinks.html", drinks=drinks)
+
 @app.route('/drinks/<drink>')
 def drinks(drink):
     return render_template(drink + ".html")
 
 @app.route('/ingredients')
 def ingredients_listing():
-    return render_template("ingredients.html")
+    ingredients = Ingredient.query.all()
+    return render_template("ingredients.html", ingredients=ingredients)
   
 @app.route('/ingredients/<ingredient>')
 def ingredients(ingredient):

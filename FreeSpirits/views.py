@@ -29,7 +29,7 @@ def drinks(drink):
 
 @app.route('/ingredients')
 def ingredients_listing():
-    ingredients = Ingredient.query.all()
+    ingredients = Ingredient.query.order_by(Ingredient.name)
     return render_template("ingredients.html", ingredients=ingredients)
   
 @app.route('/ingredients/<ingredient>')

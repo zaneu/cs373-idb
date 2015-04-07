@@ -32,9 +32,9 @@ def ingredients_listing():
     ingredients = Ingredient.query.order_by(Ingredient.name)
     return render_template("ingredients.html", ingredients=ingredients)
   
-@app.route('/ingredients/<ingredient>')
+@app.route('/ingredients/<ingredient_id>')
 def ingredients(ingredient_id):
-    ingredient = Ingredient.query.filter_by(Ingredient.id).first()
+    ingredient = Ingredient.query.filter_by(id=ingredient_id).first()
     return render_template("ingredient.html", ingredient=ingredient)
 
 @app.route('/users')

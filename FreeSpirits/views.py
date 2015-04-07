@@ -33,8 +33,9 @@ def ingredients_listing():
     return render_template("ingredients.html", ingredients=ingredients)
   
 @app.route('/ingredients/<ingredient>')
-def ingredients(ingredient):
-    return render_template(ingredient + ".html")
+def ingredients(ingredient_id):
+    ingredient = Ingredient.query.filter_by(Ingredient.id).first()
+    return render_template("ingredient.html", ingredient=ingredient)
 
 @app.route('/users')
 def users_listing():

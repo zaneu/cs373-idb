@@ -12,10 +12,20 @@ class DrinkItem(scrapy.Item):
     the Drink Item
     """
 
-    name        = scrapy.Field()
-    description = scrapy.Field()
-    recipe      = scrapy.Field()
-    ingredients = scrapy.Field()
+    name          = scrapy.Field()
+    description   = scrapy.Field()
+    recipe        = scrapy.Field()
+    ingredients   = scrapy.Field()
+    calories      = scrapy.Field()
+    energy        = scrapy.Field()
+    fats          = scrapy.Field()
+    carbohydrates = scrapy.Field()
+    protein       = scrapy.Field()
+    fiber         = scrapy.Field()
+    sugars        = scrapy.Field()
+    cholesterol   = scrapy.Field()
+    sodium        = scrapy.Field()
+    alcohol       = scrapy.Field()
 
 
 class IngredientItem(scrapy.Item):

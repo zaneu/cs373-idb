@@ -17,7 +17,7 @@ class IngredientsSpider(CrawlSpider):
     allowed_domains = ["drinksmixer.com"]
 
     start_urls = [
-        "http://www.drinksmixer.com/desc%d.html" % p for p in xrange(1, 1351)
+        "http://www.drinksmixer.com/desc%d.html" % p for p in xrange(1, 2917)
     ]
 
     rules = (
@@ -47,30 +47,41 @@ class IngredientsSpider(CrawlSpider):
                                     "cellpadding": "0",
                                     "width": "98%",
                                     "border": "0"})
-        table = table.find("tr")
+        if table:
+            table = table.find("tr")
 
-        # first remove the specifiers (calories, energy, fats)
-        for s in table.find_all("td", {"width": "135", "valign": "top"}):
-            s.extract()
+            # first remove the specifiers (calories, energy, fats)
+            for s in table.find_all("td", {"width": "135", "valign": "top"}):
+                s.extract()
 
-        listing = table.find("td", {"valign": "top"})
-        listing = listing.find("p", {"class": "l1a"})
-        values  = values_from_listing(listing)
+            listing = table.find("td", {"valign": "top"})
+            listing = listing.find("p", {"class": "l1a"})
+            values  = values_from_listing(listing)
 
-        ingredient["calories"]      = values[0]
-        ingredient["energy"]        = values[1]
-        ingredient["fats"]          = values[2]
-        ingredient["carbohydrates"] = values[3]
-        ingredient["protein"]       = values[4]
+            ingredient["calories"]      = values[0] if len(values) > 0 else ""
+            ingredient["energy"]        = values[1] if len(values) > 1 else ""
+            ingredient["fats"]          = values[2] if len(values) > 2 else ""
+            ingredient["carbohydrates"] = values[3] if len(values) > 3 else ""
+            ingredient["protein"]       = values[4] if len(values) > 4 else ""
 
-        listing = listing.findNext("p", {"class": "l1a"})
-        values  = values_from_listing(listing)
+            listing = listing.findNext("p", {"class": "l1a"})
+            values  = values_from_listing(listing)
 
-        ingredient["fiber"]       = values[0]
-        ingredient["sugars"]      = values[1]
-        ingredient["cholesterol"] = values[2]
-        ingredient["sodium"]      = values[3]
-        ingredient["alcohol"]     = values[4] if len(values) > 4 else ""
-        # alcohol is optional, and often left empty
+            ingredient["fiber"]       = values[0] if len(values) > 0 else ""
+            ingredient["sugars"]      = values[1] if len(values) > 1 else ""
+            ingredient["cholesterol"] = values[2] if len(values) > 2 else ""
+            ingredient["sodium"]      = values[3] if len(values) > 3 else ""
+            ingredient["alcohol"]     = values[4] if len(values) > 4 else ""
+        else:
+            ingredient["calories"]      = ""
+            ingredient["energy"]        = ""
+            ingredient["fats"]          = ""
+            ingredient["carbohydrates"] = ""
+            ingredient["protein"]       = ""
+            ingredient["fiber"]         = ""
+            ingredient["sugars"]        = ""
+            ingredient["cholesterol"]   = ""
+            ingredient["sodium"]        = ""
+            ingredient["alcohol"]       = ""
 
         return ingredient

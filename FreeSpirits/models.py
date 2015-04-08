@@ -50,7 +50,7 @@ class Ingredient(db.Model):
     __tablename__ = "Ingredient"
 
     id            = db.Column(db.Integer, primary_key=True)
-    name          = db.Column(db.String(120), index=True, unique=True)
+    name          = db.Column(db.String(120), index=True)
     description   = db.Column(db.String(2000))
     calories      = db.Column(db.String(20))
     energy        = db.Column(db.String(20))
@@ -76,18 +76,7 @@ class Drink(db.Model):
     """
     __tablename__ = "Drink"
 
-    id            = db.Column(db.Integer, primary_key=True)
-    name          = db.Column(db.String(120), index=True, unique=True)
-    description   = db.Column(db.String(2000))
-    ingredients   = db.Column
-    calories      = db.Column(db.String(20))
-    energy        = db.Column(db.String(20))
-    fats          = db.Column(db.String(20))
-    carbohydrates = db.Column(db.String(20))
-    protein       = db.Column(db.String(20))
-    fiber         = db.Column(db.String(20))
-    sugars        = db.Column(db.String(20))
-    cholesterol   = db.Column(db.String(20))
-    sodium        = db.Column(db.String(20))
-    alcohol       = db.Column(db.String(20))
-
+    id          = db.Column(db.Integer, primary_key=True)
+    name        = db.Column(db.String(120), index=True, unique=True)
+    description = db.Column(db.String(2000))
+    recipe      = db.Column(db.String(2000))

@@ -4,3 +4,4 @@ temp.json
 temp
 /scraper/free_spirits/spiders/'
 .DS_STORE
+app.db

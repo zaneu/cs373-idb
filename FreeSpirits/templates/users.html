@@ -16,7 +16,23 @@
   </tr>
 </thead>
 <tbody>
-  <tr>
+  {% for user in users %}
+    <tr>
+      <td class="col-sm-1">
+        {{ loop.index }}
+      </td>
+      <td class="col-lg-5">
+        <a href="{{ 'users/' + user.id|string }}">
+          {{ user.name }}
+        </a>
+      </td>
+      <td>
+        {{ user.email }}
+      </td>
+    </tr>
+  {% endfor %}
+
+  <!-- <tr>
     <td class="col-sm-1">1</td>
     <td class="col-lg-5">
       <a href="{{ url_for('users', username='user1') }}">Paul Bae</a>
@@ -42,7 +58,7 @@
     <td>
       <a href="mailto:wjsekfghks@gmail.com">wjsekfghks@gmail.com</a>
     </td>
-  </tr>
+  </tr> -->
 </tbody>
 </table>
 {% endblock %}

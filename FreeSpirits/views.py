@@ -19,6 +19,7 @@ def about():
     return render_template("about.html")
 
 @app.route('/drinks')
+@app.route('/drinks/')
 @app.route('/drinks/<drink_id>')
 def drinks(drink_id=None):
     if drink_id is None:
@@ -26,6 +27,7 @@ def drinks(drink_id=None):
     return render_template("drink.html", drink=Drink.query.filter_by(id=drink_id).first())
 
 @app.route('/ingredients')
+@app.route('/ingredients/')
 @app.route('/ingredients/<ingredient_id>')
 def ingredients(ingredient_id=None):
     if ingredient_id is None:
@@ -33,6 +35,7 @@ def ingredients(ingredient_id=None):
     return render_template("ingredient.html", ingredient=Ingredient.query.filter_by(id=ingredient_id).first())
 
 @app.route('/users')
+@app.route('/users/')
 @app.route('/users/<user_id>')
 def users(user_id=None):
     if user_id is None:

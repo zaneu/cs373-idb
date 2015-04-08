@@ -4,6 +4,7 @@ from . import app
 from .models import *
 
 from flask import render_template
+from flask import jsonify
 
 @app.route('/')
 @app.route('/index')
@@ -44,6 +45,18 @@ def users(user_id=None):
     if user_id is None:
         return render_template("users.html", users=User.query.order_by(User.name))
     return render_template("user.html", user=User.query.filter_by(id=user_id).first())
+
+@app.route('/api/drinks')
+@app.route('/api/drinks/')
+@app.route('/api/drinks/<drink_id>')
+def api_drinks(drink_id=None):
+    if drink_id is None:
+        drinks_name = Drink.query.all().name
+        drinks_id   = Drink.query.all().id
+        drinks = dict(zip(drinks_name, drinks_id))
+	return jsonify(**drinks)
+    return None
+
 
 @app.errorhandler(404)
 def page_not_found(error):

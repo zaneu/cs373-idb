@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  {{ user.name }}
+{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../static/css/user.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h1 class="text-center name">
+        {{ user.name }}
+      </h1>
+      <p class="text-center email">
+        {{ user.email }}
+      </p>
+
+      <!-- <img src="../static/img/paul-bae.jpg" name="aboutme" width="140" height="140" class="img-circle img-responsive center-block">
+      <h1 class="text-center name">Paul Bae</h1>
+      <p class="text-center location-description">
+        <i class="fa fa-map-marker"></i> Round Rock, Texas
+      </p>
+      <div id="favorites">
+        <p class="text-center">Favorites:</p>
+        <p class="text-center">Gin & Tonic</p>
+        <p class="text-center">Fireman's Four</p>
+      </div> -->
+    </div>
+  </div>
+</div>
+{% endblock %}

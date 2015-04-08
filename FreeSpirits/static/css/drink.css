@@ -10,6 +10,15 @@
 	opacity: 0.6;
 }
 
+.ingredients_title {
+    font-size: 40px;
+}
+
+.ingredients {
+    font-size: 20px;
+    opacity: 0.6;
+}
+
 .recipe_title {
     font-size: 40px;
 }

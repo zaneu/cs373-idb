@@ -21,6 +21,18 @@
       </p>
 
       <br><br>
+      <p class="text-center ingredients_title">
+        Ingredients
+      </p>
+      <br>
+      <p class="text-center ingredients">
+        {% for ingredient in ingredients %}
+        {{ ingredient }}
+        <br>
+        {% endfor %}
+      </p>
+
+      <br><br>
       <p class="text-center recipe_title">
         Recipe
       </p>

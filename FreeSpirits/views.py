@@ -33,12 +33,11 @@ def ingredients(ingredient_id=None):
     return render_template("ingredient.html", ingredient=Ingredient.query.filter_by(id=ingredient_id).first())
 
 @app.route('/users')
-def users_listing():
-    return render_template("users.html")
-
-@app.route('/users/<username>')
-def users(username):
-    return render_template(username + ".html")
+@app.route('/users/<user_id>')
+def users(user_id=None):
+    if user_id is None:
+        return render_template("users.html", users=User.query.order_by(User.name))
+    return render_template("user.html", user=User.query.filter_by(id=user_id).first())
 
 @app.errorhandler(404)
 def page_not_found(error):

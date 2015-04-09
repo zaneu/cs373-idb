@@ -27,7 +27,7 @@
       <br>
       <p class="text-center ingredients">
         {% for ingredient in ingredients %}
-          {{ quantities[loop.index]|string + " " }}
+          {{ quantities[loop.index - 1]|string + " " }}
           <a href="{{ url_for('ingredients') + ingredient.id|string }}">
             {{ ingredient.name }}
           </a>

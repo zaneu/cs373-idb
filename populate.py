@@ -9,6 +9,7 @@ import json
 from FreeSpirits import db
 from FreeSpirits.models import Ingredient
 from FreeSpirits.models import Drink
+from FreeSpirits.models import User
 from FreeSpirits.models import IngredientToDrink
 from sqlalchemy import func
 from clint.textui import progress
@@ -75,4 +76,25 @@ for value in progress.bar(drinks):
     drink_count += 1
 
 print("Committing drinks")
+db.session.commit()
+
+print("Loading dummy users")
+users = [
+        {"name": "Paul Bae", "email": "pbae@utexas.edu"},
+        {"name": "Larry Liu", "email": "liudi1990@gmail.com"},
+        {"name": "Zane Urbanski", "email": "urbanski@utexas.edu"},
+        {"name": "Ali Homafar", "email": "home.isfar@gmail.com"},
+        {"name": "Menglin Brown", "email": "menglinbrown@utexas.edu"},
+        {"name": "Jin Tang", "email": "jindtang@utexas.edu"}
+]
+
+for value in progress.bar(users):
+    user = User(
+            name=value["name"],
+            email=value["email"]
+            )
+
+    db.session.add(user)
+
+print("Committing users")
 db.session.commit()

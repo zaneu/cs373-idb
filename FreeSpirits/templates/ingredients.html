@@ -27,7 +27,11 @@
         </a>
       </td>
       <td>
-        {{ ingredient.calories }}
+        {% if ingredient.calories == "" %}
+          -
+        {% else %}
+          {{ ingredient.calories }}
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

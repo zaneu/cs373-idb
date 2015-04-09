@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import subprocess
+import os
+
 from . import app
 from .models import *
 
 from flask import render_template
 from flask import jsonify
+
 
 @app.route('/')
 @app.route('/index')
@@ -82,6 +86,14 @@ def api_ingredients(ingredient_id=None):
         return jsonify(ingredients)
     return None
 
+@app.route('/api/tests')
+def api_tests():
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    basedir = os.path.abspath(os.path.join(basedir, os.pardir))
+
+    output = subprocess.check_output(['python', basedir + '/tests.py'], stderr=subprocess.STDOUT)
+
+    return output
 
 @app.errorhandler(404)
 def page_not_found(error):

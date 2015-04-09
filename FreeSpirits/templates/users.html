@@ -22,7 +22,7 @@
         {{ loop.index }}
       </td>
       <td class="col-lg-5">
-        <a href="{{ user.id|string }}">
+        <a href="{{ url_for('users') + user.id|string }}">
           {{ user.name }}
         </a>
       </td>

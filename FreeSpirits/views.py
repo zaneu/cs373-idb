@@ -29,12 +29,14 @@ def about():
 def drinks(drink_id=None):
     if drink_id is None:
         return render_template("drinks.html", drinks=Drink.query.order_by(Drink.name))
-    ingredients = []
     if IngredientToDrink.query.filter_by(drink_id=drink_id).first() is None:
         return page_not_found(404)
+    quantities = []
+    ingredients = []
     for ingredient in IngredientToDrink.query.filter_by(drink_id=drink_id):
-        ingredients.append(ingredient.quantity + " " + Ingredient.query.filter_by(id=ingredient.ingredient_id).first().name)
-    return render_template("drink.html", drink=Drink.query.filter_by(id=drink_id).first(), ingredients=ingredients)
+        quantities.append(ingredient.quantity)
+        ingredients.append(Ingredient.query.filter_by(id=ingredient.ingredient_id).first())
+    return render_template("drink.html", drink=Drink.query.filter_by(id=drink_id).first(), quantities=quantities, ingredients=ingredients)
 
 @app.route('/ingredients')
 @app.route('/ingredients/')

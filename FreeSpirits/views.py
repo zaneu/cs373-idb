@@ -61,10 +61,9 @@ def api_drinks(drink_id=None):
     if drink_id is None:
         drinks_name = Drink.query.values(Drink.name)
         drinks_id   = Drink.query.values(Drink.id)
-        print (drinks_name)
+
         drinks_zip = zip(drinks_name, drinks_id)
         drinks = {k[0]: v[0] for (k, v) in drinks_zip}
-
         
         return jsonify(drinks)
     return None

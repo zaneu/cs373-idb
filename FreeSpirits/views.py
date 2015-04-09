@@ -68,6 +68,20 @@ def api_drinks(drink_id=None):
         return jsonify(drinks)
     return None
 
+@app.route('/api/ingredients')
+@app.route('/api/ingredients/')
+@app.route('/api/ingredients/<ingredient_id>')
+def api_ingredients(ingredient_id=None):
+    if ingredient_id is None:
+        ingredients_name = Ingredient.query.values(Ingredient.name)
+        ingredients_id   = Ingredient.query.values(Ingredient.id)
+
+        ingredients_zip = zip(ingredients_name, ingredients_id)
+        ingredients = {k[0]: v[0] for (k, v) in ingredients_zip}
+        
+        return jsonify(ingredients)
+    return None
+
 
 @app.errorhandler(404)
 def page_not_found(error):

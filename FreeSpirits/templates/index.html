@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container vertical-center">
+<div id="indexPage" class="container vertical-center">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <h1 class="logo text-center">Free Spirits</h1>
@@ -23,6 +23,9 @@
           </div>
         </div>
       </div>
+      <center>
+      <span style="cursor:pointer"><a id="drinks_text" type="button" onclick="setToDrinks(true);" >Drinks</a>&nbsp;&nbsp;<a id="ingredients_text" onclick="setToDrinks(false);" >Ingredients</a></span>
+      </center>
     </div>
   </div>
 </div>

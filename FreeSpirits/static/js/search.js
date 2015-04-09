@@ -11,7 +11,7 @@ $(document).ready(function(){
         $.getJSON(host + "/api/drinks", function(data) {
         	for(var key in data){
         		//console.log(key + "  "+ data[key]);
-                if (key.indexOf(inputdata) > -1) {
+                if (key.toLowerCase().indexOf(inputdata.toLowerCase()) > -1) {
                     addr = addr + data[key];
                     // alert(addr);
                     window.location.replace(addr);

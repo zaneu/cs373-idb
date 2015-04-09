@@ -53,12 +53,12 @@ function searchDrinks() {
                 if (key.toLowerCase().indexOf(inputdata.toLowerCase()) > -1) {
                     addr = addr + data[key];
 
-                    window.location.replace(addr);
+                    window.location.href = addr;
                     return;
 
                 }
             }
-            window.location.replace(404);
+            window.location.href = host + "/404";
             // alert(data); //uncomment this for debug
 
         });
@@ -74,12 +74,12 @@ function searchIngredients() {
                 //console.log(key + "  "+ data[key]);
                 if (key.toLowerCase().indexOf(inputdata.toLowerCase()) > -1) {
                     addr = addr + data[key];
-                    window.location.replace(addr);
+                    window.location.href = addr;
                     return;
 
                 }
             }
-            window.location.replace(404);
+            window.location.href = host + "/404";
             // alert(addr); //uncomment this for debug
 
         });

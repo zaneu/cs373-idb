@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FreeSpirits.views &mdash; FreeSpirits 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="FreeSpirits 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="FreeSpirits" href="../FreeSpirits.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">FreeSpirits 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../FreeSpirits.html" accesskey="U">FreeSpirits</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for FreeSpirits.views</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">jsonify</span>
+
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/index&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="index"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;index.html&quot;</span><span class="p">)</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/builder&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="builder"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.builder">[docs]</a><span class="k">def</span> <span class="nf">builder</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;builder.html&quot;</span><span class="p">)</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/about&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="about"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.about">[docs]</a><span class="k">def</span> <span class="nf">about</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;about.html&quot;</span><span class="p">)</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/drinks&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/drinks/&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/drinks/&lt;drink_id&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="drinks"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.drinks">[docs]</a><span class="k">def</span> <span class="nf">drinks</span><span class="p">(</span><span class="n">drink_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">drink_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;drinks.html&quot;</span><span class="p">,</span> <span class="n">drinks</span><span class="o">=</span><span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">IngredientToDrink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">drink_id</span><span class="o">=</span><span class="n">drink_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+    <span class="n">quantities</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ingredients</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ingredient</span> <span class="ow">in</span> <span class="n">IngredientToDrink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">drink_id</span><span class="o">=</span><span class="n">drink_id</span><span class="p">):</span>
+        <span class="n">quantities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ingredient</span><span class="o">.</span><span class="n">quantity</span><span class="p">)</span>
+        <span class="n">ingredients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ingredient</span><span class="o">.</span><span class="n">ingredient_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;drink.html&quot;</span><span class="p">,</span> <span class="n">drink</span><span class="o">=</span><span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">drink_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">(),</span> <span class="n">quantities</span><span class="o">=</span><span class="n">quantities</span><span class="p">,</span> <span class="n">ingredients</span><span class="o">=</span><span class="n">ingredients</span><span class="p">)</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/ingredients&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/ingredients/&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/ingredients/&lt;ingredient_id&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ingredients"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.ingredients">[docs]</a><span class="k">def</span> <span class="nf">ingredients</span><span class="p">(</span><span class="n">ingredient_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ingredient_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;ingredients.html&quot;</span><span class="p">,</span> <span class="n">ingredients</span><span class="o">=</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">ingredient_page</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ingredient_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ingredient_page</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;ingredient.html&quot;</span><span class="p">,</span> <span class="n">ingredient</span><span class="o">=</span><span class="n">ingredient_page</span><span class="p">)</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/users&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/users/&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/users/&lt;user_id&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="users"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.users">[docs]</a><span class="k">def</span> <span class="nf">users</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;users.html&quot;</span><span class="p">,</span> <span class="n">users</span><span class="o">=</span><span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">user_page</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">user_page</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;user.html&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user_page</span><span class="p">)</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/drinks&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/drinks/&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/drinks/&lt;drink_id&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="api_drinks"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.api_drinks">[docs]</a><span class="k">def</span> <span class="nf">api_drinks</span><span class="p">(</span><span class="n">drink_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">drink_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">drinks_name</span> <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">drinks_id</span>   <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="n">drinks_zip</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">drinks_name</span><span class="p">,</span> <span class="n">drinks_id</span><span class="p">)</span>
+        <span class="n">drinks</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">drinks_zip</span><span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">drinks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">None</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/ingredients&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/ingredients/&#39;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/ingredients/&lt;ingredient_id&gt;&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="api_ingredients"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.api_ingredients">[docs]</a><span class="k">def</span> <span class="nf">api_ingredients</span><span class="p">(</span><span class="n">ingredient_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ingredient_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">ingredients_name</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">ingredients_id</span>   <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="n">ingredients_zip</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ingredients_name</span><span class="p">,</span> <span class="n">ingredients_id</span><span class="p">)</span>
+        <span class="n">ingredients</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ingredients_zip</span><span class="p">}</span>
+        
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">None</span>
+</div>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/tests&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="api_tests"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.api_tests">[docs]</a><span class="k">def</span> <span class="nf">api_tests</span><span class="p">():</span>
+    <span class="n">basedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+    <span class="n">basedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="n">basedir</span> <span class="o">+</span> <span class="s">&#39;/tests.py&#39;</span><span class="p">],</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output</span>
+</div>
+<span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+<div class="viewcode-block" id="page_not_found"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.page_not_found">[docs]</a><span class="k">def</span> <span class="nf">page_not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&#39;404.html&#39;</span><span class="p">),</span> <span class="mi">404</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, FreeSpirits Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

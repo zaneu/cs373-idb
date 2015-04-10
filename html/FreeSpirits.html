@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FreeSpirits package &mdash; FreeSpirits 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="FreeSpirits 1.0 documentation" href="index.html" />
+    <link rel="next" title="conf module" href="conf.html" />
+    <link rel="prev" title="Welcome to FreeSpirits’s documentation!" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="conf.html" title="conf module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to FreeSpirits’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">FreeSpirits 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="freespirits-package">
+<h1>FreeSpirits package<a class="headerlink" href="#freespirits-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-FreeSpirits.models">
+<span id="freespirits-models-module"></span><h2>FreeSpirits.models module<a class="headerlink" href="#module-FreeSpirits.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="FreeSpirits.models.Drink">
+<em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">Drink</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Drink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Drink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>The required variables of this class are
+The name
+The description
+The nutritional values (an array)</p>
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.description">
+<code class="descname">description</code><a class="headerlink" href="#FreeSpirits.models.Drink.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.id">
+<code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.Drink.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.name">
+<code class="descname">name</code><a class="headerlink" href="#FreeSpirits.models.Drink.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.recipe">
+<code class="descname">recipe</code><a class="headerlink" href="#FreeSpirits.models.Drink.recipe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.models.Ingredient">
+<em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">Ingredient</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Ingredient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Ingredient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>The required variables of this class are
+The name
+The description
+The nutritional values (an array)</p>
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.alcohol">
+<code class="descname">alcohol</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.alcohol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.calories">
+<code class="descname">calories</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.calories" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.carbohydrates">
+<code class="descname">carbohydrates</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.carbohydrates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.cholesterol">
+<code class="descname">cholesterol</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.cholesterol" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.description">
+<code class="descname">description</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.energy">
+<code class="descname">energy</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.energy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.fats">
+<code class="descname">fats</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.fats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.fiber">
+<code class="descname">fiber</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.fiber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.id">
+<code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.name">
+<code class="descname">name</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.protein">
+<code class="descname">protein</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.protein" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.sodium">
+<code class="descname">sodium</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.sodium" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.sugars">
+<code class="descname">sugars</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.sugars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.models.IngredientToDrink">
+<em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">IngredientToDrink</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#IngredientToDrink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.IngredientToDrink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>This is the join table between ingredients and drinks
+It was necessary to create a separate class, rather than a table, since we
+wanted to include an extra column (quantity) between each relationship</p>
+<dl class="attribute">
+<dt id="FreeSpirits.models.IngredientToDrink.drink_id">
+<code class="descname">drink_id</code><a class="headerlink" href="#FreeSpirits.models.IngredientToDrink.drink_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.IngredientToDrink.id">
+<code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.IngredientToDrink.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.IngredientToDrink.ingredient_id">
+<code class="descname">ingredient_id</code><a class="headerlink" href="#FreeSpirits.models.IngredientToDrink.ingredient_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.IngredientToDrink.quantity">
+<code class="descname">quantity</code><a class="headerlink" href="#FreeSpirits.models.IngredientToDrink.quantity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.models.User">
+<em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">User</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>The User model
+As of now, this class is not related to the database at all
+This will be done in the later phases
+So, the instance variables will have to be replaced with Columns and so
+forth to accomodate for SQL-Alchemy</p>
+<p>The associations will be done by join tables and are thus excluded here</p>
+<p>The required variables of this class are:
+the name
+the email</p>
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.email">
+<code class="descname">email</code><a class="headerlink" href="#FreeSpirits.models.User.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.id">
+<code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.User.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.name">
+<code class="descname">name</code><a class="headerlink" href="#FreeSpirits.models.User.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-FreeSpirits.views">
+<span id="freespirits-views-module"></span><h2>FreeSpirits.views module<a class="headerlink" href="#module-FreeSpirits.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="FreeSpirits.views.about">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">about</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.about" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.api_drinks">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">api_drinks</code><span class="sig-paren">(</span><em>drink_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#api_drinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.api_drinks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.api_ingredients">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">api_ingredients</code><span class="sig-paren">(</span><em>ingredient_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#api_ingredients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.api_ingredients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.api_tests">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">api_tests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#api_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.api_tests" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.builder">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.builder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.drinks">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">drinks</code><span class="sig-paren">(</span><em>drink_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#drinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.drinks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.index">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.ingredients">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">ingredients</code><span class="sig-paren">(</span><em>ingredient_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#ingredients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.ingredients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.page_not_found">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">page_not_found</code><span class="sig-paren">(</span><em>error</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#page_not_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.page_not_found" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.users">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">users</code><span class="sig-paren">(</span><em>user_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.users" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-FreeSpirits">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-FreeSpirits" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="FreeSpirits.test_client">
+<code class="descclassname">FreeSpirits.</code><code class="descname">test_client</code><span class="sig-paren">(</span><em>basedir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits.html#test_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.test_client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">FreeSpirits package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-FreeSpirits.models">FreeSpirits.models module</a></li>
+<li><a class="reference internal" href="#module-FreeSpirits.views">FreeSpirits.views module</a></li>
+<li><a class="reference internal" href="#module-FreeSpirits">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to FreeSpirits&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="conf.html"
+                        title="next chapter">conf module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/FreeSpirits.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, FreeSpirits Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/FreeSpirits.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -12,11 +12,6 @@ Contents:
    :maxdepth: 4
 
    FreeSpirits
-   conf
-   config
-   populate
-   tests
-   wsgi
 
 
 Indices and tables

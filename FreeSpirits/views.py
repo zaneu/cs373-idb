@@ -72,7 +72,14 @@ def api_drinks(drink_id=None):
         drinks = {k[0]: v[0] for (k, v) in drinks_zip}
         
         return jsonify(drinks)
-    return None
+    else :
+        drink_name = list(Drink.query.filter_by(id=drink_id).values(Drink.name))
+        if len(drink_name) <= 0:
+            return page_not_found(404)
+        drink = {drink_name[0][0]: drink_id}
+
+        return jsonify(drink)
+    return page_not_found(404)
 
 @app.route('/api/ingredients')
 @app.route('/api/ingredients/')
@@ -86,7 +93,14 @@ def api_ingredients(ingredient_id=None):
         ingredients = {k[0]: v[0] for (k, v) in ingredients_zip}
         
         return jsonify(ingredients)
-    return None
+    else :
+        ingredient_name = list(Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.name))
+        if len(ingredient_name) <= 0:
+            return page_not_found(404)
+        ingredient = {ingredient_name[0][0]: ingredient_id}
+
+        return jsonify(ingredient)
+    return page_not_found(404)
 
 @app.route('/api/tests')
 def api_tests():

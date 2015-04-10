@@ -27,16 +27,21 @@ function setToDrinks(value) {
 
 function formatText() {
     if (search_drinks) {
-        document.getElementById('drinks_text').style.textDecoration = 'underline';
-        document.getElementById('drinks_text').style.fontStyle = 'italic';
+        //document.getElementById('drinks_text').style.textDecoration = 'underline';
+        //document.getElementById('drinks_text').style.fontStyle = 'italic';
+        document.getElementById('drinks_text').style.background = '#466279';
         document.getElementById('ingredients_text').style.textDecoration = 'none';
         document.getElementById('ingredients_text').style.fontStyle = 'normal';
+        document.getElementById('ingredients_text').style.background = 'none';
+        
     }
     else {
-        document.getElementById('ingredients_text').style.textDecoration = 'underline';
-        document.getElementById('ingredients_text').style.fontStyle = 'italic';
+        //document.getElementById('ingredients_text').style.textDecoration = 'underline';
+        //document.getElementById('ingredients_text').style.fontStyle = 'italic';
+        document.getElementById('ingredients_text').style.background = '#466279';
         document.getElementById('drinks_text').style.textDecoration = 'none';
         document.getElementById('drinks_text').style.fontStyle = 'normal';
+        document.getElementById('drinks_text').style.background = 'none';
     }
 }
 

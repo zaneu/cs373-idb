@@ -126,7 +126,14 @@
         <span class="n">drinks</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">drinks_zip</span><span class="p">}</span>
         
         <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">drinks</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="n">drink_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">drink_id</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drink_name</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+        <span class="n">drink</span> <span class="o">=</span> <span class="p">{</span><span class="n">drink_name</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span> <span class="n">drink_id</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">drink</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 </div>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/ingredients&#39;</span><span class="p">)</span>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/ingredients/&#39;</span><span class="p">)</span>
@@ -140,7 +147,14 @@
         <span class="n">ingredients</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">ingredients_zip</span><span class="p">}</span>
         
         <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="n">ingredient_name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ingredient_id</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ingredient_name</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+        <span class="n">ingredient</span> <span class="o">=</span> <span class="p">{</span><span class="n">ingredient_name</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span> <span class="n">ingredient_id</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">ingredient</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 </div>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/api/tests&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="api_tests"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.api_tests">[docs]</a><span class="k">def</span> <span class="nf">api_tests</span><span class="p">():</span>

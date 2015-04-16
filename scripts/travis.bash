@@ -65,7 +65,7 @@ commit_message=`git log -1 --pretty=%B`
 git log > IDB.log
 git add -A
 git commit -m "Added IDB.log (Travis CI)"
-git reset --soft HEAD~1
+git reset --hard HEAD~1
 git commit -m "$commit_message"
 git push
 

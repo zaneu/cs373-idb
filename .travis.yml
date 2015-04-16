@@ -1,6 +1,14 @@
 language: python
 python:
-  - "3.4"
-
+- '3.4'
 install: pip install -r requirements.txt
 script: bash scripts/travis.bash
+branches:
+  except:
+    - travis-ci
+notifications:
+  slack:
+    secure: UIB+Q4baiIikZimpIPAwKIeUrms5sqZl9hRHGv+OFWTHdHv1vugtOZ+QNjwFbHMA8+3pPJ3ck1etwsx/u021qJkZPZCoiU77zdCNZUGWGPtDYtU3FbLvafV7JCyfrkfxkjLipsL2fsNxWOGKlsYnLV6O6wF5jm2QJP47EkoXS/4=
+env:
+  global:
+    secure: CAybRW5quZhHg9RnvMU2G08dau9uw1ygRQn0fKHfa+2w7eWgJK75nTjXK7/ZaPnIRnFmz3Q34vqZ4k+m9BUQK5kXeuBgIA+BOKVQjlVsKx2DjibxuPqTC3OoQJ4OMMFwgEGVd9YHLCUqyE89EQVNuR6mNxKSjdxMxTKd/6KnFRk=

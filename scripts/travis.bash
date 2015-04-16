@@ -43,14 +43,15 @@ cd ..
 
 echo "Running tests"
 
-python tests.py > tests.out
+coverage run tests.py 2> tests.out
+coverage report -m >> tests.out
 
 echo "Generating Sphinx Documentation"
 
 rm -rf html doc
 sphinx-apidoc . --full -o doc -H 'FreeSpirits' -A 'FreeSpirits Team' -V '1.0'
 cd doc
-rm conf.py index.rst
+rm -f conf.py index.rst
 wget https://gist.githubusercontent.com/pybae/f600f8cdbc1f6a0ffe4e/raw/f1fee5a19962d20f77a30af0e120edca1f9c4b97/conf.py
 wget https://gist.githubusercontent.com/pybae/701c26ed77093e825fbd/raw/080ad84dd9af27ee256cf71b854b05098bb46196/index.rst
 
@@ -61,11 +62,21 @@ cd ..
 echo "Making IDB.log"
 
 commit_message=`git log -1 --pretty=%B`
+commit_author=`git log -1 --pretty=%cn`
+commit_email=`git log -1 --pretty=%ce`
+
+git config --global user.name "$commit_author"
+git config --global user.email "$commit_email"
+git config --global push.default simple
+git config --global credential.helper store
+echo "https://${GITHUB_KEY}:x-oauth-basic@github.com" >> ~/.git-credentials
+
+git checkout travis-ci
 git log > IDB.log
 git add -A
 git commit -m "Added IDB.log (Travis CI)"
-git reset --hard HEAD~1
+git reset --soft HEAD~1
 git commit -m "$commit_message"
-git push
+git push -f "https://github.com/zaneu/cs373-idb.git" HEAD:travis-ci
 
 echo "Done."

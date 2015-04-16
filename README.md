@@ -1,3 +1,5 @@
+![Travis](https://travis-ci.org/zaneu/cs373-idb.svg?branch=master)
+
 # Free Spirits
 
 Mixed drink database and builder. Built for our Software

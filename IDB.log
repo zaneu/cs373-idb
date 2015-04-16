@@ -1,14 +1,40 @@
+commit cd4d423c4192239de85d47a8a7287b73bb241146
+Merge: e272b97 c886802
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 16:08:48 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit e272b9726fd6884b4fb3683a5ff525a7808554ec
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 16:08:44 2015 -0500
+
+    added links to drinks to ingredient pages, resolves #48
+
 commit eabf1b9e1582717c0de08f0c1d60e3c35b79db1f
 Author: Zane Urbanski <zane.urbanski@gmail.com>
 Date:   Thu Apr 16 15:45:46 2015 -0500
 
     added links to drinks to ingredient pages, resolves #48
 
+commit c8868026e0285a81e231e0930b928ba0f162ac61
+Merge: da1a1e3 fdc17d8
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 15:52:32 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
 commit da1a1e3d4b7c2e765c0e98585319de9e8811e754
 Author: Paul Bae <pbae@utexas.edu>
 Date:   Thu Apr 16 15:52:11 2015 -0500
 
     generates FreeSpirits documentation now
+
+commit fdc17d8c723286fe81c4d47c6786437da2125f0a
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 16 15:45:46 2015 -0500
+
+    added links to drinks to ingredient pages, resolves #48
 
 commit f16eadf58a509e1474c8b2354314e1946e35376b
 Author: Paul Bae <pbae@utexas.edu>

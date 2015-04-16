@@ -15,15 +15,24 @@
       <h1 class="text-center name">
         {{ ingredient.name }}
       </h1>
+
       <p class="text-center description">
         {{ ingredient.description }}
       </p>
 
-      <!-- <img src="../static/img/vodka.png" name="aboutme" width="140" height="140" class="img-responsive center-block">
-      <h1 class="text-center name">Vodka</h1>
-      <p class="text-center description">
-        Vodka (Polish: wódka [ˈvutka], Russian: водка [ˈvotkə]) is a distilled beverage composed primarily of water and ethanol, sometimes with traces of impurities and flavorings. Traditionally, vodka is made by the distillation of fermented cereal grains or potatoes, though some modern brands use other substances, such as fruits or sugar.
-      </p> -->
+      <br><br>
+      <p class="text-center drinks_title">
+        Drinks
+      </p>
+      <br>
+      <p class="text-center drinks">
+        {% for drink in drinks %}
+          <a href="{{ url_for('drinks') + drink.id|string }}">
+            {{ drink.name }}
+          </a>
+          <br>
+        {% endfor %}
+      </p>
     </div>
   </div>
 </div>

@@ -1,3 +1,45 @@
+commit eabf1b9e1582717c0de08f0c1d60e3c35b79db1f
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 16 15:45:46 2015 -0500
+
+    added links to drinks to ingredient pages, resolves #48
+
+commit da1a1e3d4b7c2e765c0e98585319de9e8811e754
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 15:52:11 2015 -0500
+
+    generates FreeSpirits documentation now
+
+commit f16eadf58a509e1474c8b2354314e1946e35376b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 15:28:06 2015 -0500
+
+    Travis CI Unit tests working
+
+commit 3a5f49174da879b358d46941f0e5a2cd34924188
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 15:24:23 2015 -0500
+
+    fixed python version in the travis ci
+
+commit 84b532d17cee7477a00834d8baba20ee9cf37775
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 16 15:18:02 2015 -0500
+
+    added up initial Travis CI
+
+commit 82abdd19d0895d542d4a34a8f3f89991a8b1edd9
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Fri Apr 10 12:20:22 2015 -0500
+
+    changed 404 page to only have image
+
+commit 86915f3a62f02a856a5fb877ea82fb8e19a40666
+Author: Fang Tang <jindtang@utexas.edu>
+Date:   Thu Apr 9 21:27:17 2015 -0500
+
+    add IDB.log
+
 commit aad90c44f54ce68c7fea093beaea982338e74ee3
 Merge: 16a3858 50aa290
 Author: Fang Tang <jindtang@utexas.edu>

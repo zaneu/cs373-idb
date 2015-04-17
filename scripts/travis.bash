@@ -44,7 +44,7 @@ cd ..
 echo "Running tests"
 
 coverage run tests.py 2> tests.out
-coverage report -m >> tests.out
+coverage report -m FreeSpirits/*.py >> tests.out
 
 echo "Generating Sphinx Documentation"
 

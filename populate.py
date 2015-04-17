@@ -11,7 +11,6 @@ from FreeSpirits.models import Ingredient
 from FreeSpirits.models import Drink
 from FreeSpirits.models import User
 from FreeSpirits.models import IngredientToDrink
-from sqlalchemy import func
 from clint.textui import progress
 
 print("Dropping all tables")
@@ -27,18 +26,18 @@ f.close()
 
 for value in progress.bar(ingredients):
     ingredient = Ingredient(
-            name=value["name"],
-            description=value["description"],
-            calories=value["calories"],
-            energy=value["energy"],
-            fats=value["fats"],
-            carbohydrates=value["carbohydrates"],
-            protein=value["protein"],
-            fiber=value["fiber"],
-            sugars=value["sugars"],
-            cholesterol=value["cholesterol"],
-            sodium=value["sodium"],
-            alcohol=value["alcohol"]
+        name=value["name"],
+        description=value["description"],
+        calories=value["calories"],
+        energy=value["energy"],
+        fats=value["fats"],
+        carbohydrates=value["carbohydrates"],
+        protein=value["protein"],
+        fiber=value["fiber"],
+        sugars=value["sugars"],
+        cholesterol=value["cholesterol"],
+        sodium=value["sodium"],
+        alcohol=value["alcohol"]
     )
 
     db.session.add(ingredient)
@@ -57,10 +56,10 @@ drink_count = 1
 
 for value in progress.bar(drinks):
     drink = Drink(
-            id=drink_count,
-            name=value["name"],
-            description=value["description"],
-            recipe=value["recipe"]
+        id=drink_count,
+        name=value["name"],
+        description=value["description"],
+        recipe=value["recipe"]
     )
 
     db.session.add(drink)
@@ -69,7 +68,10 @@ for value in progress.bar(drinks):
         ingredient_quantity = value["ingredients"][ingredient_id]
         ingredient = ingredient_table[ingredient_id]
 
-        link = IngredientToDrink(id=count, ingredient_id=ingredient.id, drink_id=drink_count, quantity=ingredient_quantity)
+        link = IngredientToDrink(id=count,
+                                 ingredient_id=ingredient.id,
+                                 drink_id=drink_count,
+                                 quantity=ingredient_quantity)
         db.session.add(link)
         count += 1
 
@@ -80,19 +82,19 @@ db.session.commit()
 
 print("Loading dummy users")
 users = [
-        {"name": "Paul Bae", "email": "pbae@utexas.edu"},
-        {"name": "Larry Liu", "email": "liudi1990@gmail.com"},
-        {"name": "Zane Urbanski", "email": "urbanski@utexas.edu"},
-        {"name": "Ali Homafar", "email": "home.isfar@gmail.com"},
-        {"name": "Menglin Brown", "email": "menglinbrown@utexas.edu"},
-        {"name": "Jin Tang", "email": "jindtang@utexas.edu"}
+    {"name": "Paul Bae", "email": "pbae@utexas.edu"},
+    {"name": "Larry Liu", "email": "liudi1990@gmail.com"},
+    {"name": "Zane Urbanski", "email": "urbanski@utexas.edu"},
+    {"name": "Ali Homafar", "email": "home.isfar@gmail.com"},
+    {"name": "Menglin Brown", "email": "menglinbrown@utexas.edu"},
+    {"name": "Jin Tang", "email": "jindtang@utexas.edu"}
 ]
 
 for value in progress.bar(users):
     user = User(
-            name=value["name"],
-            email=value["email"]
-            )
+        name=value["name"],
+        email=value["email"]
+    )
 
     db.session.add(user)
 

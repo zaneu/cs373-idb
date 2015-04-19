@@ -90,12 +90,13 @@ class Ingredient(db.Model):
     def get_drinks_by_name(name, limit):
         assert (limit >= 0)
 
-        query = IngredientToDrink.query.filter_by(ingredient_name=name)
+        id = Ingredient.query.filter_by(name=name).first().id
+        query = IngredientToDrink.query.filter_by(ingredient_id=id)
         drinks = []
         for count, row in enumerate(query):
             if count >= limit:
                 break
-            drinks.append(Drink.query.filter_by(name=row.name).first())
+            drinks.append(Drink.query.filter_by(id=row.drink_id).first())
 
         return drinks
 
@@ -131,12 +132,13 @@ class Drink(db.Model):
 
     @staticmethod
     def get_ingredients_by_name(name):
-        query = IngredientToDrink.query.filter_by(drink_name=name)
+        id = Drink.query.filter_by(name=name).first().id
+        query = IngredientToDrink.query.filter_by(drink_id=id)
         quantities = []
         ingredients = []
         for row in query:
             quantities.append(row.quantity)
-            ingredients.append(Ingredient.query_by_id(row.ingredient_id).
-                               first())
+            ingredients.append(Ingredient.query.
+                               filter_by(id=row.ingredient_id).first())
 
         return (quantities, ingredients)

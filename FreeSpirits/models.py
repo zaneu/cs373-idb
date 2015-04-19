@@ -2,6 +2,7 @@
 
 from . import db
 
+
 class User(db.Model):
     """
     The User model
@@ -24,7 +25,7 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User %r>" % (self.name)
- 
+
 
 class IngredientToDrink(db.Model):
     """
@@ -51,7 +52,7 @@ class Ingredient(db.Model):
 
     id            = db.Column(db.Integer, primary_key=True)
     name          = db.Column(db.String(120), index=True)
-    description   = db.Column(db.String(2000))
+    description   = db.Column(db.String(10000))
     calories      = db.Column(db.String(20))
     energy        = db.Column(db.String(20))
     fats          = db.Column(db.String(20))
@@ -78,5 +79,5 @@ class Drink(db.Model):
 
     id          = db.Column(db.Integer, primary_key=True)
     name        = db.Column(db.String(120), index=True, unique=True)
-    description = db.Column(db.String(2000))
-    recipe      = db.Column(db.String(2000))
+    description = db.Column(db.String(10000))
+    recipe      = db.Column(db.String(10000))

@@ -15,13 +15,16 @@ from flask import jsonify
 def index():
     return render_template("index.html")
 
+
 @app.route('/builder')
 def builder():
     return render_template("builder.html")
 
+
 @app.route('/about')
 def about():
     return render_template("about.html")
+
 
 @app.route('/drinks')
 @app.route('/drinks/')
@@ -40,6 +43,7 @@ def drinks(drink_id=None):
 
     return render_template("drink.html", drink=Drink.query.filter_by(id=drink_id).first(), quantities=quantities, ingredients=ingredients)
 
+
 @app.route('/ingredients')
 @app.route('/ingredients/')
 @app.route('/ingredients/<ingredient_id>')
@@ -57,6 +61,7 @@ def ingredients(ingredient_id=None):
 
     return render_template("ingredient.html", ingredient=Ingredient.query.filter_by(id=ingredient_id).first(), drinks=drinks)
 
+
 @app.route('/users')
 @app.route('/users/')
 @app.route('/users/<user_id>')
@@ -68,6 +73,7 @@ def users(user_id=None):
 
     return render_template("user.html", user=user_page)
 
+
 @app.route('/api/drinks')
 @app.route('/api/drinks/')
 @app.route('/api/drinks/<drink_id>')
@@ -78,9 +84,9 @@ def api_drinks(drink_id=None):
 
         drinks_zip = zip(drinks_name, drinks_id)
         drinks = {k[0]: v[0] for (k, v) in drinks_zip}
-        
+
         return jsonify(drinks)
-    else :
+    else:
         drink_name = list(Drink.query.filter_by(id=drink_id).values(Drink.name))
         if len(drink_name) <= 0:
             return page_not_found(404)
@@ -88,6 +94,7 @@ def api_drinks(drink_id=None):
 
         return jsonify(drink)
     return page_not_found(404)
+
 
 @app.route('/api/ingredients')
 @app.route('/api/ingredients/')
@@ -99,7 +106,7 @@ def api_ingredients(ingredient_id=None):
 
         ingredients_zip = zip(ingredients_name, ingredients_id)
         ingredients = {k[0]: v[0] for (k, v) in ingredients_zip}
-        
+
         return jsonify(ingredients)
     else :
         ingredient_name = list(Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.name))
@@ -110,14 +117,17 @@ def api_ingredients(ingredient_id=None):
         return jsonify(ingredient)
     return page_not_found(404)
 
+
 @app.route('/api/tests')
 def api_tests():
     basedir = os.path.abspath(os.path.dirname(__file__))
     basedir = os.path.abspath(os.path.join(basedir, os.pardir))
 
-    output = subprocess.check_output(['python', basedir + '/tests.py'], stderr=subprocess.STDOUT)
+    output = subprocess.check_output(['python', basedir + '/tests.py'],
+                                     stderr=subprocess.STDOUT)
 
     return output
+
 
 @app.errorhandler(404)
 def page_not_found(error):

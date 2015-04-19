@@ -14,12 +14,13 @@ db = SQLAlchemy(app)
 from . import views
 from . import models
 
-def test_client(basedir):
+
+def dummy_client(basedir):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'test.db')
 
     app.config["TESTING"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
     db = SQLAlchemy(app)
-    
+
     from . import views
     from . import models

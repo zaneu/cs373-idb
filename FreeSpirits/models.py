@@ -26,6 +26,10 @@ class User(db.Model):
     def __repr__(self):
         return "<User %r>" % (self.name)
 
+    @staticmethod
+    def query_by_id(id):
+        return User.query.filter_by(id=id)
+
 
 class IngredientToDrink(db.Model):
     """
@@ -69,6 +73,32 @@ class Ingredient(db.Model):
     def __repr__(self):
         return "<Ingredient %r>" % (self.name)
 
+    @staticmethod
+    def get_drinks_by_id(id, limit):
+        assert (limit >= 0)
+
+        query = IngredientToDrink.query.filter_by(ingredient_id=id)
+        drinks = []
+        for count, row in enumerate(query):
+            if count >= limit:
+                break
+            drinks.append(Drink.query.filter_by(id=row.drink_id).first())
+
+        return drinks
+
+    @staticmethod
+    def get_drinks_by_name(name, limit):
+        assert (limit >= 0)
+
+        query = IngredientToDrink.query.filter_by(ingredient_name=name)
+        drinks = []
+        for count, row in enumerate(query):
+            if count >= limit:
+                break
+            drinks.append(Drink.query.filter_by(name=row.name).first())
+
+        return drinks
+
 
 class Drink(db.Model):
     """
@@ -83,3 +113,30 @@ class Drink(db.Model):
     name = db.Column(db.String(120), index=True, unique=True)
     description = db.Column(db.String(10000))
     recipe = db.Column(db.String(10000))
+
+    def __repr__(self):
+        return "<Ingredient %r>" % (self.name)
+
+    @staticmethod
+    def get_ingredients_by_id(id):
+        query = IngredientToDrink.query.filter_by(drink_id=id)
+        quantities = []
+        ingredients = []
+        for row in query:
+            quantities.append(row.quantity)
+            ingredients.append(Ingredient.query.
+                               filter_by(id=row.ingredient_id).first())
+
+        return (quantities, ingredients)
+
+    @staticmethod
+    def get_ingredients_by_name(name):
+        query = IngredientToDrink.query.filter_by(drink_name=name)
+        quantities = []
+        ingredients = []
+        for row in query:
+            quantities.append(row.quantity)
+            ingredients.append(Ingredient.query_by_id(row.ingredient_id).
+                               first())
+
+        return (quantities, ingredients)

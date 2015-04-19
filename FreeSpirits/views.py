@@ -31,17 +31,14 @@ def about():
 @app.route('/drinks/<drink_id>')
 def drinks(drink_id=None):
     if drink_id is None:
-        return render_template("drinks.html", drinks=Drink.query.order_by(Drink.name))
-    if IngredientToDrink.query.filter_by(drink_id=drink_id).first() is None:
-        return page_not_found(404)
+        return render_template("drinks.html",
+                               drinks=Drink.query.order_by(Drink.name))
 
-    quantities = []
-    ingredients = []
-    for ingredient in IngredientToDrink.query.filter_by(drink_id=drink_id):
-        quantities.append(ingredient.quantity)
-        ingredients.append(Ingredient.query.filter_by(id=ingredient.ingredient_id).first())
-
-    return render_template("drink.html", drink=Drink.query.filter_by(id=drink_id).first(), quantities=quantities, ingredients=ingredients)
+    quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
+    return render_template("drink.html",
+                           drink=Drink.query.filter_by(id=drink_id).first(),
+                           quantities=quantities,
+                           ingredients=ingredients)
 
 
 @app.route('/ingredients')
@@ -49,17 +46,16 @@ def drinks(drink_id=None):
 @app.route('/ingredients/<ingredient_id>')
 def ingredients(ingredient_id=None):
     if ingredient_id is None:
-        return render_template("ingredients.html", ingredients=Ingredient.query.order_by(Ingredient.name))
-    if Ingredient.query.filter_by(id=ingredient_id).first() is None:
-        return page_not_found(404)
+        return render_template("ingredients.html",
+                               ingredients=Ingredient.query.
+                               order_by(Ingredient.name))
 
-    drinks = []
-    for count, drink in enumerate(IngredientToDrink.query.filter_by(ingredient_id=ingredient_id)):
-        if count >= 5:
-            break
-        drinks.append(Drink.query.filter_by(id=drink.drink_id).first())
-
-    return render_template("ingredient.html", ingredient=Ingredient.query.filter_by(id=ingredient_id).first(), drinks=drinks)
+    # get the top 5 most popular drinks
+    drinks = Ingredient.get_drinks_by_id(ingredient_id, 5)
+    ingredient = Ingredient.query.filter_by(id=ingredient_id).first()
+    return render_template("ingredient.html",
+                           ingredient=ingredient,
+                           drinks=drinks)
 
 
 @app.route('/users')
@@ -67,11 +63,14 @@ def ingredients(ingredient_id=None):
 @app.route('/users/<user_id>')
 def users(user_id=None):
     if user_id is None:
-        return render_template("users.html", users=User.query.order_by(User.name))
+        return render_template("users.html",
+                               users=User.query.order_by(User.name))
+
+    query = User.query_by_id(id)
     if User.query.filter_by(id=user_id).first() is None:
         return page_not_found(404)
 
-    return render_template("user.html", user=user_page)
+    return render_template("user.html", user=query.first())
 
 
 @app.route('/api/drinks')

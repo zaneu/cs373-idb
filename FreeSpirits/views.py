@@ -27,7 +27,6 @@ def about():
 
 
 @app.route('/drinks')
-@app.route('/drinks/')
 @app.route('/drinks/<drink_id>')
 def drinks(drink_id=None):
     if drink_id is None:
@@ -42,7 +41,6 @@ def drinks(drink_id=None):
 
 
 @app.route('/ingredients')
-@app.route('/ingredients/')
 @app.route('/ingredients/<ingredient_id>')
 def ingredients(ingredient_id=None):
     if ingredient_id is None:
@@ -59,7 +57,6 @@ def ingredients(ingredient_id=None):
 
 
 @app.route('/users')
-@app.route('/users/')
 @app.route('/users/<user_id>')
 def users(user_id=None):
     if user_id is None:

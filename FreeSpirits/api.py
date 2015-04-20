@@ -13,7 +13,7 @@ from flask.ext import restful
 api = restful.Api(app)
 
 
-class DrinksListing(restful.Resource):
+class DrinkListing(restful.Resource):
     """
     the class that returns the entire listing of drinks
     these drinks are provided in name, id value pairs
@@ -27,7 +27,7 @@ class DrinksListing(restful.Resource):
 
         return jsonify(drinks)
 
-api.add_resource(DrinksListing, '/api/drinks')
+api.add_resource(DrinkListing, '/api/drinks/')
 
 
 class DrinkId(restful.Resource):
@@ -59,27 +59,59 @@ class DrinkId(restful.Resource):
 
 api.add_resource(DrinkId, '/api/drinks/<int:drink_id>')
 
-@app.route('/api/ingredients')
-@app.route('/api/ingredients/')
-@app.route('/api/ingredients/<ingredient_id>')
-def api_ingredients(ingredient_id=None):
-    if ingredient_id is None:
+
+class IngredientListing(restful.Resource):
+    """
+    This is the ingredients listing viewW
+    This class is identical in design to the earlier DrinkListing
+    """
+
+    def get(self):
         ingredients_name = Ingredient.query.values(Ingredient.name)
-        ingredients_id   = Ingredient.query.values(Ingredient.id)
-
-        ingredients_zip = zip(ingredients_name, ingredients_id)
-        ingredients = {k[0]: v[0] for (k, v) in ingredients_zip}
-
+        ingredients_id = Ingredient.query.values(Ingredient.id)
+        ingredients = {k[0]: v[0] for (k, v) in
+                       zip(ingredients_name, ingredients_id)}
         return jsonify(ingredients)
-    else:
-        ingredient_name = list(Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.name))
-        if len(ingredient_name) <= 0:
-            return page_not_found(404)
-        ingredient = {ingredient_name[0][0]: ingredient_id}
 
-        return jsonify(ingredient)
-    return page_not_found(404)
+api.add_resource(IngredientListing, '/api/ingredients/')
 
+
+class IngredientId(restful.Resource):
+    """
+    The endpoint to get an ingredient by id
+    This returns all of the fields that the ingredient contains
+    plus all the drinks that this ingredient is associated with
+    """
+
+    def get(self, ingredient_id):
+        ingredient = Ingredient.query.filter_by(id=ingredient_id)
+        if ingredient:
+            ingredient = ingredient.first()
+            result = {
+                "id": ingredient.id,
+                "name": ingredient.name,
+                "description": ingredient.description,
+                "calories": ingredient.calories,
+                "energy": ingredient.energy,
+                "fats": ingredient.fats,
+                "carbohydrates": ingredient.carbohydrates,
+                "protein": ingredient.protein,
+                "fiber": ingredient.fiber,
+                "sugars": ingredient.sugars,
+                "cholesterol": ingredient.cholesterol,
+                "sodium": ingredient.sodium,
+                "alcohol": ingredient.alcohol
+            }
+
+            drinks = Ingredient.get_drinks_by_id(ingredient_id, -1)
+            drinks = [x.name for x in drinks]
+            result["drinks"] = drinks
+
+            return jsonify(result)
+        else:
+            return "{}"
+
+api.add_resource(IngredientId, '/api/ingredients/<int:ingredient_id>')
 
 @app.route('/api/users')
 @app.route('/api/users/')

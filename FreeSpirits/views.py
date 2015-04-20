@@ -69,8 +69,9 @@ def users(user_id=None):
 @app.route('/api/drinks/<drink_id>')
 def api_drinks(drink_id=None):
     if drink_id is None:
-        drinks_name = Drink.query.values(Drink.name)
         drinks_id   = Drink.query.values(Drink.id)
+        drinks_name = Drink.query.values(Drink.name)
+        
         drinks_desc = Drink.query.values(Drink.description)
         drinks_recipe = Drink.query.values(Drink.recipe)
         

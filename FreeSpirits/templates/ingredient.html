@@ -27,7 +27,7 @@
       <br>
       <p class="text-center drinks">
         {% for drink in drinks %}
-          <a href="{{ url_for('drinks') + drink.id|string }}">
+          <a href="{{ url_for('drinks', drink_id=drink.id) }}">
             {{ drink.name }}
           </a>
           <br>

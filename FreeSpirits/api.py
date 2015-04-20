@@ -39,7 +39,7 @@ class DrinkId(restful.Resource):
 
     def get(self, drink_id):
         drink = Drink.query.filter_by(id=drink_id)
-        if drink:
+        if drink.first():
             drink = drink.first()
             result = {
                 "id": drink.id,
@@ -85,7 +85,7 @@ class IngredientId(restful.Resource):
 
     def get(self, ingredient_id):
         ingredient = Ingredient.query.filter_by(id=ingredient_id)
-        if ingredient:
+        if ingredient.first():
             ingredient = ingredient.first()
             result = {
                 "id": ingredient.id,
@@ -137,13 +137,13 @@ class UserListing(restful.Resource):
             return "Name must be provided"
         if not email:
             return "Email must be provided"
+        if User.query.filter_by(email=email):
+            return "Email already exists"
         if not password:
             return "Password must be provided"
         if len(password) < 8:
             return "Password must be longer than eight characters"
 
-        if User.query.filter_by(email=email):
-            return "Email already exists"
         user = User(
             name=name,
             email=email
@@ -162,7 +162,7 @@ class UserId(restful.Resource):
 
     def get(self, user_id):
         user = User.query.filter_by(id=user_id)
-        if user:
+        if user.first():
             user = user.first()
             result = {
                 "id": user.id,
@@ -189,6 +189,17 @@ class TestApi(restful.Resource):
 
         output = subprocess.check_output(['python', basedir + '/tests.py'],
                                          stderr=subprocess.STDOUT)
-        return output
+        output = str(output)
+        output = output.strip()
+
+        passed_tests = output.count('E')
+        failed_tests = output.count('.')
+        result = {
+            "passed_tests": output.count('E'),
+            "failed_tests": output.count('.'),
+            "output": output
+        }
+
+        return jsonify(result)
 
 api.add_resource(TestApi, '/api/tests/')

@@ -35,10 +35,6 @@ class User(db.Model):
     def __repr__(self):
         return "<User %r>" % (self.name)
 
-    @staticmethod
-    def query_by_id(id):
-        return User.query.filter_by(id=id)
-
 
 class IngredientToDrink(db.Model):
     """

@@ -7,7 +7,7 @@ import os
 from . import app
 from .models import *
 
-from flask import render_template, jsonify
+from flask import render_template, jsonify, request
 from flask.ext import restful
 
 api = restful.Api(app)
@@ -113,35 +113,82 @@ class IngredientId(restful.Resource):
 
 api.add_resource(IngredientId, '/api/ingredients/<int:ingredient_id>')
 
-@app.route('/api/users')
-@app.route('/api/users/')
-@app.route('/api/users/<user_id>')
-def api_users(user_id=None):
-    if user_id is None:
+
+class UserListing(restful.Resource):
+    """
+    The endpoint that represents all the users in the database
+    This is again similar to DrinkListing and IngredientListing
+    You can create a user by sending a post request to this api
+    With the correct inputs, name, email
+    If these inputs are not provided, then
+    """
+
+    def get(self):
         users_name = User.query.values(User.name)
         users_id = User.query.values(User.id)
         users = {k[0]: v[0] for (k, v) in zip(users_name, users_id)}
 
         return jsonify(users)
-    else:
+
+    def post(self):
+        name = request.form["name"]
+        email = request.form["email"]
+        if not name:
+            return "Name must be provided"
+        if not email:
+            return "Email must be provided"
+        if not password:
+            return "Password must be provided"
+        if len(password) < 8:
+            return "Password must be longer than eight characters"
+
+        if User.query.filter_by(email=email):
+            return "Email already exists"
+        user = User(
+            name=name,
+            email=email
+        )
+        user.set_password(request.form["password"])
+        return "success"
+
+api.add_resource(UserListing, '/api/users/')
+
+
+class UserId(restful.Resource):
+    """
+    The endpoint to find a user by id in the database
+    This returns all the associated fields of the user
+    """
+
+    def get(self, user_id):
         user = User.query.filter_by(id=user_id)
         if user:
             user = user.first()
-            return jsonify({
+            result = {
                 "id": user.id,
                 "name": user.name,
                 "email": user.email
-            })
+            }
+
+            return jsonify(result)
         else:
             return "{}"
 
+api.add_resource(UserId, '/api/users/<int:user_id>')
 
-@app.route('/api/tests')
-def api_tests():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    basedir = os.path.abspath(os.path.join(basedir, os.pardir))
 
-    output = subprocess.check_output(['python', basedir + '/tests.py'],
-                                     stderr=subprocess.STDOUT)
+class TestApi(restful.Resource):
+    """
+    The Test API
+    this simply runs test.py as a subprocess and returns the output
+    """
 
-    return output
+    def get(self):
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        basedir = os.path.abspath(os.path.join(basedir, os.pardir))
+
+        output = subprocess.check_output(['python', basedir + '/tests.py'],
+                                         stderr=subprocess.STDOUT)
+        return output
+
+api.add_resource(TestApi, '/api/tests/')

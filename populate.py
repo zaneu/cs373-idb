@@ -82,12 +82,13 @@ db.session.commit()
 
 print("Loading dummy users")
 users = [
-    {"name": "Paul Bae", "email": "pbae@utexas.edu"},
-    {"name": "Larry Liu", "email": "liudi1990@gmail.com"},
-    {"name": "Zane Urbanski", "email": "urbanski@utexas.edu"},
-    {"name": "Ali Homafar", "email": "home.isfar@gmail.com"},
-    {"name": "Menglin Brown", "email": "menglinbrown@utexas.edu"},
-    {"name": "Jin Tang", "email": "jindtang@utexas.edu"}
+    {"name": "Paul Bae", "email": "pbae@utexas.edu", "pass": "123"},
+    {"name": "Larry Liu", "email": "liudi1990@gmail.com", "pass": "132"},
+    {"name": "Zane Urbanski", "email": "urbanski@utexas.edu", "pass": "321"},
+    {"name": "Ali Homafar", "email": "home.isfar@gmail.com", "pass": "312"},
+    {"name": "Menglin Brown", "email": "menglinbrown@utexas.edu",
+     "pass": "213"},
+    {"name": "Jin Tang", "email": "jindtang@utexas.edu", "pass": "231"}
 ]
 
 for value in progress.bar(users):
@@ -96,6 +97,7 @@ for value in progress.bar(users):
         email=value["email"]
     )
 
+    user.set_password(value["pass"])
     db.session.add(user)
 
 print("Committing users")

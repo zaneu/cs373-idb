@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from . import db
+from . import app, db
 
 from werkzeug.security import generate_password_hash, \
      check_password_hash
+
+import flask.ext.whooshalchemy as whooshalchemy
+
 
 class User(db.Model):
     """
@@ -20,6 +23,7 @@ class User(db.Model):
     the email
     """
     __tablename__ = "User"
+    __searchable__ = ["name", "email"]
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
@@ -34,6 +38,8 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User %r>" % (self.name)
+
+whooshalchemy.whoosh_index(app, User)
 
 
 class IngredientToDrink(db.Model):
@@ -60,6 +66,7 @@ class Ingredient(db.Model):
     The nutritional values (an array)
     """
     __tablename__ = "Ingredient"
+    __searchable__ = ["name", "description"]
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True)
@@ -94,6 +101,8 @@ class Ingredient(db.Model):
         id = Ingredient.query.filter_by(name=name).first().id
         return Ingredient.get_drinks_by_id(id, limit)
 
+whooshalchemy.whoosh_index(app, Ingredient)
+
 
 class Drink(db.Model):
     """
@@ -103,6 +112,7 @@ class Drink(db.Model):
     The nutritional values (an array)
     """
     __tablename__ = "Drink"
+    __searchable__ = ["name", "description", "recipe"]
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True, unique=True)
@@ -128,3 +138,5 @@ class Drink(db.Model):
     def get_ingredients_by_name(name):
         id = Drink.query.filter_by(name=name).first().id
         return Drink.get_ingredients_by_id(id)
+
+whooshalchemy.whoosh_index(app, Drink)

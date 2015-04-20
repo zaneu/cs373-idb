@@ -11,8 +11,8 @@ from flask import jsonify
 from json import dumps
 
 from collections import OrderedDict
+import flask.ext.whooshalchemy
 
-#app.config["JSON_SORT_KEYS"] = False
 
 @app.route('/')
 @app.route('/index')
@@ -95,27 +95,25 @@ def api_drinks(drink_id=None):
             drink_recipe = drink_obj.values(Drink.recipe)
             ingredients = []
             quantities = []
-            
+
             for ingredient in IngredientToDrink.query.filter_by(drink_id=drink_id):
                 ingredients.append(Ingredient.query.filter_by(id=ingredient.ingredient_id).first())
                 quantities.append(ingredient.quantity)
-                
+
             all_ingredients = ""
             ingred_elem = []
             for i in ingredients:
                 all_ingredients += i.name + ', '
                 ingred_elem.append(i.name)
             c = ', '.join('%s %s' % t for t in zip(quantities, ingred_elem))
-            
+
             drink_dict = {'id': drink_id, 'name': next(drink_name)[0], 'description': next(drink_desc)[0], 'instructions': next(drink_recipe)[0]}
             drink_dict['recipe'] = c
             drink_dict['ingredients'] = all_ingredients[:-2]
-            drinks_list.append(drink_dict);
+            drinks_list.append(drink_dict)
 
-        
-        
         return jsonify(drinks=drinks_list)
-    else :
+    else:
         drink_name = list(Drink.query.filter_by(id=drink_id).values(Drink.name))
         drink_desc = list(Drink.query.filter_by(id=drink_id).values(Drink.description))
         drink_recipe = list(Drink.query.filter_by(id=drink_id).values(Drink.recipe))
@@ -128,7 +126,7 @@ def api_drinks(drink_id=None):
 
         if len(drink_name) <= 0:
             return page_not_found(404)
-        
+
         all_ingredients = ""
         ingred_elem = []
         for i in ingredients:
@@ -144,18 +142,19 @@ def api_drinks(drink_id=None):
         drink_dict['instructions'] = drink_recipe[0][0]
         drink_dict['recipe'] = c
         drink_dict['ingredients'] = all_ingredients[:-2]
-        
+
         return jsonify(drink_dict)
     return page_not_found(404)
+
 
 @app.route('/api/ingredients')
 @app.route('/api/ingredients/')
 @app.route('/api/ingredients/<ingredient_id>')
 def api_ingredients(ingredient_id=None):
     if ingredient_id is None:
-        
-        ins_id   = Ingredient.query.values(Ingredient.id)
-        
+
+        ins_id = Ingredient.query.values(Ingredient.id)
+
         ingredients_list = []
         for i_id in ins_id:
             ingredient_id = i_id[0]
@@ -172,10 +171,10 @@ def api_ingredients(ingredient_id=None):
             in_chol = in_ingr.values(Ingredient.cholesterol)
             in_sodi = in_ingr.values(Ingredient.sodium)
             in_alco = in_ingr.values(Ingredient.alcohol)
-            
+
             ingred_dict = {'id': ingredient_id, 'name': next(in_name)[0], 'description': next(in_desc)[0], 'calories': next(in_calo)[0], 'energy': next(in_ener)[0], 'fats': next(in_fats)[0], 'carbohydrates': next(in_carb)[0], 'protein': next(in_prot)[0], 'fiber': next(in_fibe)[0], 'sugars': next(in_suga)[0], 'cholesterol': next(in_chol)[0], 'sodium': next(in_sodi)[0], 'alcohol': next(in_alco)[0]}
             ingredients_list.append(ingred_dict)
-        
+
         return jsonify(ingredients=ingredients_list)
     else :
         in_ingr = Ingredient.query.filter_by(id=ingredient_id)
@@ -192,13 +191,14 @@ def api_ingredients(ingredient_id=None):
         in_chol = in_ingr.values(Ingredient.cholesterol)
         in_sodi = in_ingr.values(Ingredient.sodium)
         in_alco = in_ingr.values(Ingredient.alcohol)
-        
+
         if len(in_name) <= 0:
             return page_not_found(404)
         ingredient = {'id': ingredient_id, 'name': in_name[0][0], 'description': in_desc[0][0], 'calories': next(in_calo)[0], 'energy': next(in_ener)[0], 'fats': next(in_fats)[0], 'carbohydrates': next(in_carb)[0], 'protein': next(in_prot)[0], 'fiber': next(in_fibe)[0], 'sugars': next(in_suga)[0], 'cholesterol': next(in_chol)[0], 'sodium': next(in_sodi)[0], 'alcohol': next(in_alco)[0]}
 
         return jsonify(ingredient)
     return page_not_found(404)
+
 
 @app.route('/api/tests')
 @app.route('/api/tests/')
@@ -209,6 +209,7 @@ def api_tests():
     output = subprocess.check_output(['python', basedir + '/tests.py'], stderr=subprocess.STDOUT)
 
     return output
+
 
 @app.errorhandler(404)
 def page_not_found(error):

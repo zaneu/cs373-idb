@@ -71,6 +71,7 @@ for value in progress.bar(drinks):
     drink_count += 1
 
 print("Committing drinks")
+db.session.commit()
 
 count = 1
 for drink, ingredients in progress.bar(list(zip(drinks_listing,

@@ -7,30 +7,57 @@ import os
 from . import app
 from .models import *
 
-from flask import render_template
-from flask import jsonify
+from flask import render_template, jsonify
+from flask.ext import restful
 
-@app.route('/api/drinks')
-@app.route('/api/drinks/')
-@app.route('/api/drinks/<drink_id>')
-def api_drinks(drink_id=None):
-    if drink_id is None:
+api = restful.Api(app)
+
+
+class DrinksListing(restful.Resource):
+    """
+    the class that returns the entire listing of drinks
+    these drinks are provided in name, id value pairs
+    if it is necessary to know more about an individual drink,
+    refer to the DrinkId class below
+    """
+    def get(self):
         drinks_name = Drink.query.values(Drink.name)
-        drinks_id   = Drink.query.values(Drink.id)
-
-        drinks_zip = zip(drinks_name, drinks_id)
-        drinks = {k[0]: v[0] for (k, v) in drinks_zip}
+        drinks_id = Drink.query.values(Drink.id)
+        drinks = {k[0]: v[0] for (k, v) in zip(drinks_name, drinks_id)}
 
         return jsonify(drinks)
-    else:
-        drink_name = list(Drink.query.filter_by(id=drink_id).values(Drink.name))
-        if len(drink_name) <= 0:
-            return page_not_found(404)
-        drink = {drink_name[0][0]: drink_id}
 
-        return jsonify(drink)
-    return page_not_found(404)
+api.add_resource(DrinksListing, '/api/drinks')
 
+
+class DrinkId(restful.Resource):
+    """
+    this is the class that queries an individual drink by id
+    a drink will return all of it's associated fields in it
+    plus the ingredients that the drink uses
+    """
+
+    def get(self, drink_id):
+        drink = Drink.query.filter_by(id=drink_id)
+        if drink:
+            drink = drink.first()
+            result = {
+                "id": drink.id,
+                "name": drink.name,
+                "description": drink.description,
+                "recipe": drink.recipe
+            }
+
+            quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
+
+            result["quantities"] = quantities
+            result["ingredients"] = [x.name for x in ingredients]
+
+            return jsonify(result)
+        else:
+            return "{}"
+
+api.add_resource(DrinkId, '/api/drinks/<int:drink_id>')
 
 @app.route('/api/ingredients')
 @app.route('/api/ingredients/')

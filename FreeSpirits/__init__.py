@@ -13,6 +13,7 @@ db = SQLAlchemy(app)
 # late imports so dependencies are correct
 from . import views
 from . import models
+from . import api
 
 
 def dummy_client(basedir):
@@ -24,3 +25,4 @@ def dummy_client(basedir):
 
     from . import views
     from . import models
+    from . import api

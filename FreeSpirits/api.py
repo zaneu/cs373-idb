@@ -189,14 +189,20 @@ class TestApi(restful.Resource):
 
         output = subprocess.check_output(['python', basedir + '/tests.py'],
                                          stderr=subprocess.STDOUT)
-        output = str(output)
+        output = output.decode("utf-8")
         output = output.strip()
+        values = output.split("\n")
 
-        passed_tests = output.count('E')
-        failed_tests = output.count('.')
+        passed_tests = values[0].count('.')
+        failed_tests = values[0].count('E')
+        time = values[2].find("in") + 2
+        time = float(values[2][time:-1])
+
         result = {
-            "passed_tests": output.count('E'),
-            "failed_tests": output.count('.'),
+            "success": failed_tests == 0,
+            "passed_tests": passed_tests,
+            "failed_tests": failed_tests,
+            "time": time,
             "output": output
         }
 

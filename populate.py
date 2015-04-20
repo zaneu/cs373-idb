@@ -51,8 +51,9 @@ f = open("data/drinks.json")
 drinks = json.load(f)
 f.close()
 
-count = 1
 drink_count = 1
+drinks_listing = []
+ingredients_listing = []
 
 for value in progress.bar(drinks):
     drink = Drink(
@@ -64,20 +65,28 @@ for value in progress.bar(drinks):
 
     db.session.add(drink)
 
-    for ingredient_id in value["ingredients"]:
-        ingredient_quantity = value["ingredients"][ingredient_id]
-        ingredient = ingredient_table[ingredient_id]
-
-        link = IngredientToDrink(id=count,
-                                 ingredient_id=ingredient.id,
-                                 drink_id=drink_count,
-                                 quantity=ingredient_quantity)
-        db.session.add(link)
-        count += 1
+    drinks_listing.append(drink)
+    ingredients_listing.append(value["ingredients"])
 
     drink_count += 1
 
 print("Committing drinks")
+
+count = 1
+for drink, ingredients in progress.bar(list(zip(drinks_listing,
+                                                ingredients_listing))):
+    for ingredient_id in ingredients:
+        ingredient_quantity = ingredients[ingredient_id]
+        ingredient = ingredient_table[ingredient_id]
+
+        link = IngredientToDrink(id=count,
+                                 ingredient_id=ingredient.id,
+                                 drink_id=drink.id,
+                                 quantity=ingredient_quantity)
+        db.session.add(link)
+        count += 1
+
+print("Committing many to many from Drink to Ingredient")
 db.session.commit()
 
 print("Loading dummy users")

@@ -8,7 +8,11 @@ from .models import *
 
 from flask import render_template
 from flask import jsonify
+from json import dumps
 
+from collections import OrderedDict
+
+#app.config["JSON_SORT_KEYS"] = False
 
 @app.route('/')
 @app.route('/index')
@@ -67,18 +71,58 @@ def api_drinks(drink_id=None):
     if drink_id is None:
         drinks_name = Drink.query.values(Drink.name)
         drinks_id   = Drink.query.values(Drink.id)
+        drinks_desc = Drink.query.values(Drink.description)
+        drinks_recipe = Drink.query.values(Drink.recipe)
 
-        drinks_zip = zip(drinks_name, drinks_id)
-        drinks = {k[0]: v[0] for (k, v) in drinks_zip}
+        drinks_zip = zip(drinks_id, drinks_name, drinks_desc, drinks_recipe)
         
-        return jsonify(drinks)
+        drinks = []
+        for k, *v in drinks_zip :
+            drink_dict = {'id': k[0], 'name': v[0][0], 'description': v[1][0], 'recipe': v[2][0]}
+            drinks.append(drink_dict);
+        #drinks = {k[0]: v[0][0] for (k, *v) in drinks_zip, k[0]: v[1][0]}
+        
+        
+        return jsonify(r=drinks)
     else :
         drink_name = list(Drink.query.filter_by(id=drink_id).values(Drink.name))
+        drink_desc = list(Drink.query.filter_by(id=drink_id).values(Drink.description))
+        drink_recipe = list(Drink.query.filter_by(id=drink_id).values(Drink.recipe))
+        ingredients = []
+        quantities = []
+
+        for ingredient in IngredientToDrink.query.filter_by(drink_id=drink_id):
+            ingredients.append(Ingredient.query.filter_by(id=ingredient.ingredient_id).first())
+            quantities.append(ingredient.quantity)
+        
+        print(ingredients)
+        print(quantities)
+
         if len(drink_name) <= 0:
             return page_not_found(404)
-        drink = {drink_name[0][0]: drink_id}
+        
+        all_ingredients = ""
+        ingred_elem = []
+        for i in ingredients:
+            all_ingredients += i.name + ', '
+            ingred_elem.append(i.name)
+#        all_ingredients = " ".join(ingredients.name)
 
-        return jsonify(drink)
+        c = ', '.join('%s %s' % t for t in zip(quantities, ingred_elem))
+
+        drink_dict = OrderedDict()
+        drink_dict['id'] = drink_id
+        drink_dict['name'] = drink_name[0][0]
+        drink_dict['description'] = drink_desc[0][0]
+#        drink_dict['recipe'] = drink_desc[0][0]
+#        drink_dict['quantities'] = str(quantities).strip('[]')
+        drink_dict['recipe'] = c
+        drink_dict['ingredients'] = all_ingredients[:-2]
+        
+#        {'id': drink_id, 'name': drink_name[0][0], 'description': drink_desc[0][0], 'recipe': drink_recipe[0][0], 'quantities': str(quantities).strip('[]'), 'ingredient': all_ingredients}
+#        drink = {drink_name[0][0]: drink_id}
+
+        return jsonify(drink_dict)
     return page_not_found(404)
 
 @app.route('/api/ingredients')
@@ -103,6 +147,7 @@ def api_ingredients(ingredient_id=None):
     return page_not_found(404)
 
 @app.route('/api/tests')
+@app.route('/api/tests/')
 def api_tests():
     basedir = os.path.abspath(os.path.dirname(__file__))
     basedir = os.path.abspath(os.path.join(basedir, os.pardir))

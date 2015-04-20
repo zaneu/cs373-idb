@@ -73,12 +73,28 @@ def api_drinks(drink_id=None):
         drinks_id   = Drink.query.values(Drink.id)
         drinks_desc = Drink.query.values(Drink.description)
         drinks_recipe = Drink.query.values(Drink.recipe)
+        
 
         drinks_zip = zip(drinks_id, drinks_name, drinks_desc, drinks_recipe)
         
         drinks = []
         for k, *v in drinks_zip :
-            drink_dict = {'id': k[0], 'name': v[0][0], 'description': v[1][0], 'recipe': v[2][0]}
+            ingredients = []
+            quantities = []
+            for ingredient in IngredientToDrink.query.filter_by(drink_id=k[0]):
+                ingredients.append(Ingredient.query.filter_by(id=ingredient.ingredient_id).first())
+                quantities.append(ingredient.quantity)
+                
+            all_ingredients = ""
+            ingred_elem = []
+            for i in ingredients:
+                all_ingredients += i.name + ', '
+                ingred_elem.append(i.name)
+            c = ', '.join('%s %s' % t for t in zip(quantities, ingred_elem))
+            
+            drink_dict = {'id': k[0], 'name': v[0][0], 'description': v[1][0], 'instructions': v[2][0]}
+            drink_dict['recipe'] = c
+            drink_dict['ingredients'] = all_ingredients[:-2]
             drinks.append(drink_dict);
         #drinks = {k[0]: v[0][0] for (k, *v) in drinks_zip, k[0]: v[1][0]}
         
@@ -144,8 +160,8 @@ def api_ingredients(ingredient_id=None):
         
         ingredients_zip = zip(ins_name, ins_id, ins_desc, ins_calo, ins_ener, ins_fats, ins_carb, ins_prot, ins_fibe, ins_suga, ins_chol, ins_sodi, ins_alco)
         ingredients_list = []
-        for k, *v in ingredients_zip:
-            ingred_dict = {'id': k[0], 'name': v[0][0], 'description': v[1][0], 'calories': v[2][0], 'energy': v[3][0], 'fats': v[4][0], 'carbohydrates': v[5][0], 'protein': v[6][0], 'fiber': v[7][0], 'sugars': v[8][0], 'cholesterol': v[9][0], 'sodium': v[10][0], 'alcohol': v[11][0]}
+        for k, *v in ingredients_zip: # TODO: fix the key to id not name
+            ingred_dict = {'id': v[0][0], 'name': k[0], 'description': v[1][0], 'calories': v[2][0], 'energy': v[3][0], 'fats': v[4][0], 'carbohydrates': v[5][0], 'protein': v[6][0], 'fiber': v[7][0], 'sugars': v[8][0], 'cholesterol': v[9][0], 'sodium': v[10][0], 'alcohol': v[11][0]}
             ingredients_list.append(ingred_dict)
         
         return jsonify(r=ingredients_list)

@@ -70,19 +70,18 @@ def users(user_id=None):
 def api_drinks(drink_id=None):
     if drink_id is None:
         drinks_id   = Drink.query.values(Drink.id)
-        drinks_name = Drink.query.values(Drink.name)
-        
-        drinks_desc = Drink.query.values(Drink.description)
-        drinks_recipe = Drink.query.values(Drink.recipe)
-        
 
-        drinks_zip = zip(drinks_id, drinks_name, drinks_desc, drinks_recipe)
-        
-        drinks = []
-        for k, *v in drinks_zip :
+        drinks_list = []
+        for d_id in drinks_id :
+            drink_id = d_id[0]
+            drink_obj = Drink.query.filter_by(id=drink_id)
+            drink_name = drink_obj.values(Drink.name)
+            drink_desc = drink_obj.values(Drink.description)
+            drink_recipe = drink_obj.values(Drink.recipe)
             ingredients = []
             quantities = []
-            for ingredient in IngredientToDrink.query.filter_by(drink_id=k[0]):
+            
+            for ingredient in IngredientToDrink.query.filter_by(drink_id=drink_id):
                 ingredients.append(Ingredient.query.filter_by(id=ingredient.ingredient_id).first())
                 quantities.append(ingredient.quantity)
                 
@@ -93,14 +92,14 @@ def api_drinks(drink_id=None):
                 ingred_elem.append(i.name)
             c = ', '.join('%s %s' % t for t in zip(quantities, ingred_elem))
             
-            drink_dict = {'id': k[0], 'name': v[0][0], 'description': v[1][0], 'instructions': v[2][0]}
-            drink_dict['recipe'] = c
-            drink_dict['ingredients'] = all_ingredients[:-2]
-            drinks.append(drink_dict);
+            drink_dict = {'id': drink_id, 'name': next(drink_name)[0], 'description': next(drink_desc)[0], 'instructions': next(drink_recipe)[0]}
+#            drink_dict['recipe'] = c
+#            drink_dict['ingredients'] = all_ingredients[:-2]
+            drinks_list.append(drink_dict);
         #drinks = {k[0]: v[0][0] for (k, *v) in drinks_zip, k[0]: v[1][0]}
         
         
-        return jsonify(r=drinks)
+        return jsonify(drinks=drinks_list)
     else :
         drink_name = list(Drink.query.filter_by(id=drink_id).values(Drink.name))
         drink_desc = list(Drink.query.filter_by(id=drink_id).values(Drink.description))
@@ -144,43 +143,46 @@ def api_drinks(drink_id=None):
 @app.route('/api/ingredients/<ingredient_id>')
 def api_ingredients(ingredient_id=None):
     if ingredient_id is None:
-        ins_name = Ingredient.query.values(Ingredient.name)
+        
         ins_id   = Ingredient.query.values(Ingredient.id)
         
-        ins_desc   = Ingredient.query.values(Ingredient.description)
-        ins_calo   = Ingredient.query.values(Ingredient.calories)
-        ins_ener   = Ingredient.query.values(Ingredient.energy)
-        ins_fats   = Ingredient.query.values(Ingredient.fats)
-        ins_carb   = Ingredient.query.values(Ingredient.carbohydrates)
-        ins_prot   = Ingredient.query.values(Ingredient.protein)
-        ins_fibe   = Ingredient.query.values(Ingredient.fiber)
-        ins_suga   = Ingredient.query.values(Ingredient.sugars)
-        ins_chol   = Ingredient.query.values(Ingredient.cholesterol)
-        ins_sodi   = Ingredient.query.values(Ingredient.sodium)
-        ins_alco   = Ingredient.query.values(Ingredient.alcohol)
-        
-        ingredients_zip = zip(ins_name, ins_id, ins_desc, ins_calo, ins_ener, ins_fats, ins_carb, ins_prot, ins_fibe, ins_suga, ins_chol, ins_sodi, ins_alco)
+#        ingredients_zip = zip(ins_name, ins_id, ins_desc, ins_calo, ins_ener, ins_fats, ins_carb, ins_prot, ins_fibe, ins_suga, ins_chol, ins_sodi, ins_alco)
         ingredients_list = []
-        for k, *v in ingredients_zip: # TODO: fix the key to id not name
-            ingred_dict = {'id': v[0][0], 'name': k[0], 'description': v[1][0], 'calories': v[2][0], 'energy': v[3][0], 'fats': v[4][0], 'carbohydrates': v[5][0], 'protein': v[6][0], 'fiber': v[7][0], 'sugars': v[8][0], 'cholesterol': v[9][0], 'sodium': v[10][0], 'alcohol': v[11][0]}
+        for i_id in ins_id: # TODO: fix the key to id not name
+            ingredient_id = i_id[0]
+            in_ingr = Ingredient.query.filter_by(id=ingredient_id)
+            in_name = in_ingr.values(Ingredient.name)
+            in_desc = in_ingr.values(Ingredient.description)
+            in_calo = in_ingr.values(Ingredient.calories)
+            in_ener = in_ingr.values(Ingredient.energy)
+            in_fats = in_ingr.values(Ingredient.fats)
+            in_carb = in_ingr.values(Ingredient.carbohydrates)
+            in_prot = in_ingr.values(Ingredient.protein)
+            in_fibe = in_ingr.values(Ingredient.fiber)
+            in_suga = in_ingr.values(Ingredient.sugars)
+            in_chol = in_ingr.values(Ingredient.cholesterol)
+            in_sodi = in_ingr.values(Ingredient.sodium)
+            in_alco = in_ingr.values(Ingredient.alcohol)
+            
+            ingred_dict = {'id': ingredient_id, 'name': next(in_name)[0], 'description': next(in_desc)[0], 'calories': next(in_calo)[0], 'energy': next(in_ener)[0], 'fats': next(in_fats)[0], 'carbohydrates': next(in_carb)[0], 'protein': next(in_prot)[0], 'fiber': next(in_fibe)[0], 'sugars': next(in_suga)[0], 'cholesterol': next(in_chol)[0], 'sodium': next(in_sodi)[0], 'alcohol': next(in_alco)[0]}
             ingredients_list.append(ingred_dict)
         
-        return jsonify(r=ingredients_list)
+        return jsonify(ingredients=ingredients_list)
     else :
-        in_name = list(Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.name))
-        in_desc = list(Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.description))
+        in_ingr = Ingredient.query.filter_by(id=ingredient_id)
+        in_name = list(in_ingr.values(Ingredient.name))
+        in_desc = list(in_ingr.values(Ingredient.description))
 
-        
-        in_calo = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.calories)
-        in_ener = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.energy)
-        in_fats = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.fats)
-        in_carb = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.carbohydrates)
-        in_prot = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.protein)
-        in_fibe = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.fiber)
-        in_suga = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.sugars)
-        in_chol = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.cholesterol)
-        in_sodi = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.sodium)
-        in_alco = Ingredient.query.filter_by(id=ingredient_id).values(Ingredient.alcohol)
+        in_calo = in_ingr.values(Ingredient.calories)
+        in_ener = in_ingr.values(Ingredient.energy)
+        in_fats = in_ingr.values(Ingredient.fats)
+        in_carb = in_ingr.values(Ingredient.carbohydrates)
+        in_prot = in_ingr.values(Ingredient.protein)
+        in_fibe = in_ingr.values(Ingredient.fiber)
+        in_suga = in_ingr.values(Ingredient.sugars)
+        in_chol = in_ingr.values(Ingredient.cholesterol)
+        in_sodi = in_ingr.values(Ingredient.sodium)
+        in_alco = in_ingr.values(Ingredient.alcohol)
         
         if len(in_name) <= 0:
             return page_not_found(404)

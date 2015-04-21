@@ -120,7 +120,7 @@ class Drink(db.Model):
     recipe = db.Column(db.String(10000))
 
     def __repr__(self):
-        return "<Ingredient %r>" % (self.name)
+        return "<Drink %r>" % (self.name)
 
     @staticmethod
     def get_ingredients_by_id(id):

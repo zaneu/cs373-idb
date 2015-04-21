@@ -83,6 +83,72 @@ def users(user_id=None):
     else:
         return page_not_found(404)
 
+
+@app.route('/search')
+@app.route('/search/<query>')
+def search(query=None):
+    if query is None:
+        return render_template("search.html", results=[], query="\"\"")
+    else:
+        terms = query.split('+')
+        query = "\"" + query.replace('+', ' ') + "\""
+        and_term = ""
+        or_term = ""
+        results = []
+
+        for i, term in enumerate(terms):
+            if i != 0:
+                and_term += " AND " + term
+                or_term += " OR " + term
+            else:
+                and_term += term
+                or_term += term
+
+        and_results = Drink.query.whoosh_search(and_term).all()
+        or_results = Drink.query.whoosh_search(or_term).all()
+
+        for drink in and_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            results.append(drink_dict)
+        for drink in or_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            results.append(drink_dict)
+
+        return render_template("search.html", results=results, query=query)
+
+
+@app.route('/api/search')
+@app.route('/api/search/<query>')
+def api_search(query=None):
+    if query is None:
+        return page_not_found(404)
+    else:
+        terms = query.split('+')
+        and_term = ""
+        or_term = ""
+        results = []
+
+        for i, term in enumerate(terms):
+            if i != 0:
+                and_term += " AND " + term
+                or_term += " OR " + term
+            else:
+                and_term += term
+                or_term += term
+
+        and_results = Drink.query.whoosh_search(and_term).all()
+        or_results = Drink.query.whoosh_search(or_term).all()
+
+        for drink in and_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            results.append(drink_dict)
+        for drink in or_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            results.append(drink_dict)
+
+        return jsonify(results=results)
+
+
 @app.route('/api/drinks')
 @app.route('/api/drinks/')
 @app.route('/api/drinks/<drink_id>')
@@ -156,7 +222,6 @@ def api_drinks(drink_id=None):
 @app.route('/api/ingredients/<ingredient_id>')
 def api_ingredients(ingredient_id=None):
     if ingredient_id is None:
-
         ins_id = Ingredient.query.values(Ingredient.id)
 
         ingredients_list = []
@@ -180,7 +245,7 @@ def api_ingredients(ingredient_id=None):
             ingredients_list.append(ingred_dict)
 
         return jsonify(ingredients=ingredients_list)
-    else :
+    else:
         in_ingr = Ingredient.query.filter_by(id=ingredient_id)
         in_name = list(in_ingr.values(Ingredient.name))
         in_desc = list(in_ingr.values(Ingredient.description))

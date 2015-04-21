@@ -108,10 +108,10 @@ def api_drinks(drink_id=None):
             c = ', '.join('%s %s' % t for t in zip(quantities, ingred_elem))
             
             drink_dict = {'id': drink_id, 'name': next(drink_name)[0], 'description': next(drink_desc)[0], 'instructions': next(drink_recipe)[0]}
-#            drink_dict['recipe'] = c
-#            drink_dict['ingredients'] = all_ingredients[:-2]
+            drink_dict['recipe'] = c
+            drink_dict['ingredients'] = all_ingredients[:-2]
             drinks_list.append(drink_dict);
-        #drinks = {k[0]: v[0][0] for (k, *v) in drinks_zip, k[0]: v[1][0]}
+
         
         
         return jsonify(drinks=drinks_list)
@@ -134,7 +134,6 @@ def api_drinks(drink_id=None):
         for i in ingredients:
             all_ingredients += i.name + ', '
             ingred_elem.append(i.name)
-#        all_ingredients = " ".join(ingredients.name)
 
         c = ', '.join('%s %s' % t for t in zip(quantities, ingred_elem))
 
@@ -143,13 +142,9 @@ def api_drinks(drink_id=None):
         drink_dict['name'] = drink_name[0][0]
         drink_dict['description'] = drink_desc[0][0]
         drink_dict['instructions'] = drink_recipe[0][0]
-#        drink_dict['quantities'] = str(quantities).strip('[]')
         drink_dict['recipe'] = c
         drink_dict['ingredients'] = all_ingredients[:-2]
         
-#        {'id': drink_id, 'name': drink_name[0][0], 'description': drink_desc[0][0], 'recipe': drink_recipe[0][0], 'quantities': str(quantities).strip('[]'), 'ingredient': all_ingredients}
-#        drink = {drink_name[0][0]: drink_id}
-
         return jsonify(drink_dict)
     return page_not_found(404)
 
@@ -161,9 +156,8 @@ def api_ingredients(ingredient_id=None):
         
         ins_id   = Ingredient.query.values(Ingredient.id)
         
-#        ingredients_zip = zip(ins_name, ins_id, ins_desc, ins_calo, ins_ener, ins_fats, ins_carb, ins_prot, ins_fibe, ins_suga, ins_chol, ins_sodi, ins_alco)
         ingredients_list = []
-        for i_id in ins_id: # TODO: fix the key to id not name
+        for i_id in ins_id:
             ingredient_id = i_id[0]
             in_ingr = Ingredient.query.filter_by(id=ingredient_id)
             in_name = in_ingr.values(Ingredient.name)

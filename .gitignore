@@ -10,3 +10,4 @@ doc
 .coverage
 whoosh/
 /FreeSpirits/templates/'
+/FreeSpirits/templates/;

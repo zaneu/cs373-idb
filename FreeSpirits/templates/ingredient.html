@@ -1,39 +1,81 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  {{ ingredient.name }}
+{{ ingredient.name }}
 {% endblock %}
 {% block head %}
-  {{ super() }}
-  <link rel="stylesheet" href="../static/css/ingredient.css" type="text/css">
+{{ super() }}
+<link rel="stylesheet" href="../static/css/ingredient.css" type="text/css">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <h1 class="text-center name">
-        {{ ingredient.name }}
-      </h1>
+    <div class="jumbotron">
+        <img src="http://www.menucool.com/slider/prod/image-slider-2.jpg">
+        <h1> {{ ingredient.name }} </h1>
+        <p> {{ ingredient.description }} </p>
+        <div style="margin-top: 50px" class="container">
+            <ul class="list-group col-lg-6">
+                <li class="list-group-item list-group-item-info">
+                    Nutrition
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.calories }} </span>
+                    Calories
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.energy }} </span>
+                    Energy
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.fats }} </span>
+                    Fats
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.carbohydrates }} </span>
+                    Carbohydrates
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.protein }} </span>
+                    Protein
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.fiber }} </span>
+                    Fiber
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.sugars }} </span>
+                    Sugars
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.cholesterol }} </span>
+                    Cholesterol
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.sodium }} </span>
+                    Sodium
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"> {{ ingredient.alcohol }} </span>
+                    Alcohol
+                </li>
+            </ul>
 
-      <p class="text-center description">
-        {{ ingredient.description }}
-      </p>
+            <div class="list-group col-lg-6">
+                <a href="#" class="list-group-item active">
+                    Drinks that use this ingredient
+                </a>
 
-      <br><br>
-      <p class="text-center drinks_title">
-        Drinks
-      </p>
-      <br>
-      <p class="text-center drinks">
-        {% for drink in drinks %}
-          <a href="{{ url_for('drinks', drink_id=drink.id) }}">
-            {{ drink.name }}
-          </a>
-          <br>
-        {% endfor %}
-      </p>
+                {% for drink in drinks %}
+                <a href="{{ url_for('drinks', drink_id=drink.id) }}" class="list-group-item">
+                    {{ drink.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <p class="text-center">
+            <a href="{{ url_for('api_ingredients', ingredient_id=ingredient.id) }}" class="btn btn-primary btn-lg">Get the data</a>
+        </p>
     </div>
-  </div>
 </div>
 {% endblock %}

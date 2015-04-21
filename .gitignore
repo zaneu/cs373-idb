@@ -8,3 +8,4 @@ app.db
 test.db
 doc
 .coverage
+whoosh/

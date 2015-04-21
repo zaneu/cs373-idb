@@ -1,0 +1,11 @@
+/* The css file for all of the user profile pages */
+@import url("base.css");
+
+.name {
+    font-size: 60px;
+}
+
+.results {
+    font-size: 20px;
+	opacity: 0.6;
+}

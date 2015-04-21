@@ -84,6 +84,40 @@ def users(user_id=None):
         return page_not_found(404)
 
 
+@app.route('/search')
+@app.route('/search/<query>')
+def search(query=None):
+    if query is None:
+        return render_template("search.html", results=[], query="\"\"")
+    else:
+        terms = query.split('+')
+        query = "\"" + query.replace('+', ' ') + "\""
+        and_term = ""
+        or_term = ""
+        results = []
+
+        for i, term in enumerate(terms):
+            if i != 0:
+                and_term += " AND " + term
+                or_term += " OR " + term
+            else:
+                and_term += term
+                or_term += term
+
+        and_results = Drink.query.whoosh_search(and_term).all()
+        or_results = Drink.query.whoosh_search(or_term).all()
+
+        for drink in and_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            results.append(drink_dict)
+        for drink in or_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            results.append(drink_dict)
+
+        return render_template("search.html", results=results, query=query)
+
+
+@app.route('/api/search')
 @app.route('/api/search/<query>')
 def api_search(query=None):
     if query is None:

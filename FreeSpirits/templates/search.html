@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Search Results
+{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="../static/css/search.css" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h1>Search Results</h1>
+        <div style="margin-top: 50px" class="container">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">
+                    {{ query }}
+                </a>
+                {% for result in results %}
+                <a href="{{ url_for('drinks', drink_id=result['id']) }}" class="list-group-item">
+                    {{ result['name'] }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

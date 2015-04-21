@@ -9,3 +9,4 @@ test.db
 doc
 .coverage
 whoosh/
+/FreeSpirits/templates/'

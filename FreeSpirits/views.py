@@ -30,6 +30,10 @@ def about():
     return render_template("about.html")
 
 
+@app.route('/signup')
+def signup():
+    return render_template("signup.html")
+
 @app.route('/drinks')
 @app.route('/drinks/<drink_id>')
 def drinks(drink_id=None):

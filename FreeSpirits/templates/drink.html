@@ -1,49 +1,39 @@
 {% extends "layout.html" %}
 
 {% block title %}
-  {{ drink.name }}
+{{ drink.name }}
 {% endblock %}
 {% block head %}
-  {{ super() }}
-  <link rel="stylesheet" href="../static/css/drink.css" type="text/css">
+{{ super() }}
+<link rel="stylesheet" href="../static/css/drink.css" type="text/css">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <h1 class="text-center name">
-        {{ drink.name }}
-      </h1>
-
-      <p class="text-center description">
-        {{ drink.description }}
-      </p>
-
-      <br><br>
-      <p class="text-center ingredients_title">
-        Ingredients
-      </p>
-      <br>
-      <p class="text-center ingredients">
-        {% for ingredient in ingredients %}
-          {{ quantities[loop.index - 1]|string + " " }}
-          <a href="{{ url_for('ingredients', ingredient_id=ingredient.id) }}">
-            {{ ingredient.name }}
-          </a>
-          <br>
-        {% endfor %}
-      </p>
-
-      <br><br>
-      <p class="text-center recipe_title">
-        Recipe
-      </p>
-      <br>
-      <p class="text-center recipe">
-        {{ drink.recipe }}
-      </p>
+    <div class="jumbotron">
+        <!-- Implement the Google API here -->
+        <img src="http://www.menucool.com/slider/prod/image-slider-2.jpg">
+        <h1>{{ drink.name }}</h1>
+        <p> {{ drink.description }} </p>
+        <div style="margin-top: 50px" class="container">
+            <div class="list-group col-lg-6">
+                <a href="#" class="list-group-item active">
+                    Ingredients
+                </a>
+                {% for ingredient in ingredients %}
+                <a href="{{ url_for('ingredients', ingredient_id=ingredient.id) }}" class="list-group-item">
+                    <span class="badge"> {{ quantities[loop.index - 1] }} </span>
+                    {{ ingredient.name }}
+                </a>
+                {% endfor %}
+            </div>
+            <div class="col-lg-6">
+                <p> {{ drink.recipe }} </p>
+            </div>
+        </div>
+        <p class="text-center">
+            <a href="{{ url_for('api_drinks', drink_id=drink.id) }}" class="btn btn-primary btn-lg">Get the data</a>
+        </p>
     </div>
-  </div>
 </div>
 {% endblock %}

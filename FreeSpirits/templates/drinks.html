@@ -12,28 +12,30 @@
         <div class="panel-heading">
             <h3 class="panel-title">Page {{ page }}</h3>
         </div>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for drink in pagination.items %}
-                <tr>
-                    <td class="col-sm-1">
-                        {{ loop.index }}
-                    </td>
-                    <td class="col-lg-5">
-                        <a href="{{ url_for('drink', drink_id=drink.id) }}">
-                            {{ drink.name }}
-                        </a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for drink in pagination.items %}
+                    <tr>
+                        <td class="col-sm-1">
+                            {{ loop.index }}
+                        </td>
+                        <td class="col-lg-5">
+                            <a href="{{ url_for('drink', drink_id=drink.id) }}">
+                                {{ drink.name }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="text-center">
             <nav>
                 <ul class="pagination">

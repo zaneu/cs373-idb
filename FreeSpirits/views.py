@@ -39,7 +39,6 @@ def signup():
 @app.route('/drinks/<page>')
 def drinks(page=1):
     page = int(page)
-    page = max(page, 1)
     pagination = Drink.query.order_by(Drink.name).paginate(page, 100)
 
     return render_template("drinks.html",
@@ -64,11 +63,11 @@ def drink(drink_id=1):
 @app.route('/ingredients/<page>')
 def ingredients(page=1):
     page = int(page)
+    pagination = Ingredient.query.order_by(Ingredient.name).paginate(page, 100)
 
-    values = Ingredient.query.order_by(Ingredient.name).paginate(page, 100)
     return render_template("ingredients.html",
                            page=page,
-                           ingredients=values.items)
+                           pagination=pagination)
 
 
 @app.route('/ingredient/<ingredient_id>')

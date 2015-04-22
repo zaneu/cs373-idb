@@ -7,34 +7,82 @@
 {% endblock %}
 
 {% block content %}
-<table class="table table-striped table-hover">
-<thead>
-  <tr>
-    <th>#</th>
-    <th>Name</th>
-    <th>Calories</th>
-  </tr>
-</thead>
-<tbody>
-  {% for ingredient in ingredients %}
-    <tr>
-      <td class="col-sm-1">
-        {{ loop.index }}
-      </td>
-      <td class="col-lg-5">
-        <a href="{{ url_for('ingredient', ingredient_id=ingredient.id) }}">
-          {{ ingredient.name }}
-        </a>
-      </td>
-      <td>
-        {% if ingredient.calories == "" %}
-          -
-        {% else %}
-          {{ ingredient.calories }}
-        {% endif %}
-      </td>
-    </tr>
-  {% endfor %}
-</tbody>
-</table>
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Page {{ page }}</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ingredient in pagination.items %}
+                    <tr>
+                        <td class="col-sm-1">
+                            {{ loop.index }}
+                        </td>
+                        <td class="col-lg-5">
+                            <a href="{{ url_for('ingredient', ingredient_id=ingredient.id) }}">
+                                {{ ingredient.name }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a href="{{ url_for('ingredients', page=1)}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    {% set left_current=2 %}
+                    {% set right_current=3 %}
+
+                    {% if pagination.pages < 5 %}
+                        {% set left_current = page - 1%}
+                        {% set right_current = pagination.pages - page %}
+                    {% elif page < 3 %}
+                        {% set left_current = page - 1 %}
+                        {% set right_current = 6 - page %}
+                    {% elif page > pagination.pages - 2 %}
+                        {% set left_current = 4 - pagination.pages + page %}
+                        {% set right_current = 1 + pagination.pages - page %}
+                    {% endif %}
+
+                    {% set pages = pagination.iter_pages(left_current=left_current, right_current=right_current, left_edge=0, right_edge=0) %}
+
+                    {% for page in pages %}
+                        {% if page %}
+                            {% if page != pagination.page %}
+                            <li>
+                                <a href="{{ url_for('ingredients', page=page) }}">{{ page }}</a>
+                            </li>
+                            {% else %}
+                            <li class="active">
+                                <span>{{ page }} <span class="sr-only">(current)</span></span>
+                            </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <li>
+                        <a href="{{ url_for('ingredients', page=pagination.pages) }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 {% endblock %}

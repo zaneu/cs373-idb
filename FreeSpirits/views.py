@@ -74,7 +74,7 @@ def ingredients(page=1):
 def ingredient(ingredient_id=1):
     query = Ingredient.query.filter_by(id=ingredient_id)
     if query.first():
-        drinks = Ingredient.get_drinks_by_id(ingredient_id, 5)
+        drinks = Ingredient.get_drinks_by_id(ingredient_id, 10)
         return render_template("ingredient.html",
                                ingredient=query.first(),
                                drinks=drinks)
@@ -83,12 +83,17 @@ def ingredient(ingredient_id=1):
 
 
 @app.route('/users')
-@app.route('/users/<user_id>')
-def users(user_id=None):
-    if user_id is None:
-        return render_template("users.html",
-                               users=User.query.order_by(User.name))
+@app.route('/users/<page>')
+def users(page=1):
+    page = int(page)
+    pagination = User.query.order_by(User.name).paginate(page, 100)
+    return render_template("users.html",
+                           page=page,
+                           pagination=pagination)
 
+
+@app.route('/user/user_id')
+def user(user_id=1):
     query = User.query.filter_by(id=user_id)
     if query.first():
         return render_template("user.html", user=query.first())

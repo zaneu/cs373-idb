@@ -1,0 +1,48 @@
+{% macro generate_page_nav(endpoint='#', pagination, page) -%}
+
+{% set left_current = 2 %}
+{% set right_current = 3 %}
+
+{% if pagination.pages < 5 %}
+    {% set left_current = page - 1 %}
+    {% set right_current = 1 + pagination.pages - page %}
+{% elif page < 3 %}
+    {% set left_current = page - 1 %}
+    {% set right_current = 6 - page %}
+{% elif page > pagination.pages - 2 %}
+    {% set left_current = 4 - pagination.pages + page %}
+    {% set right_current = 1 + pagination.pages - page %}
+{% endif %}
+
+{% set pages = pagination.iter_pages(left_current=left_current, right_current=right_current, left_edge=0, right_edge=0) %}
+
+<nav>
+    <ul class="pagination">
+        <li>
+            <a href="{{ url_for(endpoint, page=1)}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        {% for page in pages %}
+            {% if page %}
+                {% if page != pagination.page %}
+                <li>
+                    <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+                </li>
+                {% else %}
+                <li class="active">
+                    <span>{{ page }} <span class="sr-only">(current)</span></span>
+                </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        <li>
+            <a href="{{ url_for(endpoint, page=pagination.pages) }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{%- endmacro %}

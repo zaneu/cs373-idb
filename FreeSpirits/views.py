@@ -201,7 +201,7 @@ def search_drinks(query=None):
             user_dict = {'id': user.id, 'name': user.name}
             users.append(user_dict)
 
-        return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, pillar=pillar, query=query)
+        return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, query=query)
 
 
 @app.route('/api/search')

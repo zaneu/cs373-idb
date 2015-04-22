@@ -204,8 +204,8 @@ def search_drinks(pillar=None, query=None):
         return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, pillar=pillar, query=query)
 
 
-@app.route('/api/search/<pillar>')
-@app.route('/api/search/<pillar>/<query>')
+@app.route('/api/search')
+@app.route('/api/search/<query>')
 def api_search_drinks(pillar=None, query=None):
     if query is None:
         return page_not_found(404)

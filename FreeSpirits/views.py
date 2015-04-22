@@ -214,7 +214,6 @@ def search_drinks(query=None):
 
         return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, query=query)
 
-
 @app.route('/api/search')
 @app.route('/api/search/<query>')
 def api_search_drinks(query=None):

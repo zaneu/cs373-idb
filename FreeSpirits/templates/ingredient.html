@@ -67,7 +67,7 @@
                 </a>
 
                 {% for drink in drinks %}
-                <a href="{{ url_for('drinks', drink_id=drink.id) }}" class="list-group-item">
+                <a href="{{ url_for('drink', drink_id=drink.id) }}" class="list-group-item">
                     {{ drink.name }}
                 </a>
                 {% endfor %}

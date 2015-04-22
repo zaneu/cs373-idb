@@ -34,13 +34,18 @@ def about():
 def signup():
     return render_template("signup.html")
 
-@app.route('/drinks')
-@app.route('/drinks/<drink_id>')
-def drinks(drink_id=None):
-    if drink_id is None:
-        return render_template("drinks.html",
-                               drinks=Drink.query.order_by(Drink.name))
 
+@app.route('/drinks')
+@app.route('/drinks/<page>')
+def drinks(page=1):
+    values = Drink.query.order_by(Drink.name).paginate(page, 100)
+
+    return render_template("drinks.html",
+                           drinks=values.items)
+
+
+@app.route('/drink/<drink_id>')
+def drink(drink_id=1):
     query = Drink.query.filter_by(id=drink_id)
     if query.first():
         quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
@@ -53,13 +58,15 @@ def drinks(drink_id=None):
 
 
 @app.route('/ingredients')
-@app.route('/ingredients/<ingredient_id>')
-def ingredients(ingredient_id=None):
-    if ingredient_id is None:
-        return render_template("ingredients.html",
-                               ingredients=Ingredient.query.
-                               order_by(Ingredient.name))
+@app.route('/ingredients/<page>')
+def ingredients(page=1):
+    values = Ingredient.query.order_by(Ingredient.name).paginate(page, 100)
+    return render_template("ingredients.html",
+                           ingredients=values.items)
 
+
+@app.route('/ingredient/<ingredient_id>')
+def ingredient(ingredient_id=1):
     query = Ingredient.query.filter_by(id=ingredient_id)
     if query.first():
         drinks = Ingredient.get_drinks_by_id(ingredient_id, 5)

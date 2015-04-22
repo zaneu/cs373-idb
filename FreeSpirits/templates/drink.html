@@ -21,7 +21,7 @@
                     Ingredients
                 </a>
                 {% for ingredient in ingredients %}
-                <a href="{{ url_for('ingredients', ingredient_id=ingredient.id) }}" class="list-group-item">
+                <a href="{{ url_for('ingredient', ingredient_id=ingredient.id) }}" class="list-group-item">
                     <span class="badge"> {{ quantities[loop.index - 1] }} </span>
                     {{ ingredient.name }}
                 </a>

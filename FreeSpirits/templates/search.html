@@ -18,7 +18,7 @@ Search Results
                     {{ query }}
                 </a>
                 {% for result in results %}
-                <a href="{{ url_for('drinks', drink_id=result['id']) }}" class="list-group-item">
+                <a href="{{ url_for('drink', drink_id=result['id']) }}" class="list-group-item">
                     {{ result['name'] }}
                 </a>
                 {% endfor %}

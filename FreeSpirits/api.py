@@ -6,8 +6,9 @@ import os
 from . import app
 from .models import *
 
-from flask import jsonify
+from flask import jsonify, request
 from flask.ext import restful
+from flask.ext.login import current_user
 
 api = restful.Api(app)
 
@@ -154,6 +155,67 @@ class UserId(restful.Resource):
             return "{}"
 
 api.add_resource(UserId, '/api/users/<int:user_id>')
+
+
+class StarItem(restful.Resource):
+    """
+    The endpoint in which to star an item (drink or ingredient)
+    and associate it with a user
+    This function can only be invoked within the application
+    (checked by current_user and csrf)
+    The parameters taken in through POST are:
+    user_id
+    item_type (Drink or Ingredient)
+    item_id
+    star_count
+    """
+
+    def get(self):
+        return "GET is not allowed"
+
+    def post(self):
+        user_id = int(request.form('user_id'))
+        item_id = int(request.form('item_id'))
+        item_type = request.form('item_type')
+        star_count = int(request.form('star_count'))
+
+        if (not (current_user.is_authenticated() or
+                 user_id != current_user.get_id())):
+            return "User id not valid"
+
+        user = User.query.get(user_id)
+        if not user:
+            return "User does not exist"
+
+        item = None
+        if item_type == "drink":
+            item = Drink
+        elif item_type == "ingredient":
+            item = Ingredient
+        else:
+            return "Item type is not valid"
+
+        item = item.query.get(item_id)
+        if not item:
+            return "Item does not exist"
+
+        assert(abs(star_count - previous_star_count) == 1)
+
+        previous_star_count = item.favorites
+        if (previous_star_count < star_count):
+            if item_type == "ingredient":
+                user.remove_ingredient(item)
+            else:
+                user.remove_drink(item)
+        else:
+            if item_type == "ingredient":
+                user.star_ingredient(item)
+            else:
+                user.star_drink(item)
+
+        return "success"
+
+api.add_resource(StarItem, '/api/star/')
 
 
 class TestApi(restful.Resource):

@@ -10,15 +10,14 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <h1 class="text-center name">
-        {{ user.name }}
-      </h1>
-      <p class="text-center email">
-        {{ user.email }}
-      </p>
+    <div class="jumbotron">
+        <!-- Implement the Google API here -->
+        <img src="http://www.menucool.com/slider/prod/image-slider-2.jpg">
+        <h1>{{ user.name }}</h1>
+        <h3 style="opacity: 0.6;"> {{ user.email }} </h3>
+        <p class="text-center">
+            <a href="#" class="btn btn-primary btn-lg">Get the data</a>
+        </p>
     </div>
-  </div>
 </div>
 {% endblock %}

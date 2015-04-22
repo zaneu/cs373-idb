@@ -92,7 +92,7 @@ def users(page=1):
                            pagination=pagination)
 
 
-@app.route('/user/user_id')
+@app.route('/user/<user_id>')
 def user(user_id=1):
     query = User.query.filter_by(id=user_id)
     if query.first():

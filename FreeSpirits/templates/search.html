@@ -17,16 +17,10 @@ Search Results
                 <a href="#" class="list-group-item active">
                     {{ query }}
                 </a>
-                {% for result in results %}
-                    {% if pillar == "drinks" %}
-                        <a href="{{ url_for('drink', drink_id=result['id']) }}" class="list-group-item">
-                            {{ result['name'] }}
-                        </a>
-                    {% elif pillar == "ingredients" %}
-                        <a href="{{ url_for('ingredient', ingredient_id=result['id']) }}" class="list-group-item">
-                            {{ result['name'] }}
-                        </a>
-                    {% endif %}
+                {% for drink in drinks %}
+                    <a href="{{ url_for('drink', drink_id=drink['id']) }}" class="list-group-item">
+                        {{ drink['name'] }}
+                    </a>
                 {% endfor %}
             </div>
         </div>

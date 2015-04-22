@@ -8,19 +8,13 @@ Free Spirits API allows users to get information about mixed drinks and ingredie
 ### List all Drinks [GET]
 + Response 200 (application/json)
 
-        [{
-          "id": 1,
-          "name": "Caribou Lou",
-          "description": "Referenced in the song \"Caribou Lou\" by rapper Tech N9ne where he sings about it - \"...151 rum, pineapple juice, and malibu, caribou, get them all numb...\". The directions are included in the song also but are scaled to a unknown jug quantity. Therefore mix as you please but remember it's the 151 that will hit you. Originated in Kansas City, MO.",
-          "recipe": "1 1/2 parts 151 proof rum, 1 part Malibu coconut rum, 5 parts pineapple juice",
-          "ingredients": "151 proof rum, Malibu coconut rum, pineapple juice"
-        }, {
-          "id": 2,
-          "name": "Jager Bomb",
-          "description": "The Jager Bomb is originally a mixture of Red Bull and Jagermeister, both being popular products, although it's increasingly common for other energy drinks to be substituted for the RB. The caffeine-alcohol combination creates a unique \"high\" or at the very least, a counteract to the depressant of alcohol - making you more aware, more energetic, and more active.",
-          "recipe": "1/2 can Red Bull energy drink, 1 - 2 oz Jagermeister herbal liqueur",
-          "ingredients": "Red Bull energy drink, Jagermeister herbal liqueur"
-        }]
+        {
+          "1": "Razzbaretto",
+          "2": "Mexican Riptide",
+          "3": "Burgundy Bishop",
+          "4": "Singapore Sling (Raffles Hotel)",
+          "5": "Blackula"
+        }
 
 ## Drink [/drinks/{drink_id}]
 A single Drink object with all its details
@@ -36,11 +30,20 @@ A single Drink object with all its details
     + Body
 
             {
-             "id": 1,
-             "name": "Caribou Lou",
-             "description": "Referenced in the song \"Caribou Lou\" by rapper Tech N9ne where he sings about it - \"...151 rum, pineapple juice, and malibu, caribou, get them all numb...\". The directions are included in the song also but are scaled to a unknown jug quantity. Therefore mix as you please but remember it's the 151 that will hit you. Originated in Kansas City, MO.",
-             "recipe": "1 1/2 parts 151 proof rum, 1 part Malibu coconut rum, 5 parts pineapple juice",
-             "ingredients": "151 proof rum, Malibu coconut rum, pineapple juice"
+              "description": "Referenced in the song \"Caribou Lou\" by rapper Tech N9ne where he sings about it - \"...151 rum, pineapple juice, and malibu, caribou, get them all numb...\". The directions are included in the song also but are scaled to a unknown jug quantity. Therefore mix as you please but remember it's the 151 that will hit you. Originated in Kansas City, MO.",
+              "id": 9532,
+              "ingredients": [
+                "Malibu\u00ae coconut rum",
+                "Pineapple juice",
+                "151 proof rum"
+              ],
+              "name": "Caribou Lou",
+              "quantities": [
+                "1 part",
+                "5 parts",
+                "1 1/2 parts"
+              ],
+              "recipe": "Shake or serve up with ice in a highball glass."
             }
 
 + Response 201 (application/json)
@@ -57,17 +60,13 @@ A single Drink object with all its details
 ### List all Ingredients [GET]
 + Response 200 (application/json)
 
-        [{
-          "id": 1,
-          "name": "pineapple juice",
-          "description": "Pineapple Juice is the sweet juice extracted from pineapples. It is sold unsweetened and sweetened in cans or bottles and as frozen concentrate, and used in many drink recipes, from ordinary mixed drinks to high proof punches.",
-          "nutrition": "17 calories, 0 g alcohol"
-        }, {
-          "id": 2,
-          "name": "151 proof rum"
-          "description": "151 Proof Rum is a well known brand of rum - commonly dark, aromatic and always high in alcohol content. It is often called \"Overproof\" rum. It should not be drunk straight from the bottle - but instead - mixed with sodas, fruit juice, or other ingredients which lower the concentration of alcohol. It's usage is commonly restricted to high-proof drinks such as shots and punches, floated or set alight on the top.",
-          "nutrition": "69 calories, 21.4 g alcohol"
-        }]
+        {
+          "1": "Bianco vermouth",
+          "2": "Sour Apple Schnapps",
+          "3": "Tomato ketchup",
+          "4": "Aftershock\u00ae Hot & Cool cinnamon schnapps",
+          "5": "Oyster Sauce"
+        }
 
 ## Ingredient [/ingredients/{ingredient_id}]
 A single Ingredient object with all its details
@@ -82,12 +81,29 @@ A single Ingredient object with all its details
 
     + Body
 
-            {
-             "id": 1,
-             "name": "pineapple juice",
-             "description": "Pineapple Juice is the sweet juice extracted from pineapples. It is sold unsweetened and sweetened in cans or bottles and as frozen concentrate, and used in many drink recipes, from ordinary mixed drinks to high proof punches.",
-             "nutrition": "17 calories, 0 g alcohol"
-            }
+        {
+          "alcohol": "0 g",
+          "calories": "75",
+          "carbohydrates": "18 g",
+          "cholesterol": "0 mg",
+          "description": "",
+          "drinks": [
+            "Picasso 1",
+            "Screaming Chocolate Monkey",
+            "Magic Sam",
+            "Jaguar",
+            "Parrot Perch",
+            "Batida de Banana"
+          ],
+          "energy": "313",
+          "fats": "0 g",
+          "fiber": "-",
+          "id": 35,
+          "name": "Banana syrup",
+          "protein": "0 g",
+          "sodium": "0 mg",
+          "sugars": "16 g"
+        }
 
 + Response 201 (application/json)
     + Header
@@ -103,17 +119,14 @@ A single Ingredient object with all its details
 ### List all Users [GET]
 + Response 200 (application/json)
 
-        [{
-          "id": 1,
-          "name": "partybro23",
-          "country": "United States",
-          "favorite drink": "Jager Bomb"
-        }, {
-          "id": 2,
-          "name": "techn9ne",
-          "country": "United States",
-          "favorite drink": "Caribou Lou"
-        }]
+    {
+      "1": "pbae@utexas.edu",
+      "2": "liudi1990@gmail.com",
+      "3": "urbanski@utexas.edu",
+      "4": "home.isfar@gmail.com",
+      "5": "menglinbrown@utexas.edu",
+      "6": "jindtang@utexas.edu"
+    }
 
 ## User [/users/{user_id}]
 A single User object with all its details
@@ -129,10 +142,10 @@ A single User object with all its details
     + Body
 
             {
-             "id": 1,
-             "name": "partybro23",
-             "country": "United States",
-             "favorite drink": "Jager Bomb"
+              "email": "home.isfar@gmail.com",
+              "first_name": "Ali",
+              "id": 4,
+              "last_name": "Homafar"
             }
 
 + Response 201 (application/json)

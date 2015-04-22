@@ -160,17 +160,19 @@ def user(user_id=1):
         return page_not_found(404)
 
 
-@app.route('/search/<pillar>')
-@app.route('/search/<pillar>/<query>')
-def search_drinks(pillar=None, query=None):
-    if (pillar.lower() != "drinks" and pillar.lower() != "ingredients") or query is None:
-        return render_template("search.html", results=[], query="\"\"")
+@app.route('/search')
+@app.route('/search/<query>')
+def search_drinks(query=None):
+    if query is None:
+        return render_template("search.html", drinks_results=[], ingredients_results = [], users_results = [], query="\"\"")
     else:
         terms = query.lower().split()
         query = "\"" + query.lower() + "\""
         and_term = ""
         or_term = ""
-        results = []
+        drinks = []
+        ingredients = []
+        users = []
 
         for i, term in enumerate(terms):
             if i != 0:
@@ -180,43 +182,52 @@ def search_drinks(pillar=None, query=None):
                 and_term += term
                 or_term += term
 
-        if pillar.lower() == "drinks":
-            and_results = Drink.query.whoosh_search(and_term).all()
-            or_results = Drink.query.whoosh_search(or_term).all()
+        and_results = Drink.query.whoosh_search(and_term).all()
+        or_results = list(set(and_results).symmetric_difference(Drink.query.whoosh_search(or_term).all()))
 
-            for drink in and_results:
-                drink_dict = {'id': drink.id, 'name': drink.name}
-                results.append(drink_dict)
-            for drink in or_results:
-                drink_dict = {'id': drink.id, 'name': drink.name}
-                results.append(drink_dict)
+        for drink in and_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            drinks.append(drink_dict)
+        for drink in or_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            drinks.append(drink_dict)
 
-            return render_template("search.html", results=results, pillar=pillar, query=query)
-        elif pillar.lower() == "ingredients":
-            and_results = Ingredient.query.whoosh_search(and_term).all()
-            or_results = Ingredient.query.whoosh_search(or_term).all()
+        and_results = Ingredient.query.whoosh_search(and_term).all()
+        or_results = list(set(and_results).symmetric_difference(Ingredient.query.whoosh_search(or_term).all()))
 
-            for ingredient in and_results:
-                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
-                results.append(ingredient_dict)
-            for ingredient in or_results:
-                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
-                results.append(ingredient_dict)
+        for ingredient in and_results:
+            ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+            ingredients.append(ingredient_dict)
+        for ingredient in or_results:
+            ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+            ingredients.append(ingredient_dict)
 
-            return render_template("search.html", results=results, pillar=pillar, query=query)
+        and_results = User.query.whoosh_search(and_term).all()
+        or_results = list(set(and_results).symmetric_difference(User.query.whoosh_search(or_term).all()))
+
+        for user in and_results:
+            user_dict = {'id': user.id, 'name': user.name}
+            users.append(user_dict)
+        for drink in or_results:
+            user_dict = {'id': user.id, 'name': user.name}
+            users.append(user_dict)
+
+        return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, query=query)
 
 
-@app.route('/api/search/<pillar>')
-@app.route('/api/search/<pillar>/<query>')
-def api_search_drinks(pillar=None, query=None):
-    if (pillar.lower() != "drinks" and pillar.lower() != "ingredients") or query is None:
+@app.route('/api/search')
+@app.route('/api/search/<query>')
+def api_search_drinks(query=None):
+    if query is None:
         return page_not_found(404)
     else:
         terms = query.lower().split()
-        print(terms)
+        query = "\"" + query.lower() + "\""
         and_term = ""
         or_term = ""
-        results = []
+        drinks = []
+        ingredients = []
+        users = []
 
         for i, term in enumerate(terms):
             if i != 0:
@@ -226,26 +237,40 @@ def api_search_drinks(pillar=None, query=None):
                 and_term += term
                 or_term += term
 
-        if pillar == "drinks":
-            and_results = Drink.query.whoosh_search(and_term).all()
-            or_results = Drink.query.whoosh_search(or_term).all()
+        and_results = Drink.query.whoosh_search(and_term).all()
+        or_results = list(set(and_results).symmetric_difference(Drink.query.whoosh_search(or_term).all()))
 
-            for drink in and_results:
-                drink_dict = {'id': drink.id, 'name': drink.name}
-                results.append(drink_dict)
-            for drink in or_results:
-                drink_dict = {'id': drink.id, 'name': drink.name}
-                results.append(drink_dict)
-        elif pillar == "ingredients":
-            and_results = Ingredient.query.whoosh_search(and_term).all()
-            or_results = Ingredient.query.whoosh_search(or_term).all()
+        for drink in and_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            drinks.append(drink_dict)
+        for drink in or_results:
+            drink_dict = {'id': drink.id, 'name': drink.name}
+            drinks.append(drink_dict)
 
-            for ingredient in and_results:
-                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
-                results.append(ingredient_dict)
-            for ingredient in or_results:
-                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
-                results.append(ingredient_dict)
+        and_results = Ingredient.query.whoosh_search(and_term).all()
+        or_results = list(set(and_results).symmetric_difference(Ingredient.query.whoosh_search(or_term).all()))
+
+        for ingredient in and_results:
+            ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+            ingredients.append(ingredient_dict)
+        for ingredient in or_results:
+            ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+            ingredients.append(ingredient_dict)
+
+        and_results = User.query.whoosh_search(and_term).all()
+        or_results = list(set(and_results).symmetric_difference(User.query.whoosh_search(or_term).all()))
+
+        for user in and_results:
+            user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
+            users.append(user_dict)
+        for drink in or_results:
+            user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
+            users.append(user_dict)
+
+        results = []
+        results.append(drinks)
+        results.append(ingredients)
+        results.append(users)
 
         return jsonify(results=results)
 

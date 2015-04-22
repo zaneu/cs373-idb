@@ -140,10 +140,10 @@ def user(user_id=1):
         return page_not_found(404)
 
 
-@app.route('/search/drinks')
-@app.route('/search/drinks/<query>')
-def search(query=None):
-    if query is None:
+@app.route('/search/<pillar>')
+@app.route('/search/<pillar>/<query>')
+def search_drinks(pillar=None, query=None):
+    if (pillar.lower() != "drinks" and pillar.lower() != "ingredients") or query is None:
         return render_template("search.html", results=[], query="\"\"")
     else:
         terms = query.lower().split()
@@ -160,23 +160,34 @@ def search(query=None):
                 and_term += term
                 or_term += term
 
-        and_results = Drink.query.whoosh_search(and_term).all()
-        or_results = Drink.query.whoosh_search(or_term).all()
+        if pillar.lower() == "drinks":
+            and_results = Drink.query.whoosh_search(and_term).all()
+            or_results = Drink.query.whoosh_search(or_term).all()
 
-        for drink in and_results:
-            drink_dict = {'id': drink.id, 'name': drink.name}
-            results.append(drink_dict)
-        for drink in or_results:
-            drink_dict = {'id': drink.id, 'name': drink.name}
-            results.append(drink_dict)
+            for drink in and_results:
+                drink_dict = {'id': drink.id, 'name': drink.name}
+                results.append(drink_dict)
+            for drink in or_results:
+                drink_dict = {'id': drink.id, 'name': drink.name}
+                results.append(drink_dict)
+        elif pillar.lower() == "ingredients":
+            and_results = Ingredient.query.whoosh_search(and_term).all()
+            or_results = Ingredient.query.whoosh_search(or_term).all()
+
+            for ingredient in and_results:
+                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+                results.append(ingredient_dict)
+            for ingredient in or_results:
+                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+                results.append(ingredient_dict)
 
         return render_template("search.html", results=results, query=query)
 
 
-@app.route('/api/search/drinks')
-@app.route('/api/search/drinks/<query>')
-def api_search(query=None):
-    if query is None:
+@app.route('/api/search/<pillar>')
+@app.route('/api/search/<pillar>/<query>')
+def api_search_drinks(pillar=None, query=None):
+    if (pillar.lower() != "drinks" and pillar.lower() != "ingredients") or query is None:
         return page_not_found(404)
     else:
         terms = query.lower().split()
@@ -193,15 +204,26 @@ def api_search(query=None):
                 and_term += term
                 or_term += term
 
-        and_results = Drink.query.whoosh_search(and_term).all()
-        or_results = Drink.query.whoosh_search(or_term).all()
+        if pillar == "drinks":
+            and_results = Drink.query.whoosh_search(and_term).all()
+            or_results = Drink.query.whoosh_search(or_term).all()
 
-        for drink in and_results:
-            drink_dict = {'id': drink.id, 'name': drink.name}
-            results.append(drink_dict)
-        for drink in or_results:
-            drink_dict = {'id': drink.id, 'name': drink.name}
-            results.append(drink_dict)
+            for drink in and_results:
+                drink_dict = {'id': drink.id, 'name': drink.name}
+                results.append(drink_dict)
+            for drink in or_results:
+                drink_dict = {'id': drink.id, 'name': drink.name}
+                results.append(drink_dict)
+        elif pillar == "ingredients":
+            and_results = Ingredient.query.whoosh_search(and_term).all()
+            or_results = Ingredient.query.whoosh_search(or_term).all()
+
+            for ingredient in and_results:
+                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+                results.append(ingredient_dict)
+            for ingredient in or_results:
+                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+                results.append(ingredient_dict)
 
         return jsonify(results=results)
 

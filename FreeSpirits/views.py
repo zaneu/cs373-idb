@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from . import app
+from . import app, login_manager
 from .models import *
 from .forms import *
 
 from flask import render_template, jsonify, flash, redirect, url_for
+from flask.ext.login import login_user, logout_user, login_required
 
 
 @app.route('/')
@@ -23,6 +24,12 @@ def about():
     return render_template("about.html")
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    user_id = int(user_id)
+    return User.query.get(user_id)
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = UserSignupForm()
@@ -36,6 +43,7 @@ def signup():
         db.session.add(user)
         db.session.commit()
 
+        login_user(user)
         flash("Welcome to Free Spirits, " + user.first_name)
         return redirect(url_for('index'))
 
@@ -46,9 +54,22 @@ def signup():
 def login():
     form = UserLoginForm()
     if form.validate_on_submit():
-        pass
+        user = User.query.filter_by(email=form.email.data).first()
+
+        login_user(user)
+        flash("Welcome back, " + user.first_name)
+        return redirect(url_for('index'))
 
     return render_template("login.html", form=form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash("You have logged out")
+
+    return redirect(url_for('index'))
 
 
 @app.route('/drinks')

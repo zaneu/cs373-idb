@@ -3,10 +3,8 @@ import os
 
 from flask import Flask
 
-from FreeSpirits import app, db, dummy_client
+from FreeSpirits import db, dummy_client
 from FreeSpirits.models import *
-from flask.ext.testing import TestCase
-from flask.ext.sqlalchemy import SQLAlchemy
 
 import unittest
 

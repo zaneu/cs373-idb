@@ -170,6 +170,8 @@ def search_drinks(pillar=None, query=None):
             for drink in or_results:
                 drink_dict = {'id': drink.id, 'name': drink.name}
                 results.append(drink_dict)
+
+            return render_template("search.html", results=results, pillar=pillar, query=query)
         elif pillar.lower() == "ingredients":
             and_results = Ingredient.query.whoosh_search(and_term).all()
             or_results = Ingredient.query.whoosh_search(or_term).all()
@@ -181,7 +183,7 @@ def search_drinks(pillar=None, query=None):
                 ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
                 results.append(ingredient_dict)
 
-        return render_template("search.html", results=results, query=query)
+            return render_template("search.html", results=results, pillar=pillar, query=query)
 
 
 @app.route('/api/search/<pillar>')

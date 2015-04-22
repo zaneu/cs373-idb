@@ -18,9 +18,15 @@ Search Results
                     {{ query }}
                 </a>
                 {% for result in results %}
-                <a href="{{ url_for('drink', drink_id=result['id']) }}" class="list-group-item">
-                    {{ result['name'] }}
-                </a>
+                    {% if pillar == "drinks" %}
+                        <a href="{{ url_for('drink', drink_id=result['id']) }}" class="list-group-item">
+                            {{ result['name'] }}
+                        </a>
+                    {% elif pillar == "ingredients" %}
+                        <a href="{{ url_for('ingredient', ingredient_id=result['id']) }}" class="list-group-item">
+                            {{ result['name'] }}
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>

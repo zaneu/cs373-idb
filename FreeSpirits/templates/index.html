@@ -30,3 +30,13 @@
   </div>
 </div>
 {% endblock %}
+
+{% block footer %}
+<div id="footer">
+    <div class="container">
+        <p class="text-muted credit text-center">
+            Made with <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> by <a href="{{ url_for('about') }}"> us </a>.
+        </p>
+    </div>
+</div>
+{% endblock %}

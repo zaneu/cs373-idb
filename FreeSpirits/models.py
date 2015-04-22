@@ -6,9 +6,10 @@ from werkzeug.security import generate_password_hash, \
      check_password_hash
 
 import flask.ext.whooshalchemy as whooshalchemy
+from flask.ext.login import UserMixin
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """
     The User model
     As of now, this class is not related to the database at all

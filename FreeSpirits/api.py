@@ -22,7 +22,7 @@ class DrinkListing(restful.Resource):
     def get(self):
         drinks_name = Drink.query.values(Drink.name)
         drinks_id = Drink.query.values(Drink.id)
-        drinks = {k[0]: v[0] for (k, v) in zip(drinks_name, drinks_id)}
+        drinks = {v[0]: k[0] for (k, v) in zip(drinks_name, drinks_id)}
 
         return jsonify(drinks)
 
@@ -68,7 +68,7 @@ class IngredientListing(restful.Resource):
     def get(self):
         ingredients_name = Ingredient.query.values(Ingredient.name)
         ingredients_id = Ingredient.query.values(Ingredient.id)
-        ingredients = {k[0]: v[0] for (k, v) in
+        ingredients = {v[0]: k[0] for (k, v) in
                        zip(ingredients_name, ingredients_id)}
         return jsonify(ingredients)
 

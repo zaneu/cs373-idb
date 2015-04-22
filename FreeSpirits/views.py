@@ -227,7 +227,7 @@ def api_search_drinks(query=None):
                 or_term += term
 
         and_results = Drink.query.whoosh_search(and_term).all()
-        or_results = Drink.query.whoosh_search(or_term).all()
+        or_results = list(set(and_results).symmetric_difference(Drink.query.whoosh_search(or_term).all()))
 
         for drink in and_results:
             drink_dict = {'id': drink.id, 'name': drink.name}
@@ -237,7 +237,7 @@ def api_search_drinks(query=None):
             drinks.append(drink_dict)
 
         and_results = Ingredient.query.whoosh_search(and_term).all()
-        or_results = Ingredient.query.whoosh_search(or_term).all()
+        or_results = list(set(and_results).symmetric_difference(Ingredient.query.whoosh_search(or_term).all()))
 
         for ingredient in and_results:
             ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
@@ -247,7 +247,7 @@ def api_search_drinks(query=None):
             ingredients.append(ingredient_dict)
 
         and_results = User.query.whoosh_search(and_term).all()
-        or_results = User.query.whoosh_search(or_term).all()
+        or_results = list(set(and_results).symmetric_difference(User.query.whoosh_search(or_term).all()))
 
         for user in and_results:
             user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}

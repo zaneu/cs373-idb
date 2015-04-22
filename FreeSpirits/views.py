@@ -191,8 +191,8 @@ def search_drinks(pillar=None, query=None):
             ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
             ingredients.append(ingredient_dict)
 
-        and_results = Ingredient.query.whoosh_search(and_term).all()
-        or_results = Ingredient.query.whoosh_search(or_term).all()
+        and_results = Users.query.whoosh_search(and_term).all()
+        or_results = Users.query.whoosh_search(or_term).all()
 
         for user in and_results:
             user_dict = {'id': user.id, 'name': user.name}

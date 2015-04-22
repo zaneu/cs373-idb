@@ -74,7 +74,7 @@
             </div>
         </div>
         <p class="text-center">
-            <a href="{{ url_for('api_ingredients', ingredient_id=ingredient.id) }}" class="btn btn-primary btn-lg">Get the data</a>
+            <a href="{{ '/api/ingredients/' ~ ingredient.id }}" class="btn btn-primary btn-lg">Get the data</a>
         </p>
     </div>
 </div>

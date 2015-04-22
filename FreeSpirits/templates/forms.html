@@ -1,0 +1,29 @@
+{% macro render_field(field) %}
+
+{% set class_vars = "form-group" %}
+{% if field.errors %}
+    {% set class_vars = "form-group has-error has-feedback" %}
+{% endif %}
+
+<div class="{{ class_vars }}">
+    <label for="first_name" class="col-md-3 control-label">
+        {{ field.label }}
+    </label>
+    <div class="col-md-9">
+        {{ field(**kwargs)|safe }}
+    </div>
+
+    <div class="col-md-9">
+        <span id="helpBlock" class="help-block">
+            <ul>
+            {% if field.errors %}
+                {% for error in field.errors %}
+                <li> {{ error }} </li>
+                {% endfor %}
+            {% endif %}
+            </ul>
+        </span>
+    </div>
+</div>
+
+{% endmacro %}

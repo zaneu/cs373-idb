@@ -23,10 +23,11 @@ class User(db.Model):
     the email
     """
     __tablename__ = "User"
-    __searchable__ = ["name", "email"]
+    __searchable__ = ["first_name", "last_name", "email"]
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), index=True, unique=True)
+    first_name = db.Column(db.String(64))
+    last_name = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
     pw_hash = db.Column(db.String(120))
 
@@ -37,7 +38,7 @@ class User(db.Model):
         return check_password_hash(self.pw_hash, password)
 
     def __repr__(self):
-        return "<User %r>" % (self.name)
+        return "<User %r>" % (self.email)
 
 whooshalchemy.whoosh_index(app, User)
 

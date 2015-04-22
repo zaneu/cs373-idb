@@ -12,3 +12,4 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/free_spirits'
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
 WHOOSH_BASE = 'whoosh'
+SECRET_KEY = os.urandom(24)

@@ -2,13 +2,18 @@
 
 import os
 
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-    render_template, flash
+from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
+from flask_wtf.csrf import CsrfProtect
 
 app = Flask(__name__)
 app.config.from_object("config")
+CsrfProtect(app)
+
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 # late imports so dependencies are correct
 from . import views

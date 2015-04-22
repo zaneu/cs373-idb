@@ -256,15 +256,15 @@ class ModelTests(unittest.TestCase):
         self.assertTrue(user in db.session)
 
     def test_add_user_1(self):
-        user = User(name="Paul")
+        user = User(first_name="Paul")
         db.session.add(user)
         db.session.commit()
 
         self.assertTrue(user in db.session)
-        self.assertEqual(User.query.filter_by(name="Paul").first(), user)
+        self.assertEqual(User.query.filter_by(first_name="Paul").first(), user)
 
     def test_add_user_2(self):
-        user = User(name="Paul", email="pbae@utexas.edu")
+        user = User(first_name="Paul", email="pbae@utexas.edu")
         db.session.add(user)
         db.session.commit()
 

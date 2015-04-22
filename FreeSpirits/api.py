@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 import subprocess
@@ -7,7 +6,7 @@ import os
 from . import app
 from .models import *
 
-from flask import render_template, jsonify, request
+from flask import jsonify
 from flask.ext import restful
 
 api = restful.Api(app)
@@ -124,32 +123,11 @@ class UserListing(restful.Resource):
     """
 
     def get(self):
-        users_name = User.query.values(User.name)
+        users_email = User.query.values(User.email)
         users_id = User.query.values(User.id)
-        users = {k[0]: v[0] for (k, v) in zip(users_name, users_id)}
+        users = {k[0]: v[0] for (k, v) in zip(users_email, users_id)}
 
         return jsonify(users)
-
-    def post(self):
-        name = request.form["name"]
-        email = request.form["email"]
-        if not name:
-            return "Name must be provided"
-        if not email:
-            return "Email must be provided"
-        if User.query.filter_by(email=email):
-            return "Email already exists"
-        if not password:
-            return "Password must be provided"
-        if len(password) < 8:
-            return "Password must be longer than eight characters"
-
-        user = User(
-            name=name,
-            email=email
-        )
-        user.set_password(request.form["password"])
-        return "success"
 
 api.add_resource(UserListing, '/api/users/')
 
@@ -166,7 +144,8 @@ class UserId(restful.Resource):
             user = user.first()
             result = {
                 "id": user.id,
-                "name": user.name,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
                 "email": user.email
             }
 

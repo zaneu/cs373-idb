@@ -32,7 +32,7 @@
             </div>
         </div>
         <p class="text-center">
-            <a href="{{ url_for('api_drinks', drink_id=drink.id) }}" class="btn btn-primary btn-lg">Get the data</a>
+            <a href="{{ '/api/drinks/' ~ drink.id }}" class="btn btn-primary btn-lg">Get the data</a>
         </p>
     </div>
 </div>

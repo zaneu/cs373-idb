@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% import "pagination.html" as pagination_helper %}
+{% from "pagination.html" import generate_page_nav %}
 
 {% block title %}Drinks{% endblock %}
 {% block head %}
@@ -38,7 +38,7 @@
             </table>
         </div>
         <div class="text-center">
-            {{ pagination_helper.generate_page_nav('drinks', pagination, page) }}
+            {{ generate_page_nav('drinks', pagination, page) }}
         </div>
     </div>
 </div>

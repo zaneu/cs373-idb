@@ -151,7 +151,7 @@ def user(user_id=1):
 
 @app.route('/search')
 @app.route('/search/<query>')
-def search_drinks(pillar=None, query=None):
+def search_drinks(query=None):
     if query is None:
         return render_template("search.html", drinks_results=[], ingredients_results = [], users_results = [], query="\"\"")
     else:
@@ -206,7 +206,7 @@ def search_drinks(pillar=None, query=None):
 
 @app.route('/api/search')
 @app.route('/api/search/<query>')
-def api_search_drinks(pillar=None, query=None):
+def api_search_drinks(query=None):
     if query is None:
         return page_not_found(404)
     else:

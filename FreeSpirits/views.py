@@ -6,7 +6,8 @@ from .forms import *
 
 from flask import render_template, jsonify, flash, redirect, url_for, \
     request
-from flask.ext.login import login_user, logout_user, login_required
+from flask.ext.login import login_user, logout_user, login_required, \
+    current_user
 
 
 @app.route('/')
@@ -90,13 +91,23 @@ def drinks(page=1):
 
 @app.route('/drink/<drink_id>')
 def drink(drink_id=1):
-    query = Drink.query.filter_by(id=drink_id)
-    if query.first():
+    query = Drink.query.get(drink_id)
+    user_id = current_user.get_id()
+    user = None
+    if user_id:
+        user = User.query.get(current_user.get_id())
+
+    starred = False
+    if user:
+        starred = user.has_starred_drink(drink_id)
+
+    if query:
         quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
         return render_template("drink.html",
-                               drink=query.first(),
+                               drink=query,
                                quantities=quantities,
-                               ingredients=ingredients)
+                               ingredients=ingredients,
+                               starred=starred)
     else:
         return page_not_found(404)
 
@@ -118,11 +129,11 @@ def ingredients(page=1):
 
 @app.route('/ingredient/<ingredient_id>')
 def ingredient(ingredient_id=1):
-    query = Ingredient.query.filter_by(id=ingredient_id)
-    if query.first():
+    query = Ingredient.query.get(ingredient_id)
+    if query:
         drinks = Ingredient.get_drinks_by_id(ingredient_id, 10)
         return render_template("ingredient.html",
-                               ingredient=query.first(),
+                               ingredient=query,
                                drinks=drinks)
     else:
         return page_not_found(404)
@@ -142,9 +153,9 @@ def users(page=1):
 
 @app.route('/user/<user_id>')
 def user(user_id=1):
-    query = User.query.filter_by(id=user_id)
-    if query.first():
-        return render_template("user.html", user=query.first())
+    query = User.query.get(user_id)
+    if query:
+        return render_template("user.html", user=query)
     else:
         return page_not_found(404)
 

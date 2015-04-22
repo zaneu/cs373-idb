@@ -31,12 +31,39 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
     pw_hash = db.Column(db.String(120))
+    fav_drinks = db.relationship('Drink', lazy='dynamic')
+    fav_ingredients = db.relationship('Ingredient', lazy='dynamic')
+
+    def star_drink(self, drink):
+        self.fav_drinks.append(drink)
+        drink.favorites += 1
+
+    def remove_drink(self, drink):
+        self.fav_drinks.remove(drink)
+        drink.favorites -= 1
+
+    def has_starred_drink(self, drink):
+        return self.fav_drinks.contains(drink)
+
+    def star_ingredient(self, ingredient):
+        self.fav_ingredients.append(ingredient)
+        ingredient.favorites += 1
+
+    def remove_ingredient(self, ingredient):
+        self.fav_ingredients.remove(ingredient)
+        ingredient.favorites -= 1
+
+    def has_starred_ingredient(self, ingredient):
+        return self.fav_ingredients.contains(ingredient)
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
+
+    def has_favorited(self, drink_id):
+        return True
 
     def __repr__(self):
         return "<User %r>" % (self.email)
@@ -84,6 +111,7 @@ class Ingredient(db.Model):
     sodium = db.Column(db.String(20))
     alcohol = db.Column(db.String(20))
     favorites = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
     def __repr__(self):
         return "<Ingredient %r>" % (self.name)
@@ -122,6 +150,7 @@ class Drink(db.Model):
     description = db.Column(db.String(10000))
     recipe = db.Column(db.String(10000))
     favorites = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
     def __repr__(self):
         return "<Drink %r>" % (self.name)

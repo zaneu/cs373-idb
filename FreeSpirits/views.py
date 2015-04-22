@@ -97,8 +97,8 @@ def search(query=None):
     if query is None:
         return render_template("search.html", results=[], query="\"\"")
     else:
-        terms = query.split('+')
-        query = "\"" + query.replace('+', ' ') + "\""
+        terms = query.lower().split()
+        query = "\"" + query.lower() + "\""
         and_term = ""
         or_term = ""
         results = []
@@ -130,7 +130,8 @@ def api_search(query=None):
     if query is None:
         return page_not_found(404)
     else:
-        terms = query.split('+')
+        terms = query.lower().split()
+        print(terms)
         and_term = ""
         or_term = ""
         results = []

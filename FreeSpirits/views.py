@@ -119,8 +119,8 @@ def user(user_id=1):
         return page_not_found(404)
 
 
-@app.route('/search')
-@app.route('/search/<query>')
+@app.route('/search/drinks')
+@app.route('/search/drinks/<query>')
 def search(query=None):
     if query is None:
         return render_template("search.html", results=[], query="\"\"")
@@ -152,8 +152,8 @@ def search(query=None):
         return render_template("search.html", results=results, query=query)
 
 
-@app.route('/api/search')
-@app.route('/api/search/<query>')
+@app.route('/api/search/drinks')
+@app.route('/api/search/drinks/<query>')
 def api_search(query=None):
     if query is None:
         return page_not_found(404)

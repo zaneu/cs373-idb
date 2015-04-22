@@ -7,12 +7,7 @@ $(document).ready(function(){
     //attach a jQuery live event to the button
 
     $('#searchBtn').on('click', function() {
-        if (search_drinks) {
-            window.location.href = host + "/search/drinks/" + $('#inputdata').val();
-        }
-        else {
-            window.location.href = host + "/search/ingredients/" + $('#inputdata').val();
-        }
+            window.location.href = host + "/search/" + $('#inputdata').val();
     });
 
     formatText();

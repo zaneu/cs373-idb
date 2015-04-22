@@ -83,6 +83,7 @@ class Ingredient(db.Model):
     cholesterol = db.Column(db.String(20))
     sodium = db.Column(db.String(20))
     alcohol = db.Column(db.String(20))
+    favorites = db.Column(db.Integer)
 
     def __repr__(self):
         return "<Ingredient %r>" % (self.name)
@@ -120,6 +121,7 @@ class Drink(db.Model):
     name = db.Column(db.String(120), index=True, unique=True)
     description = db.Column(db.String(10000))
     recipe = db.Column(db.String(10000))
+    favorites = db.Column(db.Integer)
 
     def __repr__(self):
         return "<Drink %r>" % (self.name)

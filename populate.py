@@ -37,7 +37,8 @@ for value in progress.bar(ingredients):
         sugars=value["sugars"],
         cholesterol=value["cholesterol"],
         sodium=value["sodium"],
-        alcohol=value["alcohol"]
+        alcohol=value["alcohol"],
+        favorites=0
     )
 
     db.session.add(ingredient)
@@ -60,7 +61,8 @@ for value in progress.bar(drinks):
         id=drink_count,
         name=value["name"],
         description=value["description"],
-        recipe=value["recipe"]
+        recipe=value["recipe"],
+        favorites=0
     )
 
     db.session.add(drink)

@@ -18,7 +18,17 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>
+                            <a href="{{ url_for('drinks', sort_by='name', page=page)}}">
+                                Name
+                            </a>
+                        </th>
+
+                        <th>
+                            <a href="{{ url_for('drinks', sort_by='favorites', page=page)}}">
+                                Favorites
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +41,9 @@
                             <a href="{{ url_for('drink', drink_id=drink.id) }}">
                                 {{ drink.name }}
                             </a>
+                        </td>
+                        <td class="col-lg-5">
+                            {{ drink.favorites }}
                         </td>
                     </tr>
                     {% endfor %}

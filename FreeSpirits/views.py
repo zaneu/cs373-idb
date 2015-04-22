@@ -4,7 +4,8 @@ from . import app, login_manager
 from .models import *
 from .forms import *
 
-from flask import render_template, jsonify, flash, redirect, url_for
+from flask import render_template, jsonify, flash, redirect, url_for, \
+    request
 from flask.ext.login import login_user, logout_user, login_required
 
 
@@ -76,7 +77,11 @@ def logout():
 @app.route('/drinks/<page>')
 def drinks(page=1):
     page = int(page)
-    pagination = Drink.query.order_by(Drink.name).paginate(page, 100)
+    pagination = Drink.query.order_by(Drink.name)
+    if request.args.get("sort_by") == "favorites":
+        pagination = Drink.query.order_by(Drink.favorites.desc())
+
+    pagination = pagination.paginate(page, 100)
 
     return render_template("drinks.html",
                            page=page,
@@ -96,11 +101,15 @@ def drink(drink_id=1):
         return page_not_found(404)
 
 
-@app.route('/ingredients')
+@app.route('/ingredients/')
 @app.route('/ingredients/<page>')
 def ingredients(page=1):
     page = int(page)
-    pagination = Ingredient.query.order_by(Ingredient.name).paginate(page, 100)
+    pagination = Ingredient.query.order_by(Ingredient.name)
+    if request.args.get("sort_by") == "favorites":
+        pagination = Ingredient.query.order_by(Ingredient.favorites.desc())
+
+    pagination = pagination.paginate(page, 100)
 
     return render_template("ingredients.html",
                            page=page,

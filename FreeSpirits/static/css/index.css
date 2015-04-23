@@ -19,7 +19,7 @@
 }
 
 .nav-tabs {
-    margin-left: 20px;
+    margin-left: 40px;
     /*background: yellow;  A color just for debug */
 }
 
@@ -27,4 +27,17 @@
     margin-left: 40px;
     font-size: 200%;
     /*background: red; A color just for debug */
+}
+
+.active {
+   /* background-color: #163249; */
+}
+
+
+#teamcontainer {
+/*    background-color: #163249;*/
+}
+
+#creditscontainer {
+/*    background-color: #163249;*/
 }

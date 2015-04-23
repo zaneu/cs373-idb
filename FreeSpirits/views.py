@@ -108,7 +108,7 @@ def drink(drink_id=1):
 
     if query:
         clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20"))) + "%20drink"
-        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&imgsz=medium|large|xlarge&q=" + clean_name
+        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&imgsz=large|xlarge&q=" + clean_name
 
         request = urllib.request.Request(url, None, {})
         response = urllib.request.urlopen(request)
@@ -164,7 +164,7 @@ def ingredient(ingredient_id=1):
 
     if query:
         clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20")))
-        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&imgsz=medium|large|xlarge&q=" + clean_name
+        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&imgsz=large|xlarge&q=" + clean_name
 
         request = urllib.request.Request(url, None, {})
         response = urllib.request.urlopen(request)

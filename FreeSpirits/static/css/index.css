@@ -17,3 +17,14 @@
  	display: flex;
  	align-items: center;
 }
+
+.nav-tabs {
+    margin-left: 20px;
+    /*background: yellow;  A color just for debug */
+}
+
+.creditscontent {
+    margin-left: 40px;
+    font-size: 200%;
+    /*background: red; A color just for debug */
+}

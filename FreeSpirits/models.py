@@ -52,7 +52,7 @@ class User(db.Model, UserMixin):
         ingredients = []
         for row in rows:
             ingredient_id = row.ingredient_id
-            ingredients.append(Drink.query.get(ingredient_id))
+            ingredients.append(Ingredient.query.get(ingredient_id))
         return ingredients
 
     def star_drink(self, drink):

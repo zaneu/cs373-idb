@@ -204,7 +204,7 @@ class StarItem(restful.Resource):
             else:
                 user.star_drink(item)
         else:
-            if item_type == "Drink":
+            if item_type == "Ingredient":
                 user.remove_ingredient(item)
             else:
                 user.remove_drink(item)

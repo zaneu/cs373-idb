@@ -25,25 +25,20 @@ $(function () {
     if (user_id < 0) {
         $('button').prop('disabled', true);
     }
-    if (starred) {
-        $('#star-button').hide();
-    } else {
-        $('#unstar-button').hide();
-    }
 
     $('#star-button').click(function () {
         star_count += 1;
         update_counts();
         update_db();
-        $('#unstar-button').show();
-        $('#star-button').hide();
+        $('#unstar-button').removeClass("hidden");
+        $('#star-button').addClass("hidden");
     });
 
     $("#unstar-button").click(function () {
         star_count -= 1;
         update_counts();
         update_db();
-        $('#star-button').show();
-        $('#unstar-button').hide();
+        $('#star-button').removeClass("hidden");
+        $('#unstar-button').addClass("hidden");
     });
 });

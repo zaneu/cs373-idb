@@ -58,7 +58,7 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
     def has_starred_ingredient(self, ingredient):
-        return self.fav_ingredients.contains(ingredient)
+        return ingredient in self.fav_ingredients
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)

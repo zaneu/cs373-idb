@@ -6,13 +6,34 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="../static/css/ingredient.css" type="text/css">
+<script>
+ var starred = false;
+ if ("{{ starred }}" === "True") {
+     starred = true;
+ }
+ var item_id = parseInt("{{ ingredient.id }}", 10);
+ var user_id = parseInt("{{ user_id }}", 10);
+ var star_count = parseInt("{{ ingredient.favorites }}");
+ var item_type = "Ingredient";
+</script>
+<script src="../static/js/star-button.js"> </script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="jumbotron">
         <img src="http://www.menucool.com/slider/prod/image-slider-2.jpg">
-        <h1> {{ ingredient.name }} </h1>
+        <h1>
+            {{ ingredient.name }}
+            <button id="unstar-button" type="button" class="btn btn-warning btn-md">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Unstar | {{ ingredient.favorites }}
+            </button>
+            <button id="star-button" type="button" class="btn btn-info btn-md">
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                Star | {{ ingredient.favorites }}
+            </button>
+        </h1>
         <p> {{ ingredient.description }} </p>
         <div style="margin-top: 50px" class="container">
             <ul class="list-group col-lg-6">

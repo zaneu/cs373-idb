@@ -171,11 +171,6 @@ class StarItem(restful.Resource):
     """
 
     def post(self):
-        print("INSIDE POST")
-
-        if 'user_id' not in request.form:
-            return "User id not provided, login"
-
         user_id = int(request.form['user_id'])
         item_id = int(request.form['item_id'])
         item_type = request.form['item_type']
@@ -190,9 +185,9 @@ class StarItem(restful.Resource):
             return "User does not exist"
 
         item = None
-        if item_type == "drink":
+        if item_type == "Drink":
             item = Drink
-        elif item_type == "ingredient":
+        elif item_type == "Ingredient":
             item = Ingredient
         else:
             return "Item type is not valid"
@@ -205,12 +200,12 @@ class StarItem(restful.Resource):
         assert(abs(star_count - previous_star_count) == 1)
 
         if (previous_star_count < star_count):
-            if item_type == "ingredient":
+            if item_type == "Ingredient":
                 user.star_ingredient(item)
             else:
                 user.star_drink(item)
         else:
-            if item_type == "ingredient":
+            if item_type == "Drink":
                 user.remove_ingredient(item)
             else:
                 user.remove_drink(item)

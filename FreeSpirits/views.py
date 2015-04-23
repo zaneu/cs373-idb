@@ -92,21 +92,24 @@ def drinks(page=1):
 @app.route('/drink/<drink_id>')
 def drink(drink_id=1):
     query = Drink.query.get(drink_id)
-    user_id = current_user.get_id()
-    user = None
-    if user_id:
-        user = User.query.get(current_user.get_id())
+
+    user_id = -1
+    if current_user.get_id():
+        user_id = int(current_user.get_id())
 
     starred = False
-    if user:
-        starred = user.has_starred_drink(drink_id)
+    if user_id > 0:
+        user = User.query.get(user_id)
+        starred = user.has_starred_drink(query)
 
+    print("THE USER HAS starred? " + str(starred))
     if query:
         quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
         return render_template("drink.html",
                                drink=query,
                                quantities=quantities,
                                ingredients=ingredients,
+                               user_id=user_id,
                                starred=starred)
     else:
         return page_not_found(404)

@@ -37,21 +37,25 @@ class User(db.Model, UserMixin):
     def star_drink(self, drink):
         self.fav_drinks.append(drink)
         drink.favorites += 1
+        db.session.commit()
 
     def remove_drink(self, drink):
         self.fav_drinks.remove(drink)
         drink.favorites -= 1
+        db.session.commit()
 
     def has_starred_drink(self, drink):
-        return self.fav_drinks.contains(drink)
+        return drink in self.fav_drinks
 
     def star_ingredient(self, ingredient):
         self.fav_ingredients.append(ingredient)
         ingredient.favorites += 1
+        db.session.commit()
 
     def remove_ingredient(self, ingredient):
         self.fav_ingredients.remove(ingredient)
         ingredient.favorites -= 1
+        db.session.commit()
 
     def has_starred_ingredient(self, ingredient):
         return self.fav_ingredients.contains(ingredient)

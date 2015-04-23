@@ -170,16 +170,18 @@ class StarItem(restful.Resource):
     star_count
     """
 
-    def get(self):
-        return "GET is not allowed"
-
     def post(self):
-        user_id = int(request.form('user_id'))
-        item_id = int(request.form('item_id'))
-        item_type = request.form('item_type')
-        star_count = int(request.form('star_count'))
+        print("INSIDE POST")
 
-        if (not (current_user.is_authenticated() or
+        if 'user_id' not in request.form:
+            return "User id not provided, login"
+
+        user_id = int(request.form['user_id'])
+        item_id = int(request.form['item_id'])
+        item_type = request.form['item_type']
+        star_count = int(request.form['star_count'])
+
+        if (not (current_user.is_authenticated() and
                  user_id != current_user.get_id())):
             return "User id not valid"
 
@@ -199,19 +201,19 @@ class StarItem(restful.Resource):
         if not item:
             return "Item does not exist"
 
+        previous_star_count = item.favorites
         assert(abs(star_count - previous_star_count) == 1)
 
-        previous_star_count = item.favorites
         if (previous_star_count < star_count):
-            if item_type == "ingredient":
-                user.remove_ingredient(item)
-            else:
-                user.remove_drink(item)
-        else:
             if item_type == "ingredient":
                 user.star_ingredient(item)
             else:
                 user.star_drink(item)
+        else:
+            if item_type == "ingredient":
+                user.remove_ingredient(item)
+            else:
+                user.remove_drink(item)
 
         return "success"
 

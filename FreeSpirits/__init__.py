@@ -5,11 +5,9 @@ import os
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
-from flask_wtf.csrf import CsrfProtect
 
 app = Flask(__name__)
 app.config.from_object("config")
-CsrfProtect(app)
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()

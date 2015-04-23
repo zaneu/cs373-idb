@@ -25,7 +25,17 @@
         <img src="http://www.menucool.com/slider/prod/image-slider-2.jpg">
         <h1>
             {{ ingredient.name }}
+            {% if starred %}
             <button id="unstar-button" type="button" class="btn btn-warning btn-md">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                Unstar | {{ ingredient.favorites }}
+            </button>
+            <button id="star-button" type="button" class="hidden btn btn-info btn-md">
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                Star | {{ ingredient.favorites }}
+            </button>
+            {% else %}
+            <button id="unstar-button" type="button" class="hidden btn btn-warning btn-md">
                 <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                 Unstar | {{ ingredient.favorites }}
             </button>
@@ -33,6 +43,7 @@
                 <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
                 Star | {{ ingredient.favorites }}
             </button>
+            {% endif %}
         </h1>
         <p> {{ ingredient.description }} </p>
         <div style="margin-top: 50px" class="container">

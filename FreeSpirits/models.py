@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from . import app, db
+import hashlib
 
 from werkzeug.security import generate_password_hash, \
      check_password_hash
@@ -31,6 +32,12 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
     pw_hash = db.Column(db.String(120))
+
+    def get_image(self):
+        size = 200
+        email = str(self.email).strip().lower().encode('utf-8')
+        return "http://www.gravatar.com/avatar/" + \
+            hashlib.md5(email).hexdigest() + "?s=" + str(200)
 
     def get_drinks(self):
         rows = UserToDrink.query.filter_by(user_id=self.id).all()

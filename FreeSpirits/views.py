@@ -171,6 +171,7 @@ def user(user_id=1):
     if query:
         return render_template("user.html",
                                user=query,
+                               image=query.get_image(),
                                drinks=query.get_drinks(),
                                ingredients=query.get_ingredients())
     else:

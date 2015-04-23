@@ -224,10 +224,10 @@ def search_drinks(query=None):
         or_results = list(set(and_results).symmetric_difference(User.query.whoosh_search(or_term).all()))
 
         for user in and_results:
-            user_dict = {'id': user.id, 'name': user.name}
+            user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
             users.append(user_dict)
         for drink in or_results:
-            user_dict = {'id': user.id, 'name': user.name}
+            user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
             users.append(user_dict)
 
         return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, query=query)

@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import urllib
+import simplejson
+import string
+
 from . import app, login_manager
 from .models import *
 from .forms import *
@@ -103,8 +107,23 @@ def drink(drink_id=1):
         starred = user.has_starred_drink(query)
 
     if query:
+        clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20")))
+        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + clean_name
+
+        request = urllib.request.Request(url, None, {})
+        response = urllib.request.urlopen(request)
+        results = simplejson.load(response)
+
+        image = ""
+        if 'responseData' in results and \
+           'results' in results['responseData'] and \
+           len(results['responseData']['results']) > 0 and \
+           'url' in results['responseData']['results'][0]:
+            image = results['responseData']['results'][0]['url']
+
         quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
         return render_template("drink.html",
+                               image=image,
                                drink=query,
                                quantities=quantities,
                                ingredients=ingredients,
@@ -143,8 +162,24 @@ def ingredient(ingredient_id=1):
         starred = user.has_starred_ingredient(query)
 
     if query:
+        clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20")))
+        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + clean_name
+
+        request = urllib.request.Request(url, None, {})
+        response = urllib.request.urlopen(request)
+        results = simplejson.load(response)
+
+        image = ""
+        if 'responseData' in results and \
+           'results' in results['responseData'] and \
+           len(results['responseData']['results']) > 0 and \
+           'url' in results['responseData']['results'][0]:
+            image = results['responseData']['results'][0]['url']
+
         drinks = Ingredient.get_drinks_by_id(ingredient_id, 10)
+
         return render_template("ingredient.html",
+                               image=image,
                                ingredient=query,
                                drinks=drinks,
                                user_id=user_id,

@@ -31,34 +31,66 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(64))
     email = db.Column(db.String(120), index=True, unique=True)
     pw_hash = db.Column(db.String(120))
-    fav_drinks = db.relationship('Drink', lazy='dynamic')
-    fav_ingredients = db.relationship('Ingredient', lazy='dynamic')
+
+    def get_drinks(self):
+        rows = UserToDrink.query.filter_by(user_id=self.id).all()
+        drinks = []
+        for row in rows:
+            drink_id = row.drink_id
+            drinks.append(Drink.query.get(drink_id))
+        return drinks
+
+    def get_ingredients(self):
+        rows = UserToIngredient.query.filter_by(user_id=self.id).all()
+        ingredients = []
+        for row in rows:
+            ingredient_id = row.ingredient_id
+            ingredients.append(Drink.query.get(ingredient_id))
+        return ingredients
 
     def star_drink(self, drink):
-        self.fav_drinks.append(drink)
+        row = UserToDrink(
+            user_id=self.id,
+            drink_id=drink.id
+        )
+        db.session.add(row)
         drink.favorites += 1
         db.session.commit()
 
     def remove_drink(self, drink):
-        self.fav_drinks.remove(drink)
+        row = UserToDrink.query.filter_by(user_id=self.id) \
+                               .filter_by(drink_id=drink.id).first()
+        db.session.remove(row)
         drink.favorites -= 1
         db.session.commit()
 
     def has_starred_drink(self, drink):
-        return drink in self.fav_drinks
+        row = UserToDrink.query.filter_by(user_id=self.id) \
+                               .filter_by(drink_id=drink.id).first()
+        return row is not None
 
     def star_ingredient(self, ingredient):
-        self.fav_ingredients.append(ingredient)
+        row = UserToIngredient(
+            user_id=self.id,
+            ingredient_id=ingredient.id
+        )
+        db.session.add(row)
         ingredient.favorites += 1
         db.session.commit()
 
     def remove_ingredient(self, ingredient):
-        self.fav_ingredients.remove(ingredient)
+        row = UserToIngredient.query.filter_by(user_id=self.id) \
+                                    .filter_by(ingredient_id=ingredient.id) \
+                                    .first()
+        db.session.remove(row)
         ingredient.favorites -= 1
         db.session.commit()
 
     def has_starred_ingredient(self, ingredient):
-        return ingredient in self.fav_ingredients
+        row = UserToIngredient.query.filter_by(user_id=self.id) \
+                                    .filter_by(ingredient_id=ingredient.id) \
+                                    .first()
+        return row is not None
 
     def set_password(self, password):
         self.pw_hash = generate_password_hash(password)
@@ -73,6 +105,36 @@ class User(db.Model, UserMixin):
         return "<User %r>" % (self.email)
 
 whooshalchemy.whoosh_index(app, User)
+
+
+class UserToDrink(db.Model):
+    """
+    This is the join table between users and drinks representing favorites
+    Queries are not to be made directly on this class, but to instead use
+    the User instance methods
+    """
+    __tablename__ = "UserDrink"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'),
+                        primary_key=True)
+    drink_id = db.Column(db.Integer, db.ForeignKey('Drink.id'),
+                         primary_key=True)
+
+
+class UserToIngredient(db.Model):
+    """
+    This is the join table between users and drinks representing favorites
+    Queries are not to be made directly on this class, but to instead use
+    the User instance methods
+    """
+    __tablename__ = "UserIngredient"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'),
+                        primary_key=True)
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('Ingredient.id'),
+                              primary_key=True)
 
 
 class IngredientToDrink(db.Model):

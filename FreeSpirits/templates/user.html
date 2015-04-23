@@ -23,7 +23,7 @@
                     Favorited drinks
                 </li>
 
-                {% for drink in user.fav_drinks %}
+                {% for drink in drinks %}
                 <li id="Drink{{ drink.id }}" class="list-group-item">
                     <a href="{{ url_for('drink', drink_id=drink.id)}}">
                         {{ drink.name }}
@@ -42,7 +42,7 @@
                     Favorited ingredients
                 </li>
 
-                {% for ingredient in user.fav_ingredients %}
+                {% for ingredient in ingredients %}
                 <li id="Ingredient{{ ingredient.id }}" class="list-group-item">
                     <a href="{{ url_for('ingredient', ingredient_id=ingredient.id) }}">
                         {{ ingredient.name }}

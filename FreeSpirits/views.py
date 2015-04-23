@@ -169,7 +169,10 @@ def users(page=1):
 def user(user_id=1):
     query = User.query.get(user_id)
     if query:
-        return render_template("user.html", user=query)
+        return render_template("user.html",
+                               user=query,
+                               drinks=query.get_drinks(),
+                               ingredients=query.get_ingredients())
     else:
         return page_not_found(404)
 

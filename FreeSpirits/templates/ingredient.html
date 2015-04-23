@@ -22,7 +22,9 @@
 {% block content %}
 <div class="container">
     <div class="jumbotron">
-        <img src={{ image }} width="50%">
+        {% if image != "" %}
+            <img src={{ image }} width="50%">
+        {% endif %}
         <h1>
             {{ ingredient.name }}
             {% if starred %}
@@ -99,9 +101,9 @@
                 </a>
 
                 {% for drink in drinks %}
-                <a href="{{ url_for('drink', drink_id=drink.id) }}" class="list-group-item">
-                    {{ drink.name }}
-                </a>
+                    <a href="{{ url_for('drink', drink_id=drink.id) }}" class="list-group-item">
+                        {{ drink.name }}
+                    </a>
                 {% endfor %}
             </div>
         </div>

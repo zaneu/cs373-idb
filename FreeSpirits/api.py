@@ -197,7 +197,6 @@ class StarItem(restful.Resource):
             return "Item does not exist"
 
         previous_star_count = item.favorites
-        assert(abs(star_count - previous_star_count) == 1)
 
         if (previous_star_count < star_count):
             if item_type == "Ingredient":

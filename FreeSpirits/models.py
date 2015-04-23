@@ -60,7 +60,7 @@ class User(db.Model, UserMixin):
     def remove_drink(self, drink):
         row = UserToDrink.query.filter_by(user_id=self.id) \
                                .filter_by(drink_id=drink.id).first()
-        db.session.remove(row)
+        db.session.delete(row)
         drink.favorites -= 1
         db.session.commit()
 
@@ -82,7 +82,7 @@ class User(db.Model, UserMixin):
         row = UserToIngredient.query.filter_by(user_id=self.id) \
                                     .filter_by(ingredient_id=ingredient.id) \
                                     .first()
-        db.session.remove(row)
+        db.session.delete(row)
         ingredient.favorites -= 1
         db.session.commit()
 

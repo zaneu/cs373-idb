@@ -107,8 +107,8 @@ def drink(drink_id=1):
         starred = user.has_starred_drink(query)
 
     if query:
-        clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20")))
-        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + clean_name
+        clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20"))) + "%20drink"
+        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&imgsz=medium|large|xlarge&q=" + clean_name
 
         request = urllib.request.Request(url, None, {})
         response = urllib.request.urlopen(request)
@@ -122,6 +122,7 @@ def drink(drink_id=1):
             image = results['responseData']['results'][0]['url']
 
         quantities, ingredients = Drink.get_ingredients_by_id(drink_id)
+
         return render_template("drink.html",
                                image=image,
                                drink=query,
@@ -163,7 +164,7 @@ def ingredient(ingredient_id=1):
 
     if query:
         clean_name = ''.join(filter(lambda x: x in string.printable, query.name.replace(" ", "%20")))
-        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + clean_name
+        url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&safe=active&imgsz=medium|large|xlarge&q=" + clean_name
 
         request = urllib.request.Request(url, None, {})
         response = urllib.request.urlopen(request)

@@ -11,3 +11,4 @@ doc
 whoosh/
 /FreeSpirits/templates/'
 /FreeSpirits/templates/;
+/FreeSpirits/static/img/favicon32.ico

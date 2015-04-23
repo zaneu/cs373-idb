@@ -13,24 +13,17 @@ $(function () {
     };
 
     function update_db () {
-        console.log("Inside update db");
         $.post('/api/star/', {
             user_id: user_id,
             item_id: item_id,
             star_count: star_count,
             item_type: item_type
-        }).done (function () {
-            console.log("Done");
-        }).fail (function () {
-            console.log("Failed");
         });
     }
 
     if (starred) {
-        $('#unstar-button').show();
         $('#star-button').hide();
     } else {
-        $('#star-button').show();
         $('#unstar-button').hide();
     }
 

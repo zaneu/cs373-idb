@@ -215,6 +215,50 @@ class StarItem(restful.Resource):
 api.add_resource(StarItem, '/api/star/')
 
 
+class RemoveFavorite(restful.Resource):
+    """
+    This is a private endpoint that is invoked on user profile pages
+    The parameters are described as follows:
+    user_id: the current user
+    item_id: the id of the item to be removed
+    item_type: the type of the item to be removed
+    """
+
+    def post(self):
+        user_id = int(request.form['user_id'])
+        item_id = int(request.form['item_id'])
+        item_type = request.form['item_type']
+
+        if (not (current_user.is_authenticated() and
+                 user_id != current_user.get_id())):
+            return "User id not valid"
+
+        user = User.query.get(user_id)
+        if not user:
+            return "User does not exist"
+
+        item = None
+        if item_type == "Drink":
+            item = Drink
+        elif item_type == "Ingredient":
+            item = Ingredient
+        else:
+            return "Item type is not valid"
+
+        item = item.query.get(item_id)
+        if not item:
+            return "Item does not exist"
+
+        if item_type == "Drink":
+            user.remove_drink(item)
+        else:
+            user.remove_ingredient(item)
+
+        return "success"
+
+api.add_resource(RemoveFavorite, '/api/remove-item')
+
+
 class TestApi(restful.Resource):
     """
     The Test API

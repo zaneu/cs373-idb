@@ -75,6 +75,7 @@ for value in progress.bar(drinks):
 print("Committing drinks")
 db.session.commit()
 
+print("Loading the many to many from Drink to Ingredient")
 count = 1
 for drink, ingredients in progress.bar(list(zip(drinks_listing,
                                                 ingredients_listing))):

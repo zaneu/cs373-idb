@@ -4,8 +4,9 @@
   {{ user.name }}
 {% endblock %}
 {% block head %}
-  {{ super() }}
-  <link rel="stylesheet" href="../static/css/user.css" type="text/css">
+{{ super() }}
+<link rel="stylesheet" href="../static/css/user.css" type="text/css">
+<script src="../static/js/remove-item.js"> </script>
 {% endblock %}
 
 {% block content %}
@@ -15,6 +16,48 @@
         <img src="http://www.menucool.com/slider/prod/image-slider-2.jpg">
         <h1>{{ user.first_name ~ " " ~ user.last_name }}</h1>
         <h3 style="opacity: 0.6;"> {{ user.email }} </h3>
+
+        <div style="margin-top: 50px" class="container">
+            <ul class="list-group col-lg-6">
+                <li class="list-group-item active">
+                    Favorited drinks
+                </li>
+
+                {% for drink in user.fav_drinks %}
+                <li id="Drink{{ drink.id }}" class="list-group-item">
+                    <a href="{{ url_for('drink', drink_id=drink.id)}}">
+                        {{ drink.name }}
+                    </a>
+                    {% if user.id == current_user.id %}
+                    <button class="btn btn-xs btn-default pull-right"
+                            onclick="remove_item({{ user.id }}, {{ drink.id }}, 'Drink')">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <ul class="list-group col-lg-6">
+                <li class="list-group-item list-group-item-info clearfix">
+                    Favorited ingredients
+                </li>
+
+                {% for ingredient in user.fav_ingredients %}
+                <li id="Ingredient{{ ingredient.id }}" class="list-group-item">
+                    <a href="{{ url_for('ingredient', ingredient_id=ingredient.id) }}">
+                        {{ ingredient.name }}
+                    </a>
+                    {% if user.id == current_user.id %}
+                    <button class="btn btn-xs btn-default pull-right"
+                            onclick="remove_item({{ user.id }}, {{ ingredient.id }}, 'Ingredient')">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
         <p class="text-center">
             <a href="{{ '/api/users/' ~ user.id }}" class="btn btn-primary btn-lg">Get the data</a>
         </p>

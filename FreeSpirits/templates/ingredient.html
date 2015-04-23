@@ -22,32 +22,40 @@
 {% block content %}
 <div class="container">
     <div class="jumbotron">
-        {% if image != "" %}
-            <img src={{ image }} width="50%">
-        {% endif %}
-        <h1>
-            {{ ingredient.name }}
-            {% if starred %}
-            <button id="unstar-button" type="button" class="btn btn-warning btn-md">
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                Unstar | {{ ingredient.favorites }}
-            </button>
-            <button id="star-button" type="button" class="hidden btn btn-info btn-md">
-                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                Star | {{ ingredient.favorites }}
-            </button>
-            {% else %}
-            <button id="unstar-button" type="button" class="hidden btn btn-warning btn-md">
-                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                Unstar | {{ ingredient.favorites }}
-            </button>
-            <button id="star-button" type="button" class="btn btn-info btn-md">
-                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                Star | {{ ingredient.favorites }}
-            </button>
-            {% endif %}
-        </h1>
-        <p> {{ ingredient.description }} </p>
+        <div class="container">
+            <div class="col-lg-6">
+                {% if image != "" %}
+                    <img src={{ image }} width="100%">
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                <h1>
+                    {{ ingredient.name }}
+                    {% if starred %}
+                    <button id="unstar-button" type="button" class="btn btn-warning btn-md">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        Unstar | {{ ingredient.favorites }}
+                    </button>
+                    <button id="star-button" type="button" class="hidden btn btn-info btn-md">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        Star | {{ ingredient.favorites }}
+                    </button>
+                    {% else %}
+                    <button id="unstar-button" type="button" class="hidden btn btn-warning btn-md">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                        Unstar | {{ ingredient.favorites }}
+                    </button>
+                    <button id="star-button" type="button" class="btn btn-info btn-md">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                        Star | {{ ingredient.favorites }}
+                    </button>
+                    {% endif %}
+                </h1>
+                <p>
+                    {{ ingredient.description }}
+                </p>
+            </div>
+        </div>
         <div style="margin-top: 50px" class="container">
             <ul class="list-group col-lg-6">
                 <li class="list-group-item list-group-item-info">

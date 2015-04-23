@@ -157,6 +157,72 @@ class UserId(restful.Resource):
 api.add_resource(UserId, '/api/users/<int:user_id>')
 
 
+class SearchApi(restful.Resource):
+    """
+    The mechanism to search for a user, ingredient, or
+    drink by keywords
+    """
+
+    def get(self, query):
+        if query is None:
+            return page_not_found(404)
+        else:
+            terms = query.lower().split()
+            query = "\"" + query.lower() + "\""
+            and_term = ""
+            or_term = ""
+            drinks = []
+            ingredients = []
+            users = []
+
+            for i, term in enumerate(terms):
+                if i != 0:
+                    and_term += " AND " + term
+                    or_term += " OR " + term
+                else:
+                    and_term += term
+                    or_term += term
+
+            and_results = Drink.query.whoosh_search(and_term).all()
+            or_results = list(set(and_results).symmetric_difference(Drink.query.whoosh_search(or_term).all()))
+
+            for drink in and_results:
+                drink_dict = {'id': drink.id, 'name': drink.name}
+                drinks.append(drink_dict)
+            for drink in or_results:
+                drink_dict = {'id': drink.id, 'name': drink.name}
+                drinks.append(drink_dict)
+
+            and_results = Ingredient.query.whoosh_search(and_term).all()
+            or_results = list(set(and_results).symmetric_difference(Ingredient.query.whoosh_search(or_term).all()))
+
+            for ingredient in and_results:
+                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+                ingredients.append(ingredient_dict)
+            for ingredient in or_results:
+                ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
+                ingredients.append(ingredient_dict)
+
+            and_results = User.query.whoosh_search(and_term).all()
+            or_results = list(set(and_results).symmetric_difference(User.query.whoosh_search(or_term).all()))
+
+            for user in and_results:
+                user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
+                users.append(user_dict)
+            for drink in or_results:
+                user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
+                users.append(user_dict)
+
+            results = []
+            results.append(drinks)
+            results.append(ingredients)
+            results.append(users)
+
+            return jsonify(results=results)
+
+api.add_resource(SearchApi, '/api/search/<string:query>')
+
+
 class StarItem(restful.Resource):
     """
     The endpoint in which to star an item (drink or ingredient)

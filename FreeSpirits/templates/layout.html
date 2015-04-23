@@ -56,7 +56,11 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-              <form id="navbar-search-bar" class="navbar-form navbar-left" role="search">
+              {% set search_classes = "navbar-form navbar-left" %}
+              {% if request.path == "/index" or request.path == "/" %}
+              {% set search_classes = "navbar-form navbar-left hidden" %}
+              {% endif %}
+              <form id="navbar-search-bar" class="{{ search_classes }}" role="search">
                   <div class="input-group">
                       <input id="navbar-inputdata" type="text" class="form-control" placeholder="Search">
                       <span class="input-group-addon">

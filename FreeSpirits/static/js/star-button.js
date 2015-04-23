@@ -21,6 +21,10 @@ $(function () {
         });
     }
 
+    // no current user
+    if (user_id < 0) {
+        $('button').prop('disabled', true);
+    }
     if (starred) {
         $('#star-button').hide();
     } else {

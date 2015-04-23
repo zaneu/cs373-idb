@@ -3,8 +3,8 @@
 {% block title %}Index{% endblock %}
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="../static/css/index.css" type="text/css">
-  <script src="../static/js/search.js"></script>
+<link rel="stylesheet" href="../static/css/index.css" type="text/css">
+<script src="../static/js/index.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-lg-6 col-lg-offset-3">
           <div class="input-group">
-            <input id="inputdata" type="text" class="form-control" onkeydown="if(event.keyCode==13)$('#searchBtn').trigger('click');"placeholder="What would you like to drink today?">
+            <input id="inputdata" type="text" class="form-control" placeholder="What would you like to drink today?">
             <span class="input-group-btn">
               <button id="searchBtn" class="btn btn-default" type="button" >Search</button>
             </span>

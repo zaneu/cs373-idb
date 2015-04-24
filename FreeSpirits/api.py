@@ -294,7 +294,7 @@ class TestApi(restful.Resource):
         basedir = os.path.abspath(os.path.dirname(__file__))
         basedir = os.path.abspath(os.path.join(basedir, os.pardir))
 
-        output = subprocess.check_output(['python', basedir + '/tests.py'],
+        output = subprocess.check_output(['python3', basedir + '/tests.py'],
                                          stderr=subprocess.STDOUT)
         output = output.decode("utf-8")
         output = output.strip()

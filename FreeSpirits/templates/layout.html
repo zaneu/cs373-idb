@@ -1,119 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% block head %}
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Free Spirits - {% block title %}{% endblock %}</title>
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Free Spirits - {% block title %}{% endblock %}</title>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="http://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/superhero/bootstrap.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" >
-    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="../static/css/base.css" rel="stylesheet" type="text/css">
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="../static/js/search.js"></script>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+        <link href="http://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/superhero/bootstrap.min.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" >
+        <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+        <link href="../static/css/base.css" rel="stylesheet" type="text/css">
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="../static/js/search.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
 
-    {% endblock %}
-  </head>
-  <body>
-    <div id="wrap">
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ url_for('index') }}">Free Spirits</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="{{ url_for('drinks') }}">Drinks</a>
-            </li>
-            <li>
-              <a href="{{ url_for('ingredients') }}">Ingredients</a>
-            </li>
-            <li>
-              <a href="{{ url_for('users') }}">Users</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-              {% set search_classes = "navbar-form navbar-left" %}
-              {% if request.path == "/index" or request.path == "/" %}
-              {% set search_classes = "navbar-form navbar-left hidden" %}
-              {% endif %}
-              <form id="navbar-search-bar" class="{{ search_classes }}" role="search">
-                  <div class="input-group">
-                      <input id="navbar-inputdata" type="text" class="form-control" placeholder="Search">
-                      <span class="input-group-addon">
-                              <i id="icon-search-for" class="fa fa-search"></i>
-                      </span>
-                  </div>
-              </form>
-              <li>
-                  {% if current_user.is_authenticated() %}
-                  <button class="btn btn-primary btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-                      {{ current_user.first_name }}
-                      <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                      <li role="presentation">
-                          <a role="menuitem" tabindex="-1" href="{{ url_for('user', user_id=current_user.id)}}">
-                              Profile
-                          </a>
-                      </li>
-                      <li role="presentation">
-                          <a role="menuitem" tabindex="-1" href="{{ url_for('logout') }}">
-                              Logout
-                          </a>
-                      </li>
-                  </ul>
+        {% endblock %}
+    </head>
+    <body>
+        <div id="wrap">
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{ url_for('index') }}">Free Spirits</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{ url_for('drinks') }}">Drinks</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('ingredients') }}">Ingredients</a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('users') }}">Users</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            {% set search_classes = "navbar-form navbar-left" %}
+                            {% if request.path == "/index" or request.path == "/" %}
+                            {% set search_classes = "navbar-form navbar-left hidden" %}
+                            {% endif %}
+                            <li>
+                                <form id="navbar-search-bar" class="{{ search_classes }}" role="search">
+                                    <div class="input-group">
+                                        <input id="navbar-inputdata" type="text" class="form-control" placeholder="Search">
+                                        <span class="input-group-addon">
+                                            <i id="icon-search-for" class="fa fa-search"></i>
+                                        </span>
+                                    </div>
+                                </form>
+                            </li>
+                            <li>
+                                {% if current_user.is_authenticated() %}
+                                <button class="btn btn-primary btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                                    {{ current_user.first_name }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" href="{{ url_for('user', user_id=current_user.id)}}">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" href="{{ url_for('logout') }}">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
 
-                  {% else %}
-                  <a href="{{ url_for('login') }}">Login</a>
-                  {% endif %}
-              </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+                                {% else %}
+                                <a href="{{ url_for('login') }}">Login</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div style="float: none; margin: 0 auto;" class="col-lg-4">
-            {% for message in messages %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Success!</strong> {{ message }}
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div style="float: none; margin: 0 auto;" class="col-lg-4">
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success!</strong> {{ message }}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    {% endwith %}
+            {% endif %}
+            {% endwith %}
 
-    {% block content %}{% endblock %}
-    </div>
-    {% block footer %}{% endblock %}
-    <!-- Bootstrap Core Javascript -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  </body>
+            {% block content %}{% endblock %}
+        </div>
+        {% block footer %}{% endblock %}
+        <!-- Bootstrap Core Javascript -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </body>
 </html>

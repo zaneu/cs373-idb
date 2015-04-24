@@ -24,9 +24,9 @@ def parse_query(query):
         if i != 0:
             and_term += " AND " + term
             or_term += " OR " + term
-    else:
-        and_term += term
-        or_term += term
+        else:
+            and_term += term
+            or_term += term
 
     return (and_term, or_term)
 

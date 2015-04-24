@@ -239,13 +239,24 @@ def search(query=None):
 @app.route('/superheroapitest')
 @app.route('/superheroapitest/')
 def superhero():
-    
-    request = urllib.request.Request('http://private-anon-452377244-superheroes.apiary-mock.com/characters/', None, {})
+    request = urllib.request.Request('http://superheroes-idb.tk/characters/',
+                                     None, {})
     response_body = urllib.request.urlopen(request)
     results = simplejson.load(response_body)
-    
-    return jsonify(results)
-    #return render_template("superheroapitest.html")
+
+    characters = []
+    for item in results['Characters']:
+        id = item['id']
+        request = urllib.request.Request('http://superheroes-idb.tk/characters/' +
+                                         str(id), None, {})
+        response_body = urllib.request.urlopen(request)
+        results = simplejson.load(response_body)
+        characters.append(results)
+
+    print(characters)
+
+    return render_template("superheroapitest.html",
+                           characters=characters)
 
 @app.errorhandler(404)
 def page_not_found(error):

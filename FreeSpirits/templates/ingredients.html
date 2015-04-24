@@ -21,6 +21,9 @@
                         <th>
                             <a href="{{ url_for('ingredients', sort_by='name', page=page)}}">
                                 Name
+                                {% if request.args.get('sort_by') == "name"  or request.args.get('sort_by') == None %}
+                                <i class="fa fa-arrow-down"></i>
+                                {% endif %}
                             </a>
                         </th>
 
@@ -28,6 +31,9 @@
                             <a href="{{ url_for('ingredients', sort_by='favorites', page=page)}}">
                                 Favorites
                             </a>
+                            {% if request.args.get('sort_by') == "favorites" %}
+                            <i class="fa fa-arrow-down"></i>
+                            {% endif %}
                         </th>
                     </tr>
                 </thead>

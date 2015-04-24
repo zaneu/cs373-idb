@@ -239,7 +239,13 @@ def search(query=None):
 @app.route('/superheroapitest')
 @app.route('/superheroapitest/')
 def superhero():
-    return render_template("superheroapitest.html")
+    
+    request = urllib.request.Request('http://private-anon-452377244-superheroes.apiary-mock.com/characters/', None, {})
+    response_body = urllib.request.urlopen(request)
+    results = simplejson.load(response_body)
+    
+    return jsonify(results)
+    #return render_template("superheroapitest.html")
 
 @app.errorhandler(404)
 def page_not_found(error):

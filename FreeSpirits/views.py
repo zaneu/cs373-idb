@@ -236,6 +236,11 @@ def search(query=None):
                            terms=terms)
 
 
+@app.route('/superheroapitest')
+@app.route('/superheroapitest/')
+def superhero():
+    return render_template("superheroapitest.html")
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404

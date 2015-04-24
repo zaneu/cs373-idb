@@ -253,7 +253,7 @@ def superhero():
         results = simplejson.load(response_body)
         characters.append(results)
 
-    print(characters)
+    
 
     return render_template("superheroapitest.html",
                            characters=characters)

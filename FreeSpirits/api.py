@@ -165,7 +165,9 @@ class SearchApi(restful.Resource):
 
     def get(self, query):
         if query is None:
-            return page_not_found(404)
+            return "query cannot be empty"
+        elif query.strip() == "":
+            return "query cannot be empty"
         else:
             terms = query.lower().split()
             query = "\"" + query.lower() + "\""

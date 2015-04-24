@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-from flask import Flask
-
 from FreeSpirits import db, dummy_client
 from FreeSpirits.models import *
 
@@ -178,6 +176,19 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(Drink.query.filter_by(name="Gin & Tonic").first(),
                          drink)
 
+    def test_drink_search(self):
+        drink = Drink(name="Gin & Tonic",
+                      recipe="Mix Gin and Tonic. Stir slowly")
+        db.session.add(drink)
+        db.session.commit()
+
+        self.assertTrue(drink in db.session)
+        results = Drink.search("Gin")
+        self.assertTrue(results is not None)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['id'], 1)
+        self.assertEqual(results[0]['name'], "Gin & Tonic")
+
     def test_get_ingredients_by_id_1(self):
         drink = Drink(id=1, name="Gin & Tonic",
                       recipe="Mix Gin and Tonic. Stir slowly")
@@ -246,6 +257,18 @@ class ModelTests(unittest.TestCase):
         self.assertEqual(ingredients[0], ["5", "10", "15"])
         self.assertEqual(ingredients[1], Ingredient.query.all())
 
+    def test_ingredient_search(self):
+        ingredient = Ingredient(name="Orange")
+        db.session.add(ingredient)
+        db.session.commit()
+
+        self.assertTrue(ingredient in db.session)
+        results = Ingredient.search("Orange")
+        self.assertTrue(results is not None)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['id'], 1)
+        self.assertEqual(results[0]['name'], "Orange")
+
     def test_add_default_user(self):
         user = User()
         db.session.add(user)
@@ -269,6 +292,18 @@ class ModelTests(unittest.TestCase):
         self.assertTrue(user in db.session)
         self.assertEqual(User.query.filter_by(email="pbae@utexas.edu").first(),
                          user)
+
+    def test_user_search(self):
+        user = User(first_name="Paul", last_name="Bae")
+        db.session.add(user)
+        db.session.commit()
+
+        self.assertTrue(user in db.session)
+        results = User.search("Paul")
+        self.assertTrue(results is not None)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['id'], 1)
+        self.assertEqual(results[0]['name'], "Paul Bae")
 
 if __name__ == '__main__':
     unittest.main()

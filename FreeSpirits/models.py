@@ -10,6 +10,42 @@ import flask.ext.whooshalchemy as whooshalchemy
 from flask.ext.login import UserMixin
 
 
+def parse_query(query):
+    """
+    Helper method to parse the queries
+    This function is invoked in Drink, Ingredient, and Users' search functions
+    """
+    terms = query.lower().split()
+    query = "\"" + query.lower() + "\""
+    and_term = ""
+    or_term = ""
+
+    for i, term in enumerate(terms):
+        if i != 0:
+            and_term += " AND " + term
+            or_term += " OR " + term
+    else:
+        and_term += term
+        or_term += term
+
+    return (and_term, or_term)
+
+
+def parse_results(and_results, or_results):
+    """
+    A helper function that takes in the results lists
+    and returns the id: name key pair values
+    """
+
+    result = []
+    for item in and_results:
+        result.append({'id': item.id, 'name': item.name})
+    for drink in or_results:
+        result.append({'id': item.id, 'name': item.name})
+
+    return result
+
+
 class User(db.Model, UserMixin):
     """
     The User model
@@ -33,11 +69,31 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), index=True, unique=True)
     pw_hash = db.Column(db.String(120))
 
+    @staticmethod
+    def search(query):
+        if query is None or not query.strip():
+            return []
+
+        and_term, or_term = parse_query(query)
+        and_results = User.query.whoosh_search(and_term).all()
+        or_results = User.query.whoosh_search(or_term).all()
+        or_results = list(set(and_results).symmetric_difference(or_results))
+
+        result = []
+        for item in and_results:
+            result.append({'id': item.id, 'name': item.first_name + " " +
+                           item.last_name})
+        for drink in or_results:
+            result.append({'id': item.id, 'name': item.first_name + " " +
+                           item.last_name})
+
+        return result
+
     def get_image(self):
         size = 200
         email = str(self.email).strip().lower().encode('utf-8')
         return "http://www.gravatar.com/avatar/" + \
-            hashlib.md5(email).hexdigest() + "?s=" + str(200)
+            hashlib.md5(email).hexdigest() + "?s=" + str(size)
 
     def get_drinks(self):
         rows = UserToDrink.query.filter_by(user_id=self.id).all()
@@ -186,8 +242,17 @@ class Ingredient(db.Model):
     favorites = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
-    def __repr__(self):
-        return "<Ingredient %r>" % (self.name)
+    @staticmethod
+    def search(query):
+        if query is None or not query.strip():
+            return []
+
+        and_term, or_term = parse_query(query)
+        and_results = Ingredient.query.whoosh_search(and_term).all()
+        or_results = Ingredient.query.whoosh_search(or_term).all()
+        or_results = list(set(and_results).symmetric_difference(or_results))
+
+        return parse_results(and_results, or_results)
 
     @staticmethod
     def get_drinks_by_id(id, limit):
@@ -204,6 +269,9 @@ class Ingredient(db.Model):
     def get_drinks_by_name(name, limit):
         id = Ingredient.query.filter_by(name=name).first().id
         return Ingredient.get_drinks_by_id(id, limit)
+
+    def __repr__(self):
+        return "<Ingredient %r>" % (self.name)
 
 whooshalchemy.whoosh_index(app, Ingredient)
 
@@ -225,8 +293,17 @@ class Drink(db.Model):
     favorites = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
-    def __repr__(self):
-        return "<Drink %r>" % (self.name)
+    @staticmethod
+    def search(query):
+        if query is None or not query.strip():
+            return []
+
+        and_term, or_term = parse_query(query)
+        and_results = Drink.query.whoosh_search(and_term).all()
+        or_results = Drink.query.whoosh_search(or_term).all()
+        or_results = list(set(and_results).symmetric_difference(or_results))
+
+        return parse_results(and_results, or_results)
 
     @staticmethod
     def get_ingredients_by_id(id):
@@ -244,5 +321,8 @@ class Drink(db.Model):
     def get_ingredients_by_name(name):
         id = Drink.query.filter_by(name=name).first().id
         return Drink.get_ingredients_by_id(id)
+
+    def __repr__(self):
+        return "<Drink %r>" % (self.name)
 
 whooshalchemy.whoosh_index(app, Drink)

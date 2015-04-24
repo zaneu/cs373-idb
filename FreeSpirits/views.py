@@ -217,56 +217,15 @@ def user(user_id=1):
 @app.route('/search')
 @app.route('/search/<query>')
 def search(query=None):
-    if query is None:
-        return render_template("search.html", drinks_results=[], ingredients_results = [], users_results = [], query="\"\"")
-    else:
-        terms = query.lower().split()
-        query = "\"" + query.lower() + "\""
-        and_term = ""
-        or_term = ""
-        drinks = []
-        ingredients = []
-        users = []
+    drinks = Drink.search(query)
+    ingredients = Ingredient.search(query)
+    users = User.search(query)
 
-        for i, term in enumerate(terms):
-            if i != 0:
-                and_term += " AND " + term
-                or_term += " OR " + term
-            else:
-                and_term += term
-                or_term += term
-
-        and_results = Drink.query.whoosh_search(and_term).all()
-        or_results = list(set(and_results).symmetric_difference(Drink.query.whoosh_search(or_term).all()))
-
-        for drink in and_results:
-            drink_dict = {'id': drink.id, 'name': drink.name}
-            drinks.append(drink_dict)
-        for drink in or_results:
-            drink_dict = {'id': drink.id, 'name': drink.name}
-            drinks.append(drink_dict)
-
-        and_results = Ingredient.query.whoosh_search(and_term).all()
-        or_results = list(set(and_results).symmetric_difference(Ingredient.query.whoosh_search(or_term).all()))
-
-        for ingredient in and_results:
-            ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
-            ingredients.append(ingredient_dict)
-        for ingredient in or_results:
-            ingredient_dict = {'id': ingredient.id, 'name': ingredient.name}
-            ingredients.append(ingredient_dict)
-
-        and_results = User.query.whoosh_search(and_term).all()
-        or_results = list(set(and_results).symmetric_difference(User.query.whoosh_search(or_term).all()))
-
-        for user in and_results:
-            user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
-            users.append(user_dict)
-        for drink in or_results:
-            user_dict = {'id': user.id, 'name': user.first_name + " " + user.last_name}
-            users.append(user_dict)
-
-        return render_template("search.html", drinks=drinks, ingredients=ingredients, users=users, query=query)
+    return render_template("search.html",
+                           drinks=drinks,
+                           ingredients=ingredients,
+                           users=users,
+                           query=query)
 
 
 @app.errorhandler(404)

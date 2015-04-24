@@ -8,7 +8,36 @@
 
 {% block content %}
 
+  <div class="container">
+      <div class="jumbotron">
+          <h1> Superhero Test API </h1>
+          <div style="margin-top: 50px" class="container">
+              <div class="list-group">
+                  {% for character in characters %}
+                  <div class="list-group-item">
+                      <h2 class="list-group-item-heading">
+                          {{ character.name }}
+                      </h2>
 
-<!--- API TEST CONTENT GOES BELOW --->
+                      <h4 class="list-group-item-heading">
+                          {{ character.description }}
+                      </h4>
+
+                      <img src="{{ character.picture }}" width="50%%">
+                      <h5 class="list-group-item-heading">
+                          Shows:
+                      </h5>
+                      <ul class="list-group-item-text">
+                          {% for show in character["shows"] %}
+                          <li>
+                              {{ show["name"] }}
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+                  {% endfor %}
+              </div>
+      </div>
+  </div>
 
 {% endblock %}

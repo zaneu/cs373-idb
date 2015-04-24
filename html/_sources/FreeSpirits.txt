@@ -4,10 +4,34 @@ FreeSpirits package
 Submodules
 ----------
 
+FreeSpirits.api module
+----------------------
+
+.. automodule:: FreeSpirits.api
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+FreeSpirits.forms module
+------------------------
+
+.. automodule:: FreeSpirits.forms
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 FreeSpirits.models module
 -------------------------
 
 .. automodule:: FreeSpirits.models
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+FreeSpirits.validators module
+-----------------------------
+
+.. automodule:: FreeSpirits.validators
     :members:
     :undoc-members:
     :show-inheritance:

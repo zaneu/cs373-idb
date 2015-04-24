@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>flask_whooshalchemy &mdash; FreeSpirits 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="FreeSpirits 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">FreeSpirits 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for flask_whooshalchemy</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">    whooshalchemy flask extension</span>
+<span class="sd">    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">    Adds whoosh indexing capabilities to SQLAlchemy models for Flask</span>
+<span class="sd">    applications.</span>
+
+<span class="sd">    :copyright: (c) 2012 by Karl Gyllstrom</span>
+<span class="sd">    :license: BSD (see LICENSE.txt)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+
+
+<span class="kn">import</span> <span class="nn">flask.ext.sqlalchemy</span> <span class="kn">as</span> <span class="nn">flask_sqlalchemy</span>
+
+<span class="kn">import</span> <span class="nn">sqlalchemy</span>
+
+<span class="kn">from</span> <span class="nn">whoosh.qparser</span> <span class="kn">import</span> <span class="n">OrGroup</span>
+<span class="kn">from</span> <span class="nn">whoosh.qparser</span> <span class="kn">import</span> <span class="n">AndGroup</span>
+<span class="kn">from</span> <span class="nn">whoosh.qparser</span> <span class="kn">import</span> <span class="n">MultifieldParser</span>
+<span class="kn">from</span> <span class="nn">whoosh.analysis</span> <span class="kn">import</span> <span class="n">StemmingAnalyzer</span>
+<span class="kn">import</span> <span class="nn">whoosh.index</span>
+<span class="kn">from</span> <span class="nn">whoosh.fields</span> <span class="kn">import</span> <span class="n">Schema</span>
+<span class="c">#from whoosh.fields import ID, TEXT, KEYWORD, STORED</span>
+
+<span class="kn">import</span> <span class="nn">heapq</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="n">__searchable__</span> <span class="o">=</span> <span class="s">&#39;__searchable__&#39;</span>
+
+
+<span class="n">DEFAULT_WHOOSH_INDEX_NAME</span> <span class="o">=</span> <span class="s">&#39;whoosh_index&#39;</span>
+
+
+<span class="c"># handle unicode type in Python 3</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">unicode</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="nb">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<span class="k">class</span> <span class="nc">_QueryProxy</span><span class="p">(</span><span class="n">flask_sqlalchemy</span><span class="o">.</span><span class="n">BaseQuery</span><span class="p">):</span>
+    <span class="c"># We&#39;re replacing the model&#39;s ``query`` field with this proxy. The main</span>
+    <span class="c"># thing this proxy does is override the __iter__ method so that results are</span>
+    <span class="c"># returned in the order of the whoosh score to reflect text-based ranking.</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entities</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_QueryProxy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">entities</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modelclass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapper_zero</span><span class="p">()</span><span class="o">.</span><span class="n">class_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_primary_key_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelclass</span><span class="o">.</span><span class="n">whoosh_primary_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_whoosh_searcher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modelclass</span><span class="o">.</span><span class="n">pure_whoosh</span>
+
+        <span class="c"># Stores whoosh results from query. If ``None``, indicates that no</span>
+        <span class="c"># whoosh query was performed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_whoosh_rank</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Reorder ORM-db results according to Whoosh relevance score. &#39;&#39;&#39;</span>
+
+        <span class="n">super_iter</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">_QueryProxy</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__iter__</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_whoosh_rank</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># Whoosh search hasn&#39;t been run so behave as normal.</span>
+
+            <span class="k">return</span> <span class="n">super_iter</span>
+
+        <span class="c"># Iterate through the values and re-order by whoosh relevance.</span>
+        <span class="n">ordered_by_whoosh_rank</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">super_iter</span><span class="p">:</span>
+            <span class="c"># Push items onto heap, where sort value is the rank provided by</span>
+            <span class="c"># Whoosh</span>
+
+            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">ordered_by_whoosh_rank</span><span class="p">,</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_whoosh_rank</span><span class="p">[</span><span class="nb">unicode</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">row</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_primary_key_name</span><span class="p">))],</span> <span class="n">row</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">_inner</span><span class="p">():</span>
+            <span class="k">while</span> <span class="n">ordered_by_whoosh_rank</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">ordered_by_whoosh_rank</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">_inner</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">whoosh_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">or_</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">        Execute text query on database. Results have a text-based</span>
+<span class="sd">        match to the query, ranked by the scores from the underlying Whoosh</span>
+<span class="sd">        index.</span>
+
+<span class="sd">        By default, the search is executed on all of the indexed fields as an</span>
+<span class="sd">        OR conjunction. For example, if a model has &#39;title&#39; and &#39;content&#39;</span>
+<span class="sd">        indicated as ``__searchable__``, a query will be checked against both</span>
+<span class="sd">        fields, returning any instance whose title or content are a content</span>
+<span class="sd">        match for the query. To specify particular fields to be checked,</span>
+<span class="sd">        populate the ``fields`` parameter with the desired fields.</span>
+
+<span class="sd">        By default, results will only be returned if they contain all of the</span>
+<span class="sd">        query terms (AND). To switch to an OR grouping, set the ``or_``</span>
+<span class="sd">        parameter to ``True``.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">):</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_whoosh_searcher</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">or_</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
+            <span class="c"># We don&#39;t want to proceed with empty results because we get a</span>
+            <span class="c"># stderr warning from sqlalchemy when executing &#39;in_&#39; on empty set.</span>
+            <span class="c"># However we cannot just return an empty list because it will not</span>
+            <span class="c"># be a query.</span>
+
+            <span class="c"># XXX is this efficient?</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s">&#39;null&#39;</span><span class="p">)</span>
+
+        <span class="n">result_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">result_ranks</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">rank</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_primary_key_name</span><span class="p">]</span>
+            <span class="n">result_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">pk</span><span class="p">)</span>
+            <span class="n">result_ranks</span><span class="p">[</span><span class="n">pk</span><span class="p">]</span> <span class="o">=</span> <span class="n">rank</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modelclass</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_primary_key_name</span><span class="p">)</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">result_set</span><span class="p">))</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">_whoosh_rank</span> <span class="o">=</span> <span class="n">result_ranks</span>
+
+        <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">class</span> <span class="nc">_Searcher</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Assigned to a Model class as ``pure_search``, which enables</span>
+<span class="sd">    text-querying to whoosh hit list. Also used by ``query.whoosh_search``&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primary</span><span class="p">,</span> <span class="n">indx</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primary_key_name</span> <span class="o">=</span> <span class="n">primary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="n">indx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searcher</span> <span class="o">=</span> <span class="n">indx</span><span class="o">.</span><span class="n">searcher</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_all_fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">indx</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">_fields</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span>
+                <span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">primary_key_name</span><span class="p">]))</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">or_</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fields</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_fields</span>
+
+        <span class="n">group</span> <span class="o">=</span> <span class="n">OrGroup</span> <span class="k">if</span> <span class="n">or_</span> <span class="k">else</span> <span class="n">AndGroup</span>
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">MultifieldParser</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="o">.</span><span class="n">searcher</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">query</span><span class="p">),</span>
+                <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">whoosh_index</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Create whoosh index for ``model``, if one does not exist. If</span>
+<span class="sd">    the index exists it is opened and cached. &#39;&#39;&#39;</span>
+
+    <span class="c"># gets the whoosh index for this model, creating one if it does not exist.</span>
+    <span class="c"># A dict of model -&gt; whoosh index is added to the ``app`` variable.</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="s">&#39;whoosh_indexes&#39;</span><span class="p">):</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">whoosh_indexes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">return</span> <span class="n">app</span><span class="o">.</span><span class="n">whoosh_indexes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+                <span class="n">_create_index</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_create_index</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="c"># a schema is created based on the fields of the model. Currently we only</span>
+    <span class="c"># support primary key -&gt; whoosh.ID, and sqlalchemy.(String, Unicode, Text)</span>
+    <span class="c"># -&gt; whoosh.TEXT.</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;WHOOSH_BASE&#39;</span><span class="p">):</span>
+        <span class="c"># XXX todo: is there a better approach to handle the absenSe of a</span>
+        <span class="c"># config value for whoosh base? Should we throw an exception? If</span>
+        <span class="c"># so, this exception will be thrown in the after_commit function,</span>
+        <span class="c"># which is probably not ideal.</span>
+
+        <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s">&#39;WHOOSH_BASE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_WHOOSH_INDEX_NAME</span>
+
+    <span class="c"># we index per model.</span>
+    <span class="n">wi</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;WHOOSH_BASE&#39;</span><span class="p">),</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+
+    <span class="n">schema</span><span class="p">,</span> <span class="n">primary_key</span> <span class="o">=</span> <span class="n">_get_whoosh_schema_and_primary_key</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">whoosh</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">exists_in</span><span class="p">(</span><span class="n">wi</span><span class="p">):</span>
+        <span class="n">indx</span> <span class="o">=</span> <span class="n">whoosh</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">open_dir</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">wi</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">wi</span><span class="p">)</span>
+        <span class="n">indx</span> <span class="o">=</span> <span class="n">whoosh</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">create_in</span><span class="p">(</span><span class="n">wi</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">whoosh_indexes</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">indx</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">pure_whoosh</span> <span class="o">=</span> <span class="n">_Searcher</span><span class="p">(</span><span class="n">primary_key</span><span class="p">,</span> <span class="n">indx</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">whoosh_primary_key</span> <span class="o">=</span> <span class="n">primary_key</span>
+
+    <span class="c"># change the query class of this model to our own</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">query_class</span> <span class="o">=</span> <span class="n">_QueryProxy</span>
+
+    <span class="k">return</span> <span class="n">indx</span>
+
+
+<span class="k">def</span> <span class="nf">_get_whoosh_schema_and_primary_key</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">schema</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">primary</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">searchable</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">__searchable__</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">primary_key</span><span class="p">:</span>
+            <span class="n">schema</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">whoosh</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">ID</span><span class="p">(</span><span class="n">stored</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">primary</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">searchable</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Text</span><span class="p">,</span> <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">String</span><span class="p">,</span>
+                    <span class="n">sqlalchemy</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">Unicode</span><span class="p">)):</span>
+
+            <span class="n">schema</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">whoosh</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">TEXT</span><span class="p">(</span>
+                    <span class="n">analyzer</span><span class="o">=</span><span class="n">StemmingAnalyzer</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">Schema</span><span class="p">(</span><span class="o">**</span><span class="n">schema</span><span class="p">),</span> <span class="n">primary</span>
+
+
+<span class="k">def</span> <span class="nf">_after_flush</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">changes</span><span class="p">):</span>
+    <span class="c"># Any db updates go through here. We check if any of these models have</span>
+    <span class="c"># ``__searchable__`` fields, indicating they need to be indexed. With these</span>
+    <span class="c"># we update the whoosh index for the model. If no index exists, it will be</span>
+    <span class="c"># created here; this could impose a penalty on the initial commit of a</span>
+    <span class="c"># model.</span>
+
+    <span class="n">bytype</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c"># sort changes by type so we can use per-model writer</span>
+    <span class="k">for</span> <span class="n">change</span> <span class="ow">in</span> <span class="n">changes</span><span class="p">:</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="n">change</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;update&#39;</span><span class="p">,</span> <span class="s">&#39;insert&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">change</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">__searchable__</span><span class="p">):</span>
+            <span class="n">bytype</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">change</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">update</span><span class="p">,</span>
+                <span class="n">change</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">bytype</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">whoosh_index</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">index</span><span class="o">.</span><span class="n">writer</span><span class="p">()</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">primary_field</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pure_whoosh</span><span class="o">.</span><span class="n">primary_key_name</span>
+            <span class="n">searchable</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">__searchable__</span>
+
+            <span class="k">for</span> <span class="n">update</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">update</span><span class="p">:</span>
+                    <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">searchable</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+                        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s">&#39;{0} does not have {1} field {2}&#39;</span>
+                                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">__searchable__</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+
+                    <span class="n">attrs</span><span class="p">[</span><span class="n">primary_field</span><span class="p">]</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">primary_field</span><span class="p">))</span>
+                    <span class="n">writer</span><span class="o">.</span><span class="n">update_document</span><span class="p">(</span><span class="o">**</span><span class="n">attrs</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">writer</span><span class="o">.</span><span class="n">delete_by_term</span><span class="p">(</span><span class="n">primary_field</span><span class="p">,</span> <span class="nb">unicode</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span>
+                        <span class="n">primary_field</span><span class="p">)))</span>
+
+
+<span class="n">flask_sqlalchemy</span><span class="o">.</span><span class="n">models_committed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_after_flush</span><span class="p">)</span>
+
+
+<span class="c"># def init_app(db):</span>
+<span class="c">#     app = db.get_app()</span>
+<span class="c"># #    for table in db.get_tables_for_bind():</span>
+<span class="c">#     for item in globals():</span>
+<span class="c">#</span>
+<span class="c">#        #_create_index(app, table)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, FreeSpirits Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

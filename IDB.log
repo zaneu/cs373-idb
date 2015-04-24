@@ -1,353 +1,608 @@
-commit 28ee24b24c02b738e5c25022efcc8f753384a425
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Fri Apr 17 01:15:11 2015 +0000
-
-    head master
-
-commit bfccb4617a11a212d29c28961c394aac00ce76ab
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Fri Apr 17 01:13:08 2015 +0000
-
-    head master
-
-commit 1a9c6ab4e73f334d00d02e43466db317d277a683
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Fri Apr 17 01:10:44 2015 +0000
-
-    head master
-
-commit 35df823ebeb32158d602d9f37191e807c4c30605
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Fri Apr 17 01:08:35 2015 +0000
-
-    head master
-
-commit 4242030702f2305a5b04663ae286eb343288cb17
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Fri Apr 17 01:06:28 2015 +0000
-
-    head master
-
-commit a27c7116c41a90ff4bc28f66211700a9aa0b5622
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 20:04:08 2015 -0500
-
-    head master
-
-commit 0163767937fb36886750bdec8290267995e55d91
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 20:00:29 2015 -0500
-
-    https
-
-commit 5c78811b3cc1837347100c10bf75ca99c26a3564
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:57:12 2015 -0500
-
-    trying git credentials
-
-commit c03f14fcbe0a3e21f253c354067b42c172f42b8e
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:53:37 2015 -0500
-
-    temp
-
-commit 637fd5b34697c5f97d13537db2b46d74a9ce7944
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:46:47 2015 -0500
-
-    origin master
-
-commit bcbe56801a9209aa2ca569b8ddd4b53316f9e7ca
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:36:53 2015 -0500
-
-    added branch master
-
-commit ddee520b918a598a7df1b20149fe4e9fed2dc584
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:33:03 2015 -0500
-
-    some temp
-
-commit 21cd532bf565d348c020b0950e483ddbc4320e04
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:23:29 2015 -0500
-
-    trying https tokens
-
-commit 1e7fabc8f96fa171cda0c531bffe17f5b8d334f2
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:16:11 2015 -0500
-
-    made new ssh key without passphrase
-
-commit 6c2b6c356974ee286c2e3fcc8d084502f2da0c85
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:08:46 2015 -0500
-
-    removed ssh agent
-
-commit c97853c2bdfae7f45c3a634005529f938633e6dc
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 19:01:33 2015 -0500
-
-    fixed travis yml
-
-commit c7a8059d3ef212e7f5f0176fde5cf286cc5391bb
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:49:47 2015 -0500
-
-    retrying something
-
-commit 4d4798ea526fdf4990984f9bfe89554c87006619
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:43:32 2015 -0500
-
-    updated travis.bash
-
-commit a8746ce99a2d7b55ede5046dcf7ca98cd918191d
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:43:22 2015 -0500
-
-    trying after success
-
-commit 5197a9b6c30dea8e74c873acf2f6ece493b6162c
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:40:14 2015 -0500
-
-    eval ssh agent
-
-commit 7d9ccbb728ede612727a783739b9fb10fdfbfc46
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:38:03 2015 -0500
-
-    fixed formatting
-
-commit f0b289971e33bcc753f7ae8bd051dd7f1718e88a
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:36:50 2015 -0500
-
-    moved push to travis.bash
-
-commit 351cc043b99008e93a201afe56a18facfe226afe
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:31:53 2015 -0500
-
-    fixed up travis yml
-
-commit 37a83d54963675b78230b182621887c6961b7730
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:29:56 2015 -0500
-
-    added commit name and commit email
-
-commit 1cbb205dc556e3d8d2812c51de46a0a15afe2d6e
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:23:06 2015 -0500
-
-    added encrypted ssh key
-
-commit 9aa80d366c8ce04d0ada688076f70cb849c47658
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 18:18:19 2015 -0500
-
-    gitignore for coverage
-
-commit 64458ca30530262a4b96a86099f817ebdea6edad
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 17:39:17 2015 -0500
-
-    updated README
-
-commit febc437bb6b1bfe8565163c2151db64d27826c3c
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 17:38:43 2015 -0500
-
-    updated requirements.txt
-
-commit a67ce545c8cb4e44eec7715a6f1d117d09f0d2c1
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 17:31:35 2015 -0500
-
-    moved documentation generation out of travis
-
-commit 45950f552664677dd8c13c355699357c074dde35
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 16:25:56 2015 -0500
-
-    removed IDB.log in travis.bash
-
-commit 39c67079114fcb2a28bd4f9a136cc427f108cdc2
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 16:19:40 2015 -0500
-
-    updated travis script to remove test.db
-
-commit b3c56c258f40db1583293289e22b993aed3e08fe
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 16:16:01 2015 -0500
-
-    done with travis.bash
-
-commit 3b8171a6a151937cdb265e4d0072b32889b599c5
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 16:14:20 2015 -0500
-
-    edited travis.bash
-
-commit aeaf317caf5ea260ccbe822326593769364c6710
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 16:08:55 2015 -0500
-
-    Merge branch 'master' of github.com:zaneu/cs373-idb
-
-commit e272b9726fd6884b4fb3683a5ff525a7808554ec
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 16:08:44 2015 -0500
-
-    added links to drinks to ingredient pages, resolves #48
-
-commit eabf1b9e1582717c0de08f0c1d60e3c35b79db1f
+commit 11a6d4113b37ed9d68d9043e31f7df53009c864b
 Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Thu Apr 16 15:45:46 2015 -0500
+Date:   Thu Apr 23 21:55:26 2015 -0500
 
-    added links to drinks to ingredient pages, resolves #48
+    updated commit numbers
 
-commit da1a1e3d4b7c2e765c0e98585319de9e8811e754
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 15:52:11 2015 -0500
+commit 0000351c4aa39e1eb809d7dfe6d891c60c8f653d
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 21:45:13 2015 -0500
 
-    generates FreeSpirits documentation now
+    request has been made successfully but we don't do anything with the results
 
-commit f16eadf58a509e1474c8b2354314e1946e35376b
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 15:28:06 2015 -0500
+commit ba780d08d9da0f06a5df34098e13ed77246abfcf
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 21:39:07 2015 -0500
 
-    Travis CI Unit tests working
+    included skeleton api test page
 
-commit 3a5f49174da879b358d46941f0e5a2cd34924188
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 15:24:23 2015 -0500
+commit 69bb595a49c00b41b48a573bd340ce9f1111d830
+Author: larry <liudi1990@utexas.edu>
+Date:   Thu Apr 23 20:58:16 2015 -0500
 
-    fixed python version in the travis ci
+    fix
 
-commit 84b532d17cee7477a00834d8baba20ee9cf37775
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 16 15:18:02 2015 -0500
-
-    added up initial Travis CI
-
-commit 82abdd19d0895d542d4a34a8f3f89991a8b1edd9
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Fri Apr 10 12:20:22 2015 -0500
-
-    changed 404 page to only have image
-
-commit 86915f3a62f02a856a5fb877ea82fb8e19a40666
-Author: Fang Tang <jindtang@utexas.edu>
-Date:   Thu Apr 9 21:27:17 2015 -0500
-
-    add IDB.log
-
-commit aad90c44f54ce68c7fea093beaea982338e74ee3
-Merge: 16a3858 50aa290
-Author: Fang Tang <jindtang@utexas.edu>
-Date:   Thu Apr 9 20:43:06 2015 -0500
+commit 4a5211fc6f251cfd62b71c9a008d39cbc0ee5b54
+Merge: cdaa64d bb25765
+Author: larry <liudi1990@utexas.edu>
+Date:   Thu Apr 23 20:55:07 2015 -0500
 
     Merge branch 'master' of https://github.com/zaneu/cs373-idb
 
-commit 16a38589b71996c326ca31a63f5ea41adfef36ea
-Author: Fang Tang <jindtang@utexas.edu>
-Date:   Thu Apr 9 20:43:01 2015 -0500
-
-    add api for single drink/ingredient id
-
-commit 50aa2905d3702769dea6b57d27971d65df87a6b0
-Merge: 5dcfb3f 7f40d75
+commit bb257657f2855fc189afe8e54b4380c78e4b170f
 Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 9 20:39:34 2015 -0500
+Date:   Thu Apr 23 20:51:54 2015 -0500
 
-    Merge pull request #47 from zaneu/sphinx
+    removed print statements, made some stuff more robust
+
+commit cdaa64de54122e806b9d6693ece36381743cdd6d
+Author: larry <liudi1990@utexas.edu>
+Date:   Thu Apr 23 20:42:56 2015 -0500
+
+    add icon
+
+commit d4ac53139b55fe21782f6293f29b822edcafbad5
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 20:31:02 2015 -0500
+
+    fixed bug
+
+commit 20d27989c0ed862e657981d0f278859d778dec3a
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 20:09:41 2015 -0500
+
+    done with contextualization
+
+commit d3dd7fdf5f32c527f24641cf1fc154b2bb1dbad0
+Merge: f1f661d 40c803a
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 19:48:49 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit f1f661d62fa57a53c8bdf70af0743927b8d48823
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 19:48:28 2015 -0500
+
+    limited search queries to 50
+
+commit 40c803af1008f5327ae5eaf4748790e87a1fb159
+Merge: dcafd13 5723552
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 19:37:41 2015 -0500
+
+    Merge branch 'master' of https://github.com/zaneu/cs373-idb
     
-    Sphinx
+    api test link
 
-commit 7f40d75a56d37e5e136fffa4486c3789ddd32c23
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 9 20:38:59 2015 -0500
-
-    removed doc
-
-commit 67ad81dafefe4110606036e1c12dbde01839a8f2
+commit dcafd13e9f3e497fd0911df0805c6466f4268128
 Author: Ali Homafar <home.isfar@gmail.com>
-Date:   Thu Apr 9 20:30:54 2015 -0500
+Date:   Thu Apr 23 19:37:30 2015 -0500
 
-    Duplicated html documentation into its own html dir in the project root directory
+    Included link to API test page
 
-commit e30cdacc8f6962c97676c7b0884f198576b45511
-Author: Ali Homafar <home.isfar@gmail.com>
-Date:   Thu Apr 9 20:24:51 2015 -0500
-
-    Removed unnnecessaary pages
-
-commit 031fe31ca5a7e1ee8e986be93a66147800224e5c
-Author: Ali Homafar <home.isfar@gmail.com>
-Date:   Thu Apr 9 20:19:35 2015 -0500
-
-    Sphinx documentation
-
-commit 5dcfb3f679a497ad1d54a6828fbd9660834817ba
-Merge: 2b5763a af09163
-Author: Fang Tang <jindtang@utexas.edu>
-Date:   Thu Apr 9 19:48:50 2015 -0500
-
-    Merge branch 'master' of https://github.com/zaneu/cs373-idb
-
-commit 2b5763ac02e1f56e3dc6b2b1a2466027ae20c88a
-Author: Fang Tang <jindtang@utexas.edu>
-Date:   Thu Apr 9 19:48:40 2015 -0500
-
-    edit readme and about page
-
-commit af09163624811538a91527f926cead8b3eb2df1d
+commit 5723552481803fb13846c8bd51be30ee0a4319d8
 Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 9 19:27:40 2015 -0500
+Date:   Thu Apr 23 19:35:37 2015 -0500
 
-    updated README
+    fixed bug with search
 
-commit 9263d9b4dc9e7c3b24abad4f4906d4be3ff3e3e7
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Thu Apr 9 18:58:01 2015 -0500
-
-    fixed issue with quantities not lining up, resolves #46
-
-commit 4a6d95440314dc338b4066231e20489644e6e07d
-Merge: c078951 31b1993
+commit ba53ee5696dc90c601dad302673dd970819236e3
 Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 9 18:54:44 2015 -0500
+Date:   Thu Apr 23 19:31:57 2015 -0500
+
+    got the api done
+
+commit 8f04100b211b07cc219bc8312c6c0b6bd1f7e418
+Merge: 7e8dfe6 98b8f2c
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 19:31:52 2015 -0500
 
     Merge branch 'master' of github.com:zaneu/cs373-idb
 
-commit c0789519bee427ec412e77db2760a155f469248e
+commit 7e8dfe6c7dc04a5d3f05b5a9fd7f4b5175062c94
 Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 9 18:54:37 2015 -0500
+Date:   Thu Apr 23 19:30:37 2015 -0500
 
-    added dummy users
+    moved searching functionality to the views
+    
+    wrote unit tests
 
-commit 31b1993b45c19d7a2c43a78e9e64705f4b2ba522
+commit 98b8f2cbfb99cca04c7e147056f173ea617d6e3a
+Merge: 3623aae bf165ff
+Author: Ali Homafar <homeisfar@users.noreply.github.com>
+Date:   Thu Apr 23 19:26:42 2015 -0500
+
+    Merge pull request #64 from zaneu/aboutupdate
+    
+    Aboutupdate
+
+commit bf165ff443a7a7209b380ade16186c92c8ea9339
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 19:22:15 2015 -0500
+
+    Added some icons
+
+commit 9437306bb0e7b05f9870b3c0795ade54b15c4e86
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 19:15:47 2015 -0500
+
+    Updated more icons and the about page
+
+commit 9af775ece855b68f278c6cf0842600f2bd0706bf
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 18:09:47 2015 -0500
+
+    standardized image sizes
+
+commit 3623aae865b2e512db7fa6bfea2b338f5eabe652
+Merge: c0497c1 31bc665
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 17:55:49 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit c0497c1f3291c27a0eacc1f712cd30f828b28f2c
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 17:55:26 2015 -0500
+
+    index js working now
+
+commit 31bc665090e70d18ddcf29ee6c214d42750deafb
 Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Thu Apr 9 18:44:38 2015 -0500
+Date:   Thu Apr 23 17:43:28 2015 -0500
 
-    made ingredients on drink page links to ingredient page, resolves #39
+    moved api_search to api.py
 
-commit 62252792bf3a2ea75c85c4a6835b9045d0c3d865
-Author: Fang Tang <jindtang@utexas.edu>
-Date:   Thu Apr 9 15:40:47 2015 -0500
+commit 85cae3ef1687945c0507c5601e5fe898b354138d
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 17:24:28 2015 -0500
+
+    changed layout of drink and ingredient pages
+
+commit dea46655856dcf84920ed6ace6681d96e27beef2
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 17:21:49 2015 -0500
+
+    implemented cursor for name and favorites
+
+commit 1fa88eae52a13ef3f2e412766f96570dd11cf7a4
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 17:09:17 2015 -0500
+
+    Tabs are further updated to include the links correctly and some margin.
+
+commit 7f8357fac8b623de4585e59633f6f666a52bc791
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 16:59:27 2015 -0500
+
+    updated requirements
+
+commit 552208ecbcaee4dbb5d4fc2974b4befd41a062ca
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 16:56:42 2015 -0500
+
+    search bar in the layout
+
+commit 70dc1db42ec2b1c7a4c6d993374b814f78a3f0ba
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 16:54:13 2015 -0500
+
+    only search for large and xl images
+
+commit 6c201ccf6939e464be4412b228c1bb2e51ea5d3f
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 16:40:48 2015 -0500
+
+    image only attempts to load if one was found
+
+commit 48dc341d17edd911147a640e5faf0be3d7f4b9f7
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 16:37:10 2015 -0500
+
+    added safe search and size preferences
+
+commit 65ab150dd7f12cd68b499088d16e8631ba196b2a
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 16:19:28 2015 -0500
+
+    getting pictures from google sometimes works
+
+commit a96db80a483365327beb4ddd91550815e3d7688e
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 15:52:27 2015 -0500
+
+    Added tabs to about page
+
+commit dacc08da7c358f3330b231913764f95674dcea9f
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 15:17:51 2015 -0500
+
+    fixed a bug in models.py
+
+commit 9502c9552610115456e20ef4cb227655875c3974
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 15:09:11 2015 -0500
+
+    added results for text to search results
+
+commit 0476bc90e64699882cfcec85d6ab91a2dde94ae8
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Thu Apr 23 14:49:16 2015 -0500
+
+    search tabs now work
+
+commit 4d220963151406da4020cb5f66a55c7c11359cdc
+Merge: 9581777 0e2f1c8
+Author: Ali Homafar <homeisfar@users.noreply.github.com>
+Date:   Thu Apr 23 14:26:09 2015 -0500
+
+    Merge pull request #61 from zaneu/ingredientstarfix
+    
+    Ingredient extra star has been fixed
+
+commit 0e2f1c86f1b5da160cd7781d297b7c2c13fcbb6d
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 14:21:51 2015 -0500
+
+    Ingredient extra star has been fixed
+
+commit 95817777234bddc9b8fa86c707598331c9bde2be
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 11:41:24 2015 -0500
+
+    implemented gravatar
+
+commit 97c9e90f283c9cc01152e9be5de79fb8b27365df
+Merge: f9b6bfd f5e06ba
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 11:33:10 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit f9b6bfd009dd1de3b514882d397a9a95569649c7
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 11:32:56 2015 -0500
+
+    the button don't flicker anymore
+
+commit f5e06bab187a7e560579660feb8ed57ac342df1b
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 06:44:47 2015 +0000
+
+    corrected requirements
+
+commit 24c656c675fe68f161e8586def7aa0b1fa618568
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 21:25:36 2015 -0500
+
+    removed assert and fixed remove
+
+commit 9dfd7004db3c7e59e20ebc4074be7a1ddefc703b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 21:20:43 2015 -0500
+
+    disabled button when not logged in
+
+commit fa2bfc0a192b3717349a5da838c7da5963fac887
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 21:17:34 2015 -0500
+
+    multiple users working
+
+commit 4482b5ae34363aa28e1e53aa6f0224bc99a2a545
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 20:47:54 2015 -0500
+
+    about done with user interactivity
+
+commit 920dfe11bb082f16c9c4a8871e830d919812d0fe
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 19:24:16 2015 -0500
+
+    refactored favoriting and extended for ingredients
+
+commit 0cbf048b53a871ea243be89d06a88279df333efa
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 19:17:05 2015 -0500
+
+    drink favoriting is functional
+
+commit b88b0bf3136091cc3bca02546976db02bfb7f2ff
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 17:33:45 2015 -0500
+
+    wrote api star
+
+commit 81bc305a08c7868fecc896395555da102fb9040b
+Merge: e326f5c 702fc27
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 17:11:33 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+    
+    Conflicts:
+    	FreeSpirits/views.py
+
+commit e326f5c5ddbbcd4f1dc8325045f65d702367fe00
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 17:09:51 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit 5ca659af00e4914de0e321637f1eb899faf83562
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 17:09:19 2015 -0500
+
+    the star button is now toggling
+
+commit 702fc27409ac4dcd79af3758f95fcb9e5a88d4de
+Merge: b797de2 0af14db
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Wed Apr 22 17:00:16 2015 -0500
 
     Merge branch 'master' of https://github.com/zaneu/cs373-idb
+    
+    need to push the api changes
 
-commit 30a2fdf738395369d2f907cf7d7668d1fd5530b7
+commit b797de2540d6d3c2d0d81f0e962fbba0f393d6f7
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Wed Apr 22 17:00:05 2015 -0500
+
+    corrected the order of api
+
+commit 0af14db49aabea3ff592d06fb133eb8d17bf9e6e
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Wed Apr 22 16:46:45 2015 -0500
+
+    Updating APIary to conform with new API schema
+
+commit bf89ce84470e8fc5989d09140f0ad82ae61bdcd8
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Wed Apr 22 15:54:02 2015 -0500
+
+    Updated api so ID is displayed first in all-listings
+
+commit 18b5c3d00f339f0b0d907ceea1d358d5104cdbd8
+Merge: cdf5d42 1f181d4
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Wed Apr 22 15:46:25 2015 -0500
+
+    Merge branch 'master' of https://github.com/zaneu/cs373-idb
+    
+    Need to update requirements
+
+commit cdf5d42ee8fc4930bdc65295e3942afaa0e5a098
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Wed Apr 22 15:46:14 2015 -0500
+
+    Updated requirements to fix dependency issue
+
+commit 1f181d45c3245e117fc8a022ce60307556f089ea
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:32:07 2015 -0500
+
+    added previously mentioned AND/OR changes to api search
+
+commit 4a16e7b67fd677900b953cd72a482e8ba55c81e6
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:31:10 2015 -0500
+
+    made and results not be found in or results, resolves #60
+
+commit d6038c29b6d27751585d349309692fda97bda538
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:23:42 2015 -0500
+
+    ...no comment
+
+commit f86168b90440324c4ee929940df816a2c40b57b3
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:22:17 2015 -0500
+
+    finished fixing search function headers, commit city over here
+
+commit 6e8f708fc66898f80a6bc932d2b90927fa7d60b1
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:21:19 2015 -0500
+
+    fixed api search function header
+
+commit 909c65ea81d20aecb030dfc870834966b2615ed7
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:20:02 2015 -0500
+
+    search now successfully builds a users list, resolves #59
+
+commit 493ad05ffa6e18140abedc9a786f5420644da59b
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:09:15 2015 -0500
+
+    users is not a table... oops
+
+commit 5d38175006c7622a7346ef8a39c4ff4013b1ce4e
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 15:02:40 2015 -0500
+
+    accidentally queried ingredients twice in searching
+
+commit ed5bb7d28f5d89048b7b3d317ba609a059977a6d
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 14:56:27 2015 -0500
+
+    went back to all searches using the same url
+
+commit d740ef15035c8844301b404c28ea1aa569beaf2b
+Merge: dbb3225 d7866dd
 Author: Paul Bae <pbae@utexas.edu>
-Date:   Thu Apr 9 13:45:42 2015 -0500
+Date:   Wed Apr 22 14:49:34 2015 -0500
 
-    done with the testing page
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit dbb32256270f4f29b2ab5a853d977823b675658f
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 14:49:24 2015 -0500
+
+    done with favorites/name toggle
+
+commit d7866ddc74dd27aa1b9ebab08f4c92b8b0a6b95b
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 14:31:06 2015 -0500
+
+    search bar now responds to clicking drinks/ingredients
+
+commit 62e5a41d74ede65174a0fa81c730e549a7f26b7c
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 14:29:26 2015 -0500
+
+    made ingredient searches link correctly, resolves #58
+
+commit 32ea4cd233ca4d824192b16f2ed6adc3cb66591d
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 14:18:09 2015 -0500
+
+    search now handles /search/ingredients and /search/drinks, resolves #57
+
+commit 842af2b32f201aef679008454826ffdfc319ad5d
+Merge: 619502d a7ef4e3
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 14:00:56 2015 -0500
+
+    merging I think
+
+commit 619502d50a447c850a639de52af51a16f74ab1f8
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Wed Apr 22 13:59:46 2015 -0500
+
+    separated drinks search
+
+commit a7ef4e36c5d0c1a7663c0dfbb769a7a91e9b6dd7
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 12:51:18 2015 -0500
+
+    implemented login and logout
+
+commit b2778f176ad2a28161f0bc804bf5f26716e17367
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 11:47:00 2015 -0500
+
+    user sign up is functional
+
+commit 47ab177e9edef74e6c9bb0e464075a22957fbf65
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 03:58:11 2015 -0500
+
+    starting on the users
+
+commit 6f09feef5c45332caf0dd258452f7c4aecafd523
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 03:54:21 2015 -0500
+
+    refactored templates to use pagination macro
+
+commit e3f8899ec78a04e10134cba22cb7066c5b97432d
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 03:29:48 2015 -0500
+
+    implemented the ingredients.html template
+    
+    also made the tables responsive
+
+commit ecaf409a832c1270e607f5c2268b7b69c0d7d0b6
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 03:21:31 2015 -0500
+
+    refactored drinks.html template
+
+commit 2c039f962409e0fc96eaef9fc4dcbc0e336c64f5
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 03:11:46 2015 -0500
+
+    pagination working for drinks
+
+commit f98b08b375e3993fa068507ae609fc0af03fc215
+Merge: a5283fd 49e5c7f
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 01:05:32 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit a5283fd506f7f058c6f95453514967aed26ade94
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Wed Apr 22 01:05:14 2015 -0500
+
+    working on pagination
+
+commit 49e5c7fe26ff3499bc18f8b54b67acab15815417
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Tue Apr 21 16:46:49 2015 -0500
+
+    search button and stuff now pretty much works, resolves #56
+
+commit c1ec7847b773c070591b9f5d3cf61ceb2a82efc2
+Merge: 8d0d3b9 fbbdc2a
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Tue Apr 21 16:34:30 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit 8d0d3b9a7c5d6e1c95b79d044f8ab11aa86a73ef
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Tue Apr 21 16:28:51 2015 -0500
+
+    done with ingredient.html
+
+commit fbbdc2aa1c6e62e60423daf4bdbecb515723e0ad
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Tue Apr 21 16:18:25 2015 -0500
+
+    added search results page
+
+commit e821e6ac663884e045802e28e120c2f270c706d7
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Tue Apr 21 15:56:57 2015 -0500
+
+    added basic /api/search/<query> function
+
+commit 783ca12c0c9a568f34e1a53133b3d90fa982920e
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Tue Apr 21 15:32:47 2015 -0500
+
+    drink objects are now labelled as such
+
+commit 1f3023b8a83428b9df502a40fa7da81b05b10e17
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Tue Apr 21 15:20:49 2015 -0500
+
+    implemented the drink.html
+
+commit 58fdf1fa88ca075ea35d06a6483173007eeb283b
+Merge: d708694 6e90e43
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Tue Apr 21 14:03:18 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit d7086942f743bad091561fe8613a7552e568c908
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Tue Apr 21 14:03:08 2015 -0500
+
+    addded signup js and signup html
+
+commit 6e90e439d1da815d78b6528a7dd679a22f763ef6
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Tue Apr 21 03:27:25 2015 -0500
+
+    Included tiny link to github in our about page
+
+commit 7155ca6cf19e68629604c0783df54763226cfbba
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Tue Apr 21 02:34:37 2015 -0500
+
+    Updated some documentation
+
+commit 4ab934cd4ba0d8297b6921e49b2b4f96a08dd5ee
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Mon Apr 20 17:31:28 2015 -0500
+
+    done with the test api

@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FreeSpirits.api &mdash; FreeSpirits 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="FreeSpirits 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="FreeSpirits" href="../FreeSpirits.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">FreeSpirits 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../FreeSpirits.html" accesskey="U">FreeSpirits</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for FreeSpirits.api</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask.ext</span> <span class="kn">import</span> <span class="n">restful</span>
+<span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">current_user</span>
+
+<span class="n">api</span> <span class="o">=</span> <span class="n">restful</span><span class="o">.</span><span class="n">Api</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DrinkListing"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.DrinkListing">[docs]</a><span class="k">class</span> <span class="nc">DrinkListing</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    the class that returns the entire listing of drinks</span>
+<span class="sd">    these drinks are provided in name, id value pairs</span>
+<span class="sd">    if it is necessary to know more about an individual drink,</span>
+<span class="sd">    refer to the DrinkId class below</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DrinkListing.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.DrinkListing.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">drinks_name</span> <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">drinks_id</span> <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Drink</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">drinks</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">drinks_id</span><span class="p">,</span> <span class="n">drinks_name</span><span class="p">)}</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">drinks</span><span class="p">)</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">DrinkListing</span><span class="p">,</span> <span class="s">&#39;/api/drinks/&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DrinkId"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.DrinkId">[docs]</a><span class="k">class</span> <span class="nc">DrinkId</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this is the class that queries an individual drink by id</span>
+<span class="sd">    a drink will return all of it&#39;s associated fields in it</span>
+<span class="sd">    plus the ingredients that the drink uses</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DrinkId.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.DrinkId.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">drink_id</span><span class="p">):</span>
+        <span class="n">drink</span> <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">drink_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">drink</span><span class="o">.</span><span class="n">first</span><span class="p">():</span>
+            <span class="n">drink</span> <span class="o">=</span> <span class="n">drink</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">drink</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">drink</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s">&quot;description&quot;</span><span class="p">:</span> <span class="n">drink</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s">&quot;recipe&quot;</span><span class="p">:</span> <span class="n">drink</span><span class="o">.</span><span class="n">recipe</span>
+            <span class="p">}</span>
+
+            <span class="n">quantities</span><span class="p">,</span> <span class="n">ingredients</span> <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">get_ingredients_by_id</span><span class="p">(</span><span class="n">drink_id</span><span class="p">)</span>
+
+            <span class="n">result</span><span class="p">[</span><span class="s">&quot;quantities&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">quantities</span>
+            <span class="n">result</span><span class="p">[</span><span class="s">&quot;ingredients&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;{}&quot;</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">DrinkId</span><span class="p">,</span> <span class="s">&#39;/api/drinks/&lt;int:drink_id&gt;&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IngredientListing"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.IngredientListing">[docs]</a><span class="k">class</span> <span class="nc">IngredientListing</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the ingredients listing viewW</span>
+<span class="sd">    This class is identical in design to the earlier DrinkListing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IngredientListing.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.IngredientListing.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ingredients_name</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">ingredients_id</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">Ingredient</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">ingredients</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span>
+                       <span class="nb">zip</span><span class="p">(</span><span class="n">ingredients_id</span><span class="p">,</span> <span class="n">ingredients_name</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">IngredientListing</span><span class="p">,</span> <span class="s">&#39;/api/ingredients/&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IngredientId"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.IngredientId">[docs]</a><span class="k">class</span> <span class="nc">IngredientId</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The endpoint to get an ingredient by id</span>
+<span class="sd">    This returns all of the fields that the ingredient contains</span>
+<span class="sd">    plus all the drinks that this ingredient is associated with</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IngredientId.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.IngredientId.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ingredient_id</span><span class="p">):</span>
+        <span class="n">ingredient</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">ingredient_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">first</span><span class="p">():</span>
+            <span class="n">ingredient</span> <span class="o">=</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s">&quot;description&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                <span class="s">&quot;calories&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">calories</span><span class="p">,</span>
+                <span class="s">&quot;energy&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span>
+                <span class="s">&quot;fats&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">fats</span><span class="p">,</span>
+                <span class="s">&quot;carbohydrates&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">carbohydrates</span><span class="p">,</span>
+                <span class="s">&quot;protein&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">protein</span><span class="p">,</span>
+                <span class="s">&quot;fiber&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">fiber</span><span class="p">,</span>
+                <span class="s">&quot;sugars&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">sugars</span><span class="p">,</span>
+                <span class="s">&quot;cholesterol&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">cholesterol</span><span class="p">,</span>
+                <span class="s">&quot;sodium&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">sodium</span><span class="p">,</span>
+                <span class="s">&quot;alcohol&quot;</span><span class="p">:</span> <span class="n">ingredient</span><span class="o">.</span><span class="n">alcohol</span>
+            <span class="p">}</span>
+
+            <span class="n">drinks</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">get_drinks_by_id</span><span class="p">(</span><span class="n">ingredient_id</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">drinks</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">drinks</span><span class="p">]</span>
+            <span class="n">result</span><span class="p">[</span><span class="s">&quot;drinks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">drinks</span>
+
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;{}&quot;</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">IngredientId</span><span class="p">,</span> <span class="s">&#39;/api/ingredients/&lt;int:ingredient_id&gt;&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="UserListing"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.UserListing">[docs]</a><span class="k">class</span> <span class="nc">UserListing</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The endpoint that represents all the users in the database</span>
+<span class="sd">    This is again similar to DrinkListing and IngredientListing</span>
+<span class="sd">    You can create a user by sending a post request to this api</span>
+<span class="sd">    With the correct inputs, name, email</span>
+<span class="sd">    If these inputs are not provided, then</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UserListing.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.UserListing.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">users_email</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+        <span class="n">users_id</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">users</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">users_id</span><span class="p">,</span> <span class="n">users_email</span><span class="p">)}</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">UserListing</span><span class="p">,</span> <span class="s">&#39;/api/users/&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="UserId"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.UserId">[docs]</a><span class="k">class</span> <span class="nc">UserId</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The endpoint to find a user by id in the database</span>
+<span class="sd">    This returns all the associated fields of the user</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UserId.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.UserId.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">first</span><span class="p">():</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s">&quot;first_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span>
+                <span class="s">&quot;last_name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">last_name</span><span class="p">,</span>
+                <span class="s">&quot;email&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;{}&quot;</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">UserId</span><span class="p">,</span> <span class="s">&#39;/api/users/&lt;int:user_id&gt;&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SearchApi"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.SearchApi">[docs]</a><span class="k">class</span> <span class="nc">SearchApi</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The mechanism to search for a user, ingredient, or</span>
+<span class="sd">    drink by keywords</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SearchApi.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.SearchApi.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;query cannot be empty&quot;</span>
+        <span class="k">elif</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;query cannot be empty&quot;</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">drinks</span> <span class="o">=</span> <span class="n">Drink</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">ingredients</span> <span class="o">=</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">users</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drinks</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">results</span><span class="o">=</span><span class="n">results</span><span class="p">)</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">SearchApi</span><span class="p">,</span> <span class="s">&#39;/api/search/&lt;string:query&gt;&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="StarItem"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.StarItem">[docs]</a><span class="k">class</span> <span class="nc">StarItem</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The endpoint in which to star an item (drink or ingredient)</span>
+<span class="sd">    and associate it with a user</span>
+<span class="sd">    This function can only be invoked within the application</span>
+<span class="sd">    (checked by current_user and csrf)</span>
+<span class="sd">    The parameters taken in through POST are:</span>
+<span class="sd">    user_id</span>
+<span class="sd">    item_type (Drink or Ingredient)</span>
+<span class="sd">    item_id</span>
+<span class="sd">    star_count</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StarItem.post"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.StarItem.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;user_id&#39;</span><span class="p">])</span>
+        <span class="n">item_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;item_id&#39;</span><span class="p">])</span>
+        <span class="n">item_type</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;item_type&#39;</span><span class="p">]</span>
+        <span class="n">star_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;star_count&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">()</span> <span class="ow">and</span>
+                 <span class="n">user_id</span> <span class="o">!=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">())):</span>
+            <span class="k">return</span> <span class="s">&quot;User id not valid&quot;</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;User does not exist&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Drink&quot;</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Drink</span>
+        <span class="k">elif</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Ingredient&quot;</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Ingredient</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;Item type is not valid&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;Item does not exist&quot;</span>
+
+        <span class="n">previous_star_count</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">favorites</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">previous_star_count</span> <span class="o">&lt;</span> <span class="n">star_count</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Ingredient&quot;</span><span class="p">:</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">star_ingredient</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">star_drink</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Ingredient&quot;</span><span class="p">:</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">remove_ingredient</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">user</span><span class="o">.</span><span class="n">remove_drink</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s">&quot;success&quot;</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">StarItem</span><span class="p">,</span> <span class="s">&#39;/api/star/&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RemoveFavorite"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.RemoveFavorite">[docs]</a><span class="k">class</span> <span class="nc">RemoveFavorite</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a private endpoint that is invoked on user profile pages</span>
+<span class="sd">    The parameters are described as follows:</span>
+<span class="sd">    user_id: the current user</span>
+<span class="sd">    item_id: the id of the item to be removed</span>
+<span class="sd">    item_type: the type of the item to be removed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RemoveFavorite.post"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.RemoveFavorite.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;user_id&#39;</span><span class="p">])</span>
+        <span class="n">item_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;item_id&#39;</span><span class="p">])</span>
+        <span class="n">item_type</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;item_type&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">()</span> <span class="ow">and</span>
+                 <span class="n">user_id</span> <span class="o">!=</span> <span class="n">current_user</span><span class="o">.</span><span class="n">get_id</span><span class="p">())):</span>
+            <span class="k">return</span> <span class="s">&quot;User id not valid&quot;</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;User does not exist&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Drink&quot;</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Drink</span>
+        <span class="k">elif</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Ingredient&quot;</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Ingredient</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;Item type is not valid&quot;</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">&quot;Item does not exist&quot;</span>
+
+        <span class="k">if</span> <span class="n">item_type</span> <span class="o">==</span> <span class="s">&quot;Drink&quot;</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">remove_drink</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">remove_ingredient</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s">&quot;success&quot;</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">RemoveFavorite</span><span class="p">,</span> <span class="s">&#39;/api/remove-item&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TestApi"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.TestApi">[docs]</a><span class="k">class</span> <span class="nc">TestApi</span><span class="p">(</span><span class="n">restful</span><span class="o">.</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Test API</span>
+<span class="sd">    this simply runs test.py as a subprocess and returns the output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestApi.get"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.api.TestApi.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">basedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+        <span class="n">basedir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">))</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span><span class="s">&#39;python&#39;</span><span class="p">,</span> <span class="n">basedir</span> <span class="o">+</span> <span class="s">&#39;/tests.py&#39;</span><span class="p">],</span>
+                                         <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+
+        <span class="n">passed_tests</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">failed_tests</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;E&#39;</span><span class="p">)</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;in&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="n">time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">time</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&quot;success&quot;</span><span class="p">:</span> <span class="n">failed_tests</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s">&quot;passed_tests&quot;</span><span class="p">:</span> <span class="n">passed_tests</span><span class="p">,</span>
+            <span class="s">&quot;failed_tests&quot;</span><span class="p">:</span> <span class="n">failed_tests</span><span class="p">,</span>
+            <span class="s">&quot;time&quot;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span>
+            <span class="s">&quot;output&quot;</span><span class="p">:</span> <span class="n">output</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</div></div>
+<span class="n">api</span><span class="o">.</span><span class="n">add_resource</span><span class="p">(</span><span class="n">TestApi</span><span class="p">,</span> <span class="s">&#39;/api/tests/&#39;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, FreeSpirits Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

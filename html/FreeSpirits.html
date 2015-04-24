@@ -57,6 +57,363 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-FreeSpirits.api">
+<span id="freespirits-api-module"></span><h2>FreeSpirits.api module<a class="headerlink" href="#module-FreeSpirits.api" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="FreeSpirits.api.DrinkId">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">DrinkId</code><a class="reference internal" href="_modules/FreeSpirits/api.html#DrinkId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.DrinkId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>this is the class that queries an individual drink by id
+a drink will return all of it&#8217;s associated fields in it
+plus the ingredients that the drink uses</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.DrinkId.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'drinkid'</em><a class="headerlink" href="#FreeSpirits.api.DrinkId.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.DrinkId.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>drink_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#DrinkId.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.DrinkId.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.DrinkId.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.DrinkId.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.DrinkId.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.DrinkId.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.DrinkListing">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">DrinkListing</code><a class="reference internal" href="_modules/FreeSpirits/api.html#DrinkListing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.DrinkListing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>the class that returns the entire listing of drinks
+these drinks are provided in name, id value pairs
+if it is necessary to know more about an individual drink,
+refer to the DrinkId class below</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.DrinkListing.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'drinklisting'</em><a class="headerlink" href="#FreeSpirits.api.DrinkListing.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.DrinkListing.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#DrinkListing.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.DrinkListing.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.DrinkListing.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.DrinkListing.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.DrinkListing.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.DrinkListing.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.IngredientId">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">IngredientId</code><a class="reference internal" href="_modules/FreeSpirits/api.html#IngredientId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.IngredientId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>The endpoint to get an ingredient by id
+This returns all of the fields that the ingredient contains
+plus all the drinks that this ingredient is associated with</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.IngredientId.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'ingredientid'</em><a class="headerlink" href="#FreeSpirits.api.IngredientId.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.IngredientId.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>ingredient_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#IngredientId.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.IngredientId.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.IngredientId.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.IngredientId.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.IngredientId.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.IngredientId.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.IngredientListing">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">IngredientListing</code><a class="reference internal" href="_modules/FreeSpirits/api.html#IngredientListing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.IngredientListing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>This is the ingredients listing viewW
+This class is identical in design to the earlier DrinkListing</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.IngredientListing.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'ingredientlisting'</em><a class="headerlink" href="#FreeSpirits.api.IngredientListing.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.IngredientListing.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#IngredientListing.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.IngredientListing.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.IngredientListing.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.IngredientListing.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.IngredientListing.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.IngredientListing.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.RemoveFavorite">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">RemoveFavorite</code><a class="reference internal" href="_modules/FreeSpirits/api.html#RemoveFavorite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.RemoveFavorite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>This is a private endpoint that is invoked on user profile pages
+The parameters are described as follows:
+user_id: the current user
+item_id: the id of the item to be removed
+item_type: the type of the item to be removed</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.RemoveFavorite.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'removefavorite'</em><a class="headerlink" href="#FreeSpirits.api.RemoveFavorite.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.RemoveFavorite.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.RemoveFavorite.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.RemoveFavorite.methods">
+<code class="descname">methods</code><em class="property"> = ['POST']</em><a class="headerlink" href="#FreeSpirits.api.RemoveFavorite.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.RemoveFavorite.post">
+<code class="descname">post</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#RemoveFavorite.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.RemoveFavorite.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.SearchApi">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">SearchApi</code><a class="reference internal" href="_modules/FreeSpirits/api.html#SearchApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.SearchApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>The mechanism to search for a user, ingredient, or
+drink by keywords</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.SearchApi.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'searchapi'</em><a class="headerlink" href="#FreeSpirits.api.SearchApi.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.SearchApi.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#SearchApi.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.SearchApi.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.SearchApi.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.SearchApi.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.SearchApi.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.SearchApi.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.StarItem">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">StarItem</code><a class="reference internal" href="_modules/FreeSpirits/api.html#StarItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.StarItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>The endpoint in which to star an item (drink or ingredient)
+and associate it with a user
+This function can only be invoked within the application
+(checked by current_user and csrf)
+The parameters taken in through POST are:
+user_id
+item_type (Drink or Ingredient)
+item_id
+star_count</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.StarItem.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'staritem'</em><a class="headerlink" href="#FreeSpirits.api.StarItem.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.StarItem.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.StarItem.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.StarItem.methods">
+<code class="descname">methods</code><em class="property"> = ['POST']</em><a class="headerlink" href="#FreeSpirits.api.StarItem.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.StarItem.post">
+<code class="descname">post</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#StarItem.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.StarItem.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.TestApi">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">TestApi</code><a class="reference internal" href="_modules/FreeSpirits/api.html#TestApi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.TestApi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>The Test API
+this simply runs test.py as a subprocess and returns the output</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.TestApi.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'testapi'</em><a class="headerlink" href="#FreeSpirits.api.TestApi.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.TestApi.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#TestApi.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.TestApi.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.TestApi.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.TestApi.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.TestApi.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.TestApi.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.UserId">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">UserId</code><a class="reference internal" href="_modules/FreeSpirits/api.html#UserId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.UserId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>The endpoint to find a user by id in the database
+This returns all the associated fields of the user</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.UserId.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'userid'</em><a class="headerlink" href="#FreeSpirits.api.UserId.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.UserId.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#UserId.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.UserId.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.UserId.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.UserId.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.UserId.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.UserId.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.api.UserListing">
+<em class="property">class </em><code class="descclassname">FreeSpirits.api.</code><code class="descname">UserListing</code><a class="reference internal" href="_modules/FreeSpirits/api.html#UserListing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.UserListing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_restful.Resource</span></code></p>
+<p>The endpoint that represents all the users in the database
+This is again similar to DrinkListing and IngredientListing
+You can create a user by sending a post request to this api
+With the correct inputs, name, email
+If these inputs are not provided, then</p>
+<dl class="attribute">
+<dt id="FreeSpirits.api.UserListing.endpoint">
+<code class="descname">endpoint</code><em class="property"> = 'userlisting'</em><a class="headerlink" href="#FreeSpirits.api.UserListing.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.UserListing.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/api.html#UserListing.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.api.UserListing.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.api.UserListing.mediatypes">
+<code class="descname">mediatypes</code><span class="sig-paren">(</span><em>resource_cls</em><span class="sig-paren">)</span><a class="headerlink" href="#FreeSpirits.api.UserListing.mediatypes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.api.UserListing.methods">
+<code class="descname">methods</code><em class="property"> = ['GET']</em><a class="headerlink" href="#FreeSpirits.api.UserListing.methods" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-FreeSpirits.forms">
+<span id="freespirits-forms-module"></span><h2>FreeSpirits.forms module<a class="headerlink" href="#module-FreeSpirits.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="FreeSpirits.forms.UserLoginForm">
+<em class="property">class </em><code class="descclassname">FreeSpirits.forms.</code><code class="descname">UserLoginForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/forms.html#UserLoginForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.forms.UserLoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.Form</span></code></p>
+<p>The user login form located at /login</p>
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserLoginForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(TextField, ('Email',), {'validators': [&lt;wtforms.validators.DataRequired object at 0x2b5d4dc37550&gt;, &lt;wtforms.validators.Email object at 0x2b5d4dc377f0&gt;]})&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserLoginForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserLoginForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Password',), {'validators': [&lt;wtforms.validators.DataRequired object at 0x2b5d4dc37828&gt;]})&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserLoginForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.forms.UserLoginForm.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/forms.html#UserLoginForm.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.forms.UserLoginForm.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.forms.UserSignupForm">
+<em class="property">class </em><code class="descclassname">FreeSpirits.forms.</code><code class="descname">UserSignupForm</code><span class="sig-paren">(</span><em>formdata=&lt;class 'flask_wtf.form._Auto'&gt;</em>, <em>obj=None</em>, <em>prefix=''</em>, <em>csrf_context=None</em>, <em>secret_key=None</em>, <em>csrf_enabled=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/forms.html#UserSignupForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.forms.UserSignupForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_wtf.form.Form</span></code></p>
+<p>The user signup form located at /signup</p>
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserSignupForm.email">
+<code class="descname">email</code><em class="property"> = &lt;UnboundField(TextField, ('Email',), {'validators': [&lt;wtforms.validators.DataRequired object at 0x2b5d4dbec048&gt;, &lt;wtforms.validators.Email object at 0x2b5d4dbec198&gt;, &lt;FreeSpirits.validators.Unique object at 0x2b5d4dbe6da0&gt;]})&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserSignupForm.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserSignupForm.first_name">
+<code class="descname">first_name</code><em class="property"> = &lt;UnboundField(TextField, ('First Name',), {'validators': [&lt;wtforms.validators.DataRequired object at 0x2b5d4dbe6dd8&gt;]})&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserSignupForm.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserSignupForm.last_name">
+<code class="descname">last_name</code><em class="property"> = &lt;UnboundField(TextField, ('Last Name',), {'validators': [&lt;wtforms.validators.DataRequired object at 0x2b5d4dbe6e80&gt;]})&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserSignupForm.last_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserSignupForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Password',), {'validators': [&lt;wtforms.validators.DataRequired object at 0x2b5d4dc373c8&gt;]})&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserSignupForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.forms.UserSignupForm.unique_email">
+<code class="descname">unique_email</code><em class="property"> = &lt;FreeSpirits.validators.Unique object&gt;</em><a class="headerlink" href="#FreeSpirits.forms.UserSignupForm.unique_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-FreeSpirits.models">
 <span id="freespirits-models-module"></span><h2>FreeSpirits.models module<a class="headerlink" href="#module-FreeSpirits.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -73,6 +430,21 @@ The nutritional values (an array)</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="FreeSpirits.models.Drink.favorites">
+<code class="descname">favorites</code><a class="headerlink" href="#FreeSpirits.models.Drink.favorites" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.Drink.get_ingredients_by_id">
+<em class="property">static </em><code class="descname">get_ingredients_by_id</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Drink.get_ingredients_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Drink.get_ingredients_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.Drink.get_ingredients_by_name">
+<em class="property">static </em><code class="descname">get_ingredients_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Drink.get_ingredients_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Drink.get_ingredients_by_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="FreeSpirits.models.Drink.id">
 <code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.Drink.id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -83,8 +455,34 @@ The nutritional values (an array)</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="FreeSpirits.models.Drink.pure_whoosh">
+<code class="descname">pure_whoosh</code><em class="property"> = &lt;flask_whooshalchemy._Searcher object&gt;</em><a class="headerlink" href="#FreeSpirits.models.Drink.pure_whoosh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.query_class">
+<code class="descname">query_class</code><a class="headerlink" href="#FreeSpirits.models.Drink.query_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">_QueryProxy</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="FreeSpirits.models.Drink.recipe">
 <code class="descname">recipe</code><a class="headerlink" href="#FreeSpirits.models.Drink.recipe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.Drink.search">
+<em class="property">static </em><code class="descname">search</code><span class="sig-paren">(</span><em>query</em>, <em>limit=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Drink.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Drink.search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#FreeSpirits.models.Drink.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Drink.whoosh_primary_key">
+<code class="descname">whoosh_primary_key</code><em class="property"> = 'id'</em><a class="headerlink" href="#FreeSpirits.models.Drink.whoosh_primary_key" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -133,8 +531,23 @@ The nutritional values (an array)</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.favorites">
+<code class="descname">favorites</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.favorites" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="FreeSpirits.models.Ingredient.fiber">
 <code class="descname">fiber</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.fiber" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.Ingredient.get_drinks_by_id">
+<em class="property">static </em><code class="descname">get_drinks_by_id</code><span class="sig-paren">(</span><em>id</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Ingredient.get_drinks_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Ingredient.get_drinks_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.Ingredient.get_drinks_by_name">
+<em class="property">static </em><code class="descname">get_drinks_by_name</code><span class="sig-paren">(</span><em>name</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Ingredient.get_drinks_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Ingredient.get_drinks_by_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -153,6 +566,22 @@ The nutritional values (an array)</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.pure_whoosh">
+<code class="descname">pure_whoosh</code><em class="property"> = &lt;flask_whooshalchemy._Searcher object&gt;</em><a class="headerlink" href="#FreeSpirits.models.Ingredient.pure_whoosh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.query_class">
+<code class="descname">query_class</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.query_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">_QueryProxy</span></code></p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.Ingredient.search">
+<em class="property">static </em><code class="descname">search</code><span class="sig-paren">(</span><em>query</em>, <em>limit=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#Ingredient.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.Ingredient.search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="FreeSpirits.models.Ingredient.sodium">
 <code class="descname">sodium</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.sodium" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -160,6 +589,16 @@ The nutritional values (an array)</p>
 <dl class="attribute">
 <dt id="FreeSpirits.models.Ingredient.sugars">
 <code class="descname">sugars</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.sugars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#FreeSpirits.models.Ingredient.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.Ingredient.whoosh_primary_key">
+<code class="descname">whoosh_primary_key</code><em class="property"> = 'id'</em><a class="headerlink" href="#FreeSpirits.models.Ingredient.whoosh_primary_key" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -196,7 +635,7 @@ wanted to include an extra column (quantity) between each relationship</p>
 <dl class="class">
 <dt id="FreeSpirits.models.User">
 <em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">User</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code>, <code class="xref py py-class docutils literal"><span class="pre">flask_login.UserMixin</span></code></p>
 <p>The User model
 As of now, this class is not related to the database at all
 This will be done in the later phases
@@ -206,9 +645,49 @@ forth to accomodate for SQL-Alchemy</p>
 <p>The required variables of this class are:
 the name
 the email</p>
+<dl class="method">
+<dt id="FreeSpirits.models.User.check_password">
+<code class="descname">check_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.check_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.check_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="FreeSpirits.models.User.email">
 <code class="descname">email</code><a class="headerlink" href="#FreeSpirits.models.User.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.first_name">
+<code class="descname">first_name</code><a class="headerlink" href="#FreeSpirits.models.User.first_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.get_drinks">
+<code class="descname">get_drinks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.get_drinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.get_drinks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.get_image">
+<code class="descname">get_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.get_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.get_ingredients">
+<code class="descname">get_ingredients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.get_ingredients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.get_ingredients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.has_favorited">
+<code class="descname">has_favorited</code><span class="sig-paren">(</span><em>drink_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.has_favorited"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.has_favorited" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.has_starred_drink">
+<code class="descname">has_starred_drink</code><span class="sig-paren">(</span><em>drink</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.has_starred_drink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.has_starred_drink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.has_starred_ingredient">
+<code class="descname">has_starred_ingredient</code><span class="sig-paren">(</span><em>ingredient</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.has_starred_ingredient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.has_starred_ingredient" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -217,10 +696,133 @@ the email</p>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="FreeSpirits.models.User.name">
-<code class="descname">name</code><a class="headerlink" href="#FreeSpirits.models.User.name" title="Permalink to this definition">¶</a></dt>
+<dt id="FreeSpirits.models.User.last_name">
+<code class="descname">last_name</code><a class="headerlink" href="#FreeSpirits.models.User.last_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.pure_whoosh">
+<code class="descname">pure_whoosh</code><em class="property"> = &lt;flask_whooshalchemy._Searcher object&gt;</em><a class="headerlink" href="#FreeSpirits.models.User.pure_whoosh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.pw_hash">
+<code class="descname">pw_hash</code><a class="headerlink" href="#FreeSpirits.models.User.pw_hash" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.query_class">
+<code class="descname">query_class</code><a class="headerlink" href="#FreeSpirits.models.User.query_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">_QueryProxy</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.remove_drink">
+<code class="descname">remove_drink</code><span class="sig-paren">(</span><em>drink</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.remove_drink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.remove_drink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.remove_ingredient">
+<code class="descname">remove_ingredient</code><span class="sig-paren">(</span><em>ingredient</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.remove_ingredient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.remove_ingredient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="FreeSpirits.models.User.search">
+<em class="property">static </em><code class="descname">search</code><span class="sig-paren">(</span><em>query</em>, <em>limit=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.set_password">
+<code class="descname">set_password</code><span class="sig-paren">(</span><em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.set_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.set_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.star_drink">
+<code class="descname">star_drink</code><span class="sig-paren">(</span><em>drink</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.star_drink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.star_drink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="FreeSpirits.models.User.star_ingredient">
+<code class="descname">star_ingredient</code><span class="sig-paren">(</span><em>ingredient</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#User.star_ingredient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.User.star_ingredient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.User.whoosh_primary_key">
+<code class="descname">whoosh_primary_key</code><em class="property"> = 'id'</em><a class="headerlink" href="#FreeSpirits.models.User.whoosh_primary_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.models.UserToDrink">
+<em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">UserToDrink</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#UserToDrink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.UserToDrink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>This is the join table between users and drinks representing favorites
+Queries are not to be made directly on this class, but to instead use
+the User instance methods</p>
+<dl class="attribute">
+<dt id="FreeSpirits.models.UserToDrink.drink_id">
+<code class="descname">drink_id</code><a class="headerlink" href="#FreeSpirits.models.UserToDrink.drink_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.UserToDrink.id">
+<code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.UserToDrink.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.UserToDrink.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#FreeSpirits.models.UserToDrink.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="FreeSpirits.models.UserToIngredient">
+<em class="property">class </em><code class="descclassname">FreeSpirits.models.</code><code class="descname">UserToIngredient</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#UserToIngredient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.UserToIngredient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>This is the join table between users and drinks representing favorites
+Queries are not to be made directly on this class, but to instead use
+the User instance methods</p>
+<dl class="attribute">
+<dt id="FreeSpirits.models.UserToIngredient.id">
+<code class="descname">id</code><a class="headerlink" href="#FreeSpirits.models.UserToIngredient.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.UserToIngredient.ingredient_id">
+<code class="descname">ingredient_id</code><a class="headerlink" href="#FreeSpirits.models.UserToIngredient.ingredient_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="FreeSpirits.models.UserToIngredient.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#FreeSpirits.models.UserToIngredient.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.models.parse_query">
+<code class="descclassname">FreeSpirits.models.</code><code class="descname">parse_query</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#parse_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.parse_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to parse the queries
+This function is invoked in Drink, Ingredient, and Users&#8217; search functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.models.parse_results">
+<code class="descclassname">FreeSpirits.models.</code><code class="descname">parse_results</code><span class="sig-paren">(</span><em>and_results</em>, <em>or_results</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/models.html#parse_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.models.parse_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>A helper function that takes in the results lists
+and returns the id: name key pair values</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-FreeSpirits.validators">
+<span id="freespirits-validators-module"></span><h2>FreeSpirits.validators module<a class="headerlink" href="#module-FreeSpirits.validators" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="FreeSpirits.validators.Unique">
+<em class="property">class </em><code class="descclassname">FreeSpirits.validators.</code><code class="descname">Unique</code><span class="sig-paren">(</span><em>model</em>, <em>field</em>, <em>message='This element already exists.'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/validators.html#Unique"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.validators.Unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A custom validator to check if the model already has a duplicate field</p>
 </dd></dl>
 
 </div>
@@ -232,28 +834,18 @@ the email</p>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="FreeSpirits.views.api_drinks">
-<code class="descclassname">FreeSpirits.views.</code><code class="descname">api_drinks</code><span class="sig-paren">(</span><em>drink_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#api_drinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.api_drinks" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="FreeSpirits.views.api_ingredients">
-<code class="descclassname">FreeSpirits.views.</code><code class="descname">api_ingredients</code><span class="sig-paren">(</span><em>ingredient_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#api_ingredients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.api_ingredients" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="FreeSpirits.views.api_tests">
-<code class="descclassname">FreeSpirits.views.</code><code class="descname">api_tests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#api_tests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.api_tests" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="FreeSpirits.views.builder">
 <code class="descclassname">FreeSpirits.views.</code><code class="descname">builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.builder" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="FreeSpirits.views.drink">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">drink</code><span class="sig-paren">(</span><em>drink_id=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#drink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.drink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="FreeSpirits.views.drinks">
-<code class="descclassname">FreeSpirits.views.</code><code class="descname">drinks</code><span class="sig-paren">(</span><em>drink_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#drinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.drinks" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">drinks</code><span class="sig-paren">(</span><em>page=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#drinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.drinks" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -262,8 +854,28 @@ the email</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="FreeSpirits.views.ingredient">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">ingredient</code><span class="sig-paren">(</span><em>ingredient_id=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#ingredient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.ingredient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="FreeSpirits.views.ingredients">
-<code class="descclassname">FreeSpirits.views.</code><code class="descname">ingredients</code><span class="sig-paren">(</span><em>ingredient_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#ingredients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.ingredients" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">ingredients</code><span class="sig-paren">(</span><em>page=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#ingredients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.ingredients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.load_user">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">load_user</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#load_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.load_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.login">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.logout">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">logout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#logout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.logout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -272,16 +884,36 @@ the email</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="FreeSpirits.views.search">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">search</code><span class="sig-paren">(</span><em>query=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.signup">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">signup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#signup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.signup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.superhero">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">superhero</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#superhero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.superhero" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="FreeSpirits.views.user">
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">user</code><span class="sig-paren">(</span><em>user_id=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="FreeSpirits.views.users">
-<code class="descclassname">FreeSpirits.views.</code><code class="descname">users</code><span class="sig-paren">(</span><em>user_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.users" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">FreeSpirits.views.</code><code class="descname">users</code><span class="sig-paren">(</span><em>page=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits/views.html#users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.views.users" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-FreeSpirits">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-FreeSpirits" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="FreeSpirits.test_client">
-<code class="descclassname">FreeSpirits.</code><code class="descname">test_client</code><span class="sig-paren">(</span><em>basedir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits.html#test_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.test_client" title="Permalink to this definition">¶</a></dt>
+<dt id="FreeSpirits.dummy_client">
+<code class="descclassname">FreeSpirits.</code><code class="descname">dummy_client</code><span class="sig-paren">(</span><em>basedir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/FreeSpirits.html#dummy_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#FreeSpirits.dummy_client" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -297,7 +929,10 @@ the email</p>
   <ul>
 <li><a class="reference internal" href="#">FreeSpirits package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-FreeSpirits.api">FreeSpirits.api module</a></li>
+<li><a class="reference internal" href="#module-FreeSpirits.forms">FreeSpirits.forms module</a></li>
 <li><a class="reference internal" href="#module-FreeSpirits.models">FreeSpirits.models module</a></li>
+<li><a class="reference internal" href="#module-FreeSpirits.validators">FreeSpirits.validators module</a></li>
 <li><a class="reference internal" href="#module-FreeSpirits.views">FreeSpirits.views module</a></li>
 <li><a class="reference internal" href="#module-FreeSpirits">Module contents</a></li>
 </ul>

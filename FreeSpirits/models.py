@@ -70,13 +70,15 @@ class User(db.Model, UserMixin):
     pw_hash = db.Column(db.String(120))
 
     @staticmethod
-    def search(query):
+    def search(query, limit=50):
         if query is None or not query.strip():
             return []
 
         and_term, or_term = parse_query(query)
-        and_results = User.query.whoosh_search(and_term).all()
-        or_results = User.query.whoosh_search(or_term).all()
+        and_results = User.query.whoosh_search(and_term) \
+                                .limit(50).all()
+        or_results = User.query.whoosh_search(or_term) \
+                               .limit(50).all()
         or_results = list(set(and_results).symmetric_difference(or_results))
 
         result = []
@@ -243,13 +245,16 @@ class Ingredient(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
     @staticmethod
-    def search(query):
+    def search(query, limit=50):
         if query is None or not query.strip():
             return []
 
         and_term, or_term = parse_query(query)
-        and_results = Ingredient.query.whoosh_search(and_term).all()
-        or_results = Ingredient.query.whoosh_search(or_term).all()
+        and_results = Ingredient.query.whoosh_search(and_term) \
+                                      .limit(limit).all()
+        or_results = Ingredient.query.whoosh_search(or_term) \
+                                     .limit(limit).all()
+
         or_results = list(set(and_results).symmetric_difference(or_results))
 
         return parse_results(and_results, or_results)
@@ -294,13 +299,15 @@ class Drink(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
     @staticmethod
-    def search(query):
+    def search(query, limit=50):
         if query is None or not query.strip():
             return []
 
         and_term, or_term = parse_query(query)
-        and_results = Drink.query.whoosh_search(and_term).all()
-        or_results = Drink.query.whoosh_search(or_term).all()
+        and_results = Drink.query.whoosh_search(and_term) \
+                                 .limit(limit).all()
+        or_results = Drink.query.whoosh_search(or_term) \
+                                .limit(limit).all()
         or_results = list(set(and_results).symmetric_difference(or_results))
 
         return parse_results(and_results, or_results)

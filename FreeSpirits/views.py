@@ -218,14 +218,22 @@ def user(user_id=1):
 @app.route('/search/<query>')
 def search(query=None):
     drinks = Drink.search(query)
+    drinks = [Drink.query.get(x['id']) for x in drinks]
     ingredients = Ingredient.search(query)
+    ingredients = [Ingredient.query.get(x['id']) for x in ingredients]
     users = User.search(query)
+    users = [User.query.get(x['id']) for x in users]
+
+    terms = set()
+    for term in query.split():
+        terms.add(term)
 
     return render_template("search.html",
                            drinks=drinks,
                            ingredients=ingredients,
                            users=users,
-                           query=query)
+                           query=query,
+                           terms=terms)
 
 
 @app.errorhandler(404)

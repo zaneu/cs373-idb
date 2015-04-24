@@ -30,22 +30,22 @@ Search Results
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="drinks">
                             {% for drink in drinks %}
-                                <a href="{{ url_for('drink', drink_id=drink['id']) }}" class="list-group-item">
-                                    {{ drink['name'] }}
+                                <a href="{{ url_for('drink', drink_id=drink.id) }}" class="list-group-item">
+                                    {{ drink.name }}
                                 </a>
                             {% endfor %}
                         </div>
                         <div role="tabpanel" class="tab-pane" id="ingredients">
                             {% for ingredient in ingredients %}
-                                <a href="{{ url_for('ingredient', ingredient_id=ingredient['id']) }}" class="list-group-item">
-                                    {{ ingredient['name'] }}
+                                <a href="{{ url_for('ingredient', ingredient_id=ingredient.id) }}" class="list-group-item">
+                                    {{ ingredient.name }}
                                 </a>
                             {% endfor %}
                         </div>
                         <div role="tabpanel" class="tab-pane" id="users">
                             {% for user in users %}
-                                <a href="{{ url_for('user', user_id=user['id']) }}" class="list-group-item">
-                                    {{ user['name'] }}
+                                <a href="{{ url_for('user', user_id=user.id) }}" class="list-group-item">
+                                    {{ user.name }}
                                 </a>
                             {% endfor %}
                         </div>

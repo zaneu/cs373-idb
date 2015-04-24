@@ -3,119 +3,148 @@
 {% block title %}Index{% endblock %}
 {% block head %}
   {{ super() }}
-  <link rel="stylesheet" href="../static/css/index.css" type="text/css">
+  <link rel="stylesheet" href="../static/css/about.css" type="text/css">
 {% endblock %}
 
 {% block content %}
-<div class="container">
+
+
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"> <a href="#team"><i class="fa fa-users"></i> Team Members</a></li>
+  <li><a href="#credits"><i class="fa fa-envelope"></i> Project Credits</a></li>
+
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active fade in" id="team">
+      <div class="container" id="teamcontainer">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Our Team</h2>
                     <h3 class="section-subheading text-muted">The true free spirits.</h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted"><a href="http://docs.freespirits.apiary.io/#">Apiary Website</a></p>
-                </div>
-            </div>
+
             <br>
-            <div class="row">
-                  <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="../static/img/paul.png" class="img-responsive img-circle" alt="">
-                        <h4>Paul Bae</h4>
-                        <p class="text-muted">Happy Hacker</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#">Number of commits: 55</a>
-                            </li>
-                            <li><a href="https://www.facebook.com/pybaej"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="https://www.linkedin.com/in/pybae"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4 center-block">
-                    <div class="team-member">
-                        <img src="../static/img/menglin.png" class="img-responsive img-circle" alt="">
-                        <h4>Menglin Brown</h4>
-                        <p class="text-muted">Frontend Designer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#">Number of commits: 9</a>
-                            </li>
-                            <li><a href="https://www.facebook.com/FeeLynn.Rachael"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="https://www.linkedin.com/in/menglinbrown"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="../static/img/larry.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Larry Liu</h4>
-                        <p class="text-muted">System Administrator</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#">Number of commits: 8</a>
-                            </li>
-                            <li><a href="https://www.facebook.com/larry.liu.3726"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="https://www.linkedin.com/in/larryliu97"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <br>
+                    <!-- Team Members Row -->
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="../static/img/paul.png" alt="">
+                <h3>Paul Bae
+                    <small>Happy Hacker</small>
+                </h3>
+                <ul class="list-inline social-buttons">
+                    <li><a href="#">Number of commits: 55</a>
+                    </li>
+                    <li><a href="https://www.facebook.com/pybaej"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/pybae"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
             </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="../static/img/jin.png" class="img-responsive img-circle" alt="">
-                        <h4>Jin Dong Tang</h4>
-                        <p class="text-muted">Backend Developer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#">Number of commits: 15</a>
-                            </li>
-                            <li><a href="https://www.facebook.com/jindt"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="https://www.linkedin.com/in/jindtang"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="../static/img/Ali.jpg" class="img-responsive img-circle" alt="">
-                        <h4>Ali Homafar</h4>
-                        <p class="text-muted">Middle-end developer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#">Number of commits: 6</a>
-                            </li>
-                            <li><a href="https://www.facebook.com/BabaBlackSheep"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="../static/img/zane.png" class="img-responsive img-circle" alt="">
-                        <h4>Zane Urbanski</h4>
-                        <p class="text-muted"> Developer</p>
-                        <ul class="list-inline social-buttons">
-                            <li><a href="#">Number of commits: 26</a>
-                            </li>
-                            <li><a href="https://www.facebook.com/zane.urbanski"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li><a href="https://www.linkedin.com/in/zaneurbanski"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="../static/img/menglin.png" alt="">
+                <h3>Rachel Brown
+                    <small>Front-end Dev</small>
+                </h3>
+                <ul class="list-inline social-buttons">
+                    <li><a href="#">Number of commits: 9</a>
+                    </li>
+                    <li><a href="https://www.facebook.com/FeeLynn.Rachael"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/menglinbrown"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="../static/img/larry.png" alt="">
+                <h3>Larry Liu
+                    <small>System Administrator</small>
+                </h3>
+                <ul class="list-inline social-buttons">
+                    <li><a href="#">Number of commits: 8</a>
+                    </li>
+                    <li><a href="https://www.facebook.com/larry.liu.3726"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/larryliu97"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="../static/img/jin.png" alt="">
+                <h3>Jin Tang
+                    <small>Back-end Developer</small>
+                </h3>
+                <ul class="list-inline social-buttons">
+                    <li><a href="#">Number of commits: 15</a>
+                    </li>
+                    <li><a href="https://www.facebook.com/jindt"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/jindtang"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="../static/img/Ali.png" alt="">
+                <h3>Ali Homafar
+                    <small>Middle-end Developer</small>
+                </h3>
+                <ul class="list-inline social-buttons">
+                    <li><a href="#">Number of commits: 6</a>
+                    </li>
+                    <li><a href="https://www.facebook.com/BabaBlackSheep"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-sm-6 text-center">
+                <img class="img-circle img-responsive img-center" src="../static/img/zane.png" alt="">
+                <h3>Zane Urbanski
+                    <small>Developer</small>
+                </h3>
+                <ul class="list-inline social-buttons">
+                    <li><a href="#">Number of commits: 26</a>
+                    </li>
+                    <li><a href="https://www.facebook.com/zane.urbanski"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/zaneurbanski"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
             </div>
         </div>
-<a href="https://github.com/zaneu/cs373-idb">
-    <img src="../static/img/GitHub-Mark-Light-32px.png" alt="Project Github Repo">
-</a>
+      </div>
+    
+        </div>
+    </div>
+    
+    <div class="tab-pane fade" id="credits">
+        <div class="container" id="teamcontainer">
+        <div class="creditscontent" id="creditscontainer">
+            <br>
+        <t><a href="https://github.com/zaneu/cs373-idb">Github</a></t>
+    <a href="https://github.com/zaneu/cs373-idb">
+        <img src="../static/img/GitHub-Mark-Light-32px.png" alt="Project Github Repo">
+      </a>
+        <br>
+        
+            <t class="large"><a href="http://docs.freespirits.apiary.io/#">Apiary</a></t>
+            <i class="fa fa-wrench"></i>
+
+        </div>
+    </div>
+        </div>
+</div>
+</div>
+
+<script>
+$('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+</script>
+
 {% endblock %}

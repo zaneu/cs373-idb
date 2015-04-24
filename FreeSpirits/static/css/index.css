@@ -17,3 +17,27 @@
  	display: flex;
  	align-items: center;
 }
+
+.nav-tabs {
+    margin-left: 40px;
+    /*background: yellow;  A color just for debug */
+}
+
+.creditscontent {
+    margin-left: 40px;
+    font-size: 200%;
+    /*background: red; A color just for debug */
+}
+
+.active {
+   /* background-color: #163249; */
+}
+
+
+#teamcontainer {
+/*    background-color: #163249;*/
+}
+
+#creditscontainer {
+/*    background-color: #163249;*/
+}

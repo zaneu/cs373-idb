@@ -218,7 +218,6 @@ def user(user_id=1):
 @app.route('/search/<query>')
 def search(query=None):
     drinks = Drink.search(query)
-    print (drinks)
     drinks = [Drink.query.get(x['id']) for x in drinks]
     ingredients = Ingredient.search(query)
     ingredients = [Ingredient.query.get(x['id']) for x in ingredients]

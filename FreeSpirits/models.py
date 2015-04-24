@@ -309,11 +309,6 @@ class Drink(db.Model):
         or_results = Drink.query.whoosh_search(or_term) \
                                 .limit(limit).all()
         or_results = list(set(and_results).symmetric_difference(or_results))
-        print (type(and_results))
-        print (and_results)
-        print (type(or_results))
-        print (or_results)
-
 
         return parse_results(and_results, or_results)
 

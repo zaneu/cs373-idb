@@ -19,16 +19,16 @@
                     <tr>
                         <th>#</th>
                         <th>
-                            <a href="{{ url_for('drinks', sort_by='name', page=page)}}">
+                            <a href="{{ url_for('ingredients', sort_by='name', page=page)}}">
                                 Name
-                                {% if request.args.get('sort_by') == "name" %}
+                                {% if request.args.get('sort_by') == "name"  or request.args.get('sort_by') == None %}
                                 <i class="fa fa-arrow-down"></i>
                                 {% endif %}
                             </a>
                         </th>
 
                         <th>
-                            <a href="{{ url_for('drinks', sort_by='favorites', page=page)}}">
+                            <a href="{{ url_for('ingredients', sort_by='favorites', page=page)}}">
                                 Favorites
                             </a>
                             {% if request.args.get('sort_by') == "favorites" %}

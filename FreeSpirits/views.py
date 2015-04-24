@@ -226,7 +226,7 @@ def search(query=None):
 
     terms = set()
     for term in query.split():
-        terms.add(term)
+        terms.add(term.lower())
 
     return render_template("search.html",
                            drinks=drinks,

@@ -76,9 +76,9 @@ class User(db.Model, UserMixin):
 
         and_term, or_term = parse_query(query)
         and_results = User.query.whoosh_search(and_term) \
-                                .limit(50).all()
+                                .limit(limit).all()
         or_results = User.query.whoosh_search(or_term) \
-                               .limit(50).all()
+                               .limit(limit).all()
         or_results = list(set(and_results).symmetric_difference(or_results))
 
         result = []

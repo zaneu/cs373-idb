@@ -73,7 +73,7 @@
                             </li>
                             <li>
                                 {% if current_user.is_authenticated() %}
-                                <button class="btn btn-primary btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+                                <button id="current_user_dropdown" class="btn btn-primary btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
                                     {{ current_user.first_name }}
                                     <span class="caret"></span>
                                 </button>
@@ -89,7 +89,6 @@
                                         </a>
                                     </li>
                                 </ul>
-
                                 {% else %}
                                 <a href="{{ url_for('login') }}">Login</a>
                                 {% endif %}

@@ -4,8 +4,15 @@ body {
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
 }
+
 .navbar-brand,
 .navbar-nav li a {
+    line-height: 50px;
+    height: 50px;
+    padding-top: 0;
+}
+
+#current_user_dropdown {
     line-height: 50px;
     height: 50px;
     padding-top: 0;
@@ -36,3 +43,4 @@ body {
 /* Set the fixed height of the footer here */
 #footer {
   height: 5v;
+}

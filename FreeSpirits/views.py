@@ -226,7 +226,7 @@ def search(query=None):
 
     terms = set()
     for term in query.split():
-        terms.add(term.lower())
+        terms.add(term.lower().strip(' .:s'))
 
     return render_template("search.html",
                            drinks=drinks,
@@ -253,7 +253,7 @@ def superhero():
         results = simplejson.load(response_body)
         characters.append(results)
 
-    
+
 
     return render_template("superheroapitest.html",
                            characters=characters)

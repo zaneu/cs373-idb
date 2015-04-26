@@ -31,6 +31,7 @@
     <body>
         <div id="wrap">
             <!-- Navigation -->
+
             <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
                 <div class="container">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -57,9 +58,9 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            {% set search_classes = "navbar-form navbar-left" %}
+                            {% set search_classes = "navbar-form" %}
                             {% if request.path == "/index" or request.path == "/" %}
-                            {% set search_classes = "navbar-form navbar-left hidden" %}
+                            {% set search_classes = "navbar-form hidden" %}
                             {% endif %}
                             <li>
                                 <form height="100%" id="navbar-search-bar" class="{{ search_classes }}" role="search">
@@ -77,14 +78,14 @@
                                     {{ current_user.first_name }}
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                    <li role="presentation">
-                                        <a role="menuitem" tabindex="-1" href="{{ url_for('user', user_id=current_user.id)}}">
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ url_for('user', user_id=current_user.id)}}">
                                             Profile
                                         </a>
                                     </li>
-                                    <li role="presentation">
-                                        <a role="menuitem" tabindex="-1" href="{{ url_for('logout') }}">
+                                    <li>
+                                        <a href="{{ url_for('logout') }}">
                                             Logout
                                         </a>
                                     </li>

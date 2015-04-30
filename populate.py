@@ -96,18 +96,18 @@ db.session.commit()
 print("Loading dummy users")
 users = [
     {"first_name": "Paul", "last_name": "Bae",
-     "email": "pbae@utexas.edu", "pass": "123"},
+     "email": "happyhacker@emails.edu", "pass": "123"},
     {"first_name": "Larry", "last_name": "Liu",
-     "email": "liudi1990@gmail.com", "pass": "132"},
+     "email": "larryTheDragon@emails.com", "pass": "132"},
     {"first_name": "Zane", "last_name": "Urbanski",
-     "email": "urbanski@utexas.edu", "pass": "321"},
+     "email": "ZaneIsCool@email.com", "pass": "321"},
     {"first_name": "Ali", "last_name": "Homafar",
-     "email": "home.isfar@gmail.com", "pass": "312"},
+     "email": "aliIsHungry@emails.com", "pass": "312"},
     {"first_name": "Menglin", "last_name": "Brown",
-     "email": "menglinbrown@utexas.edu",
+     "email": "rachelrules@emails.com",
      "pass": "213"},
     {"first_name": "Jin", "last_name": "Tang",
-     "email": "jindtang@utexas.edu", "pass": "231"}
+     "email": "JinindaHouse@emails.com", "pass": "231"}
 ]
 
 for value in progress.bar(users):

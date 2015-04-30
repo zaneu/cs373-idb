@@ -4,6 +4,23 @@
 {% block head %}
   {{ super() }}
 <link rel="stylesheet" href="../static/css/index.css" type="text/css">
+<script>
+
+ var array = [];
+
+ {% for name in names %}
+ array.push("{{ name }}");
+ {% endfor %}
+
+ var names = new Bloodhound({
+     datumTokenizer: Bloodhound.tokenizers.whitespace,
+     queryTokenizer: Bloodhound.tokenizers.whitespace,
+     local:  array
+ });
+
+ names.initialize();
+
+</script>
 <script src="../static/js/index.js"></script>
 {% endblock %}
 
@@ -15,7 +32,7 @@
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
                 <div class="input-group">
-                    <input id="inputdata" type="text" class="form-control" placeholder="What would you like to drink today?">
+                    <input id="inputdata" type="text" class="form-control" placeholder="What would you like to drink today?" autocomplete="off" data-provide="typeahead">
                     <span class="input-group-btn">
                         <button id="searchBtn" class="btn btn-default" type="button" >Search</button>
                     </span>

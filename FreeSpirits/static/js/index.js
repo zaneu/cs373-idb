@@ -16,4 +16,9 @@ $(document).ready(function(){
     $('#searchBtn').on('click', function () {
         redirect_to_index_search();
     });
+
+    $('#inputdata').typeahead(
+    {
+        source: names.ttAdapter()
+    });
 });

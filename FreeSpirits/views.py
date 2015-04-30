@@ -17,7 +17,17 @@ from flask.ext.login import login_user, logout_user, login_required, \
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html")
+    names = []
+    for item in Ingredient.query.all():
+        names.append(item.name)
+
+    for item in Drink.query.all():
+        names.append(item.name)
+
+    for item in User.query.all():
+        names.append(item.first_name)
+
+    return render_template("index.html", names=names)
 
 
 @app.route('/builder')

@@ -4,19 +4,17 @@ import urllib
 import simplejson
 import string
 
-from . import app, login_manager
+from . import app, login_manager, cache
 from .models import *
 from .forms import *
 
-from flask import render_template, jsonify, flash, redirect, url_for, \
-    request
+from flask import render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, login_required, \
     current_user
 
 
-@app.route('/')
-@app.route('/index')
-def index():
+@cache.cached(timeout=1000)
+def get_names():
     names = []
     for item in Ingredient.query.all():
         names.append(item.name)
@@ -25,9 +23,16 @@ def index():
         names.append(item.name)
 
     for item in User.query.all():
-        names.append(item.first_name)
+        names.append(item.first_name + " " + item.last_name)
 
-    return render_template("index.html", names=names)
+    return names
+
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template("index.html",
+                           names=get_names())
 
 
 @app.route('/builder')
@@ -63,7 +68,8 @@ def signup():
         flash("Welcome to Free Spirits, " + user.first_name)
         return redirect(url_for('index'))
 
-    return render_template("signup.html", form=form)
+    return render_template("signup.html",
+                           form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -76,7 +82,8 @@ def login():
         flash("Welcome back, " + user.first_name)
         return redirect(url_for('index'))
 
-    return render_template("login.html", form=form)
+    return render_template("login.html",
+                           form=form)
 
 
 @app.route('/logout')
@@ -140,6 +147,7 @@ def drink(drink_id=1):
                                ingredients=ingredients,
                                user_id=user_id,
                                starred=starred)
+
     else:
         return page_not_found(404)
 
@@ -195,6 +203,7 @@ def ingredient(ingredient_id=1):
                                drinks=drinks,
                                user_id=user_id,
                                starred=starred)
+
     else:
         return page_not_found(404)
 
@@ -220,6 +229,7 @@ def user(user_id=1):
                                image=query.get_image(),
                                drinks=query.get_drinks(),
                                ingredients=query.get_ingredients())
+
     else:
         return page_not_found(404)
 
@@ -263,10 +273,9 @@ def superhero():
         results = simplejson.load(response_body)
         characters.append(results)
 
-
-
     return render_template("superheroapitest.html",
                            characters=characters)
+
 
 @app.errorhandler(404)
 def page_not_found(error):

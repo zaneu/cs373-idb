@@ -9,7 +9,7 @@
  var array = [];
 
  {% for name in names %}
- array.push("{{ name }}");
+ array.push("{{ name }}".replace(/&amp;/g, '&'));
  {% endfor %}
 
  var names = new Bloodhound({

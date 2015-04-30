@@ -30,6 +30,10 @@ body {
 	font-size: 20px;
 }
 
+.dropdown-menu li a {
+    font-size: 20px;
+}
+
 /* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;

@@ -1,3 +1,137 @@
+commit 3a7d2111859a9017854050ced2dac5721fdfe40b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Fri May 1 12:21:09 2015 -0500
+
+    escaped single quote
+
+commit 7ebc2776749f9e710febe19c5f192436f594939b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 30 14:29:30 2015 -0500
+
+    done with autocomplete
+    
+    decided to only work on the index page
+
+commit ff72b6ba011bd1bbc9af3d220e94406811ca637d
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 30 13:45:45 2015 -0500
+
+    css is working
+
+commit 03c3e846298916cb4df91a4e8d846b30b49ca56b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 30 13:34:55 2015 -0500
+
+    typeahead working functionality
+
+commit e0fed80c0037a27482b8302cd10217b7db591d1c
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 30 18:22:53 2015 -0500
+
+    emails
+
+commit 1099b829dc005c39a511a0b5b356196de669fcfb
+Merge: 3d77ceb d72aac5
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Sun Apr 26 07:34:33 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit 3d77cebf788b625fe3438c37883578bd58bb6445
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Sun Apr 26 07:31:20 2015 -0500
+
+    supports user dropdown menu on mobile
+
+commit d72aac556b3aa891a8a0423cba948b5e4b026f3b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Fri Apr 24 14:39:59 2015 -0500
+
+    supports mobile compatibility, made search robust
+
+commit 989cbd182868030352bd8bbbda3871ea9312ca4b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 18:25:42 2015 -0500
+
+    works for mobile
+
+commit 3e2420f6a9eb627ceb33e121251f21147bb5ff39
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Fri Apr 24 01:16:59 2015 -0500
+
+    working on mobile compatability
+
+commit 95a8a33019263bdd1bbbf512c3f9a6c220440d0a
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 16:42:02 2015 -0500
+
+    fixed index.html to work on higher res screens
+
+commit 00ce00bb0bf42f5b03eff05d78b8da15b799a897
+Merge: 4109d2e 2d5ba45
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 23:51:19 2015 -0500
+
+    Merge branch 'master' of github.com:zaneu/cs373-idb
+
+commit 4109d2e4ac290e8e2ccc1269f7e61b141a6f985c
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 23:51:04 2015 -0500
+
+    fixed bug in drinks
+
+commit 2d5ba45e05e1dcc9c695af793de413792df79c7f
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Thu Apr 23 23:27:07 2015 -0500
+
+    removed print
+
+commit a6532c03e8e14b4b89949f1db773dc2dafb051ab
+Merge: faa44b3 dd0e467
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Fri Apr 24 04:23:55 2015 +0000
+
+    fixed icon
+
+commit faa44b33866ad33b2b2c013d2587dd3ef8e1536c
+Author: Ali Homafar <home.isfar@gmail.com>
+Date:   Fri Apr 24 04:22:11 2015 +0000
+
+    icon updates
+
+commit dd0e4672acab89f95c8c33fff6ae07ea06b240d8
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 23:11:35 2015 -0500
+
+    cleaned up repo
+
+commit 39a7eea6a9fb134f624e1907da13fe92f88a1c4b
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 23:10:46 2015 -0500
+
+    fixed drinks and ingredients arrow
+
+commit f85ffceea168beb63e4044c021cfdd0681a5f219
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 22:15:57 2015 -0500
+
+    superheroapi test
+
+commit 6a0d2c1a124f98401aa6fb28b2e520accd57a31a
+Merge: 11a6d41 1bd226e
+Author: Paul Bae <pbae@utexas.edu>
+Date:   Thu Apr 23 21:58:10 2015 -0500
+
+    Merge pull request #65 from zaneu/travis-ci
+    
+    updated commit numbers - travis
+
+commit 1bd226e48c294c455314768098f24d6e51197c3a
+Author: Zane Urbanski <zane.urbanski@gmail.com>
+Date:   Fri Apr 24 02:57:41 2015 +0000
+
+    updated commit numbers
+
 commit 11a6d4113b37ed9d68d9043e31f7df53009c864b
 Author: Zane Urbanski <zane.urbanski@gmail.com>
 Date:   Thu Apr 23 21:55:26 2015 -0500
@@ -384,54 +518,6 @@ Date:   Wed Apr 22 15:32:07 2015 -0500
 
     added previously mentioned AND/OR changes to api search
 
-commit 4a16e7b67fd677900b953cd72a482e8ba55c81e6
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:31:10 2015 -0500
-
-    made and results not be found in or results, resolves #60
-
-commit d6038c29b6d27751585d349309692fda97bda538
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:23:42 2015 -0500
-
-    ...no comment
-
-commit f86168b90440324c4ee929940df816a2c40b57b3
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:22:17 2015 -0500
-
-    finished fixing search function headers, commit city over here
-
-commit 6e8f708fc66898f80a6bc932d2b90927fa7d60b1
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:21:19 2015 -0500
-
-    fixed api search function header
-
-commit 909c65ea81d20aecb030dfc870834966b2615ed7
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:20:02 2015 -0500
-
-    search now successfully builds a users list, resolves #59
-
-commit 493ad05ffa6e18140abedc9a786f5420644da59b
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:09:15 2015 -0500
-
-    users is not a table... oops
-
-commit 5d38175006c7622a7346ef8a39c4ff4013b1ce4e
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 15:02:40 2015 -0500
-
-    accidentally queried ingredients twice in searching
-
-commit ed5bb7d28f5d89048b7b3d317ba609a059977a6d
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 14:56:27 2015 -0500
-
-    went back to all searches using the same url
-
 commit d740ef15035c8844301b404c28ea1aa569beaf2b
 Merge: dbb3225 d7866dd
 Author: Paul Bae <pbae@utexas.edu>
@@ -457,152 +543,8 @@ Date:   Wed Apr 22 14:29:26 2015 -0500
 
     made ingredient searches link correctly, resolves #58
 
-commit 32ea4cd233ca4d824192b16f2ed6adc3cb66591d
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 14:18:09 2015 -0500
-
-    search now handles /search/ingredients and /search/drinks, resolves #57
-
 commit 842af2b32f201aef679008454826ffdfc319ad5d
-Merge: 619502d a7ef4e3
 Author: Zane Urbanski <zane.urbanski@gmail.com>
 Date:   Wed Apr 22 14:00:56 2015 -0500
 
     merging I think
-
-commit 619502d50a447c850a639de52af51a16f74ab1f8
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Wed Apr 22 13:59:46 2015 -0500
-
-    separated drinks search
-
-commit a7ef4e36c5d0c1a7663c0dfbb769a7a91e9b6dd7
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 12:51:18 2015 -0500
-
-    implemented login and logout
-
-commit b2778f176ad2a28161f0bc804bf5f26716e17367
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 11:47:00 2015 -0500
-
-    user sign up is functional
-
-commit 47ab177e9edef74e6c9bb0e464075a22957fbf65
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 03:58:11 2015 -0500
-
-    starting on the users
-
-commit 6f09feef5c45332caf0dd258452f7c4aecafd523
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 03:54:21 2015 -0500
-
-    refactored templates to use pagination macro
-
-commit e3f8899ec78a04e10134cba22cb7066c5b97432d
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 03:29:48 2015 -0500
-
-    implemented the ingredients.html template
-    
-    also made the tables responsive
-
-commit ecaf409a832c1270e607f5c2268b7b69c0d7d0b6
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 03:21:31 2015 -0500
-
-    refactored drinks.html template
-
-commit 2c039f962409e0fc96eaef9fc4dcbc0e336c64f5
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 03:11:46 2015 -0500
-
-    pagination working for drinks
-
-commit f98b08b375e3993fa068507ae609fc0af03fc215
-Merge: a5283fd 49e5c7f
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 01:05:32 2015 -0500
-
-    Merge branch 'master' of github.com:zaneu/cs373-idb
-
-commit a5283fd506f7f058c6f95453514967aed26ade94
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Wed Apr 22 01:05:14 2015 -0500
-
-    working on pagination
-
-commit 49e5c7fe26ff3499bc18f8b54b67acab15815417
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Tue Apr 21 16:46:49 2015 -0500
-
-    search button and stuff now pretty much works, resolves #56
-
-commit c1ec7847b773c070591b9f5d3cf61ceb2a82efc2
-Merge: 8d0d3b9 fbbdc2a
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Tue Apr 21 16:34:30 2015 -0500
-
-    Merge branch 'master' of github.com:zaneu/cs373-idb
-
-commit 8d0d3b9a7c5d6e1c95b79d044f8ab11aa86a73ef
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Tue Apr 21 16:28:51 2015 -0500
-
-    done with ingredient.html
-
-commit fbbdc2aa1c6e62e60423daf4bdbecb515723e0ad
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Tue Apr 21 16:18:25 2015 -0500
-
-    added search results page
-
-commit e821e6ac663884e045802e28e120c2f270c706d7
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Tue Apr 21 15:56:57 2015 -0500
-
-    added basic /api/search/<query> function
-
-commit 783ca12c0c9a568f34e1a53133b3d90fa982920e
-Author: Zane Urbanski <zane.urbanski@gmail.com>
-Date:   Tue Apr 21 15:32:47 2015 -0500
-
-    drink objects are now labelled as such
-
-commit 1f3023b8a83428b9df502a40fa7da81b05b10e17
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Tue Apr 21 15:20:49 2015 -0500
-
-    implemented the drink.html
-
-commit 58fdf1fa88ca075ea35d06a6483173007eeb283b
-Merge: d708694 6e90e43
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Tue Apr 21 14:03:18 2015 -0500
-
-    Merge branch 'master' of github.com:zaneu/cs373-idb
-
-commit d7086942f743bad091561fe8613a7552e568c908
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Tue Apr 21 14:03:08 2015 -0500
-
-    addded signup js and signup html
-
-commit 6e90e439d1da815d78b6528a7dd679a22f763ef6
-Author: Ali Homafar <home.isfar@gmail.com>
-Date:   Tue Apr 21 03:27:25 2015 -0500
-
-    Included tiny link to github in our about page
-
-commit 7155ca6cf19e68629604c0783df54763226cfbba
-Author: Ali Homafar <home.isfar@gmail.com>
-Date:   Tue Apr 21 02:34:37 2015 -0500
-
-    Updated some documentation
-
-commit 4ab934cd4ba0d8297b6921e49b2b4f96a08dd5ee
-Author: Paul Bae <pbae@utexas.edu>
-Date:   Mon Apr 20 17:31:28 2015 -0500
-
-    done with the test api

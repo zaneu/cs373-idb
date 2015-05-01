@@ -58,20 +58,35 @@
 <span class="kn">import</span> <span class="nn">simplejson</span>
 <span class="kn">import</span> <span class="nn">string</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">login_manager</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">login_manager</span><span class="p">,</span> <span class="n">cache</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">jsonify</span><span class="p">,</span> <span class="n">flash</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> \
-    <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">render_template</span><span class="p">,</span> <span class="n">flash</span><span class="p">,</span> <span class="n">redirect</span><span class="p">,</span> <span class="n">url_for</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">g</span>
 <span class="kn">from</span> <span class="nn">flask.ext.login</span> <span class="kn">import</span> <span class="n">login_user</span><span class="p">,</span> <span class="n">logout_user</span><span class="p">,</span> <span class="n">login_required</span><span class="p">,</span> \
     <span class="n">current_user</span>
 
 
+<span class="nd">@cache.cached</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<div class="viewcode-block" id="get_names"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.get_names">[docs]</a><span class="k">def</span> <span class="nf">get_names</span><span class="p">():</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">Ingredient</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">Drink</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">first_name</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">last_name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">names</span>
+
+</div>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/index&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="index"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.index">[docs]</a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;index.html&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;index.html&quot;</span><span class="p">,</span>
+                           <span class="n">names</span><span class="o">=</span><span class="n">get_names</span><span class="p">())</span>
 
 </div>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/builder&#39;</span><span class="p">)</span>
@@ -107,7 +122,8 @@
         <span class="n">flash</span><span class="p">(</span><span class="s">&quot;Welcome to Free Spirits, &quot;</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;signup.html&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;signup.html&quot;</span><span class="p">,</span>
+                           <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
 
 </div>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="s">&#39;POST&#39;</span><span class="p">])</span>
@@ -120,7 +136,8 @@
         <span class="n">flash</span><span class="p">(</span><span class="s">&quot;Welcome back, &quot;</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;login.html&quot;</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;login.html&quot;</span><span class="p">,</span>
+                           <span class="n">form</span><span class="o">=</span><span class="n">form</span><span class="p">)</span>
 
 </div>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/logout&#39;</span><span class="p">)</span>
@@ -184,6 +201,7 @@
                                <span class="n">ingredients</span><span class="o">=</span><span class="n">ingredients</span><span class="p">,</span>
                                <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
                                <span class="n">starred</span><span class="o">=</span><span class="n">starred</span><span class="p">)</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 
@@ -239,6 +257,7 @@
                                <span class="n">drinks</span><span class="o">=</span><span class="n">drinks</span><span class="p">,</span>
                                <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
                                <span class="n">starred</span><span class="o">=</span><span class="n">starred</span><span class="p">)</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 
@@ -264,6 +283,7 @@
                                <span class="n">image</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">get_image</span><span class="p">(),</span>
                                <span class="n">drinks</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">get_drinks</span><span class="p">(),</span>
                                <span class="n">ingredients</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">get_ingredients</span><span class="p">())</span>
+
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">page_not_found</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 
@@ -280,7 +300,7 @@
 
     <span class="n">terms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
-        <span class="n">terms</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        <span class="n">terms</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39; .:s&#39;</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;search.html&quot;</span><span class="p">,</span>
                            <span class="n">drinks</span><span class="o">=</span><span class="n">drinks</span><span class="p">,</span>
@@ -293,13 +313,23 @@
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/superheroapitest&#39;</span><span class="p">)</span>
 <span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/superheroapitest/&#39;</span><span class="p">)</span>
 <div class="viewcode-block" id="superhero"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.superhero">[docs]</a><span class="k">def</span> <span class="nf">superhero</span><span class="p">():</span>
-    
-    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s">&#39;http://private-anon-452377244-superheroes.apiary-mock.com/characters/&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s">&#39;http://superheroes-idb.tk/characters/&#39;</span><span class="p">,</span>
+                                     <span class="bp">None</span><span class="p">,</span> <span class="p">{})</span>
     <span class="n">response_body</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
     <span class="n">results</span> <span class="o">=</span> <span class="n">simplejson</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-    <span class="c">#return render_template(&quot;superheroapitest.html&quot;)</span>
+
+    <span class="n">characters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s">&#39;Characters&#39;</span><span class="p">]:</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s">&#39;http://superheroes-idb.tk/characters/&#39;</span> <span class="o">+</span>
+                                         <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">response_body</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">simplejson</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span>
+        <span class="n">characters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s">&quot;superheroapitest.html&quot;</span><span class="p">,</span>
+                           <span class="n">characters</span><span class="o">=</span><span class="n">characters</span><span class="p">)</span>
+
 </div>
 <span class="nd">@app.errorhandler</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 <div class="viewcode-block" id="page_not_found"><a class="viewcode-back" href="../../FreeSpirits.html#FreeSpirits.views.page_not_found">[docs]</a><span class="k">def</span> <span class="nf">page_not_found</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
